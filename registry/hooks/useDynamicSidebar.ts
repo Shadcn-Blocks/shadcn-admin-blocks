@@ -1,4 +1,4 @@
-import { AnyRoute, useRouter } from '@tanstack/react-router'
+import { type AnyRoute, useRouter } from '@tanstack/react-router'
 import { Home } from 'lucide-react'
 
 export type SidebarItem = {

@@ -12,7 +12,7 @@ import {
   SidebarMenu,
 } from '@/components/ui/sidebar'
 import { useMatches } from '@tanstack/react-router'
-import { SidebarItem } from '@/hooks/useDynamicSidebar'
+import { type SidebarItem } from '@/hooks/useDynamicSidebar'
 
 const CollapsibleSidebarItem = ({ item }: { item: SidebarItem }) => {
   const { t } = useTranslation()
