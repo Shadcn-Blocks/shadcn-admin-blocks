@@ -10,7 +10,8 @@
     "build-registry": "shadcn build",
     "deploy-gh": "pnpm prepare-gh-pages && gh-pages -d gh-pages",
     "prepare-gh-pages": "rm -rf gh-pages && mkdir gh-pages && pnpm build-storybook && mv storybook-static gh-pages/storybook && pnpm build-registry && pnpm move-shadcn",
-    "move-shadcn": "mkdir -p gh-pages/r && mv public/r/* gh-pages/r/ && rm -r public/r"
+    "move-shadcn": "mkdir -p gh-pages/r && mv public/r/* gh-pages/r/ && rm -r public/r",
+    "test": "echo 'No tests specified' && exit 0"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.10",
@@ -26,7 +27,6 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.525.0",
-    "path": "^0.12.7",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-i18next": "^15.6.0",
@@ -45,6 +45,7 @@
     "@storybook/react-vite": "^9.0.17",
     "@tailwindcss/cli": "^4.1.11",
     "@tailwindcss/postcss": "^4.1.11",
+    "@types/node": "^24.0.14",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@typescript-eslint/eslint-plugin": "^8.37.0",

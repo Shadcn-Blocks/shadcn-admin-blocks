@@ -1,5 +1,7 @@
 # Shadcn Admin Blocks
 
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Documentation-blue)](https://shadcn-blocks.github.io/shadcn-admin-blocks/)
+
 Shadcn Admin Blocks is a collection of reusable admin dashboard components built with Shadcn UI and designed for rapid integration into Vite projects using TanStack Router. It provides ready-to-use layouts and UI elements to help developers quickly scaffold modern admin interfaces with minimal setup.
 
 ## Installation
