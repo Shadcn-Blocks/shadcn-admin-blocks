@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "skeleton",
-  "type": "registry:ui",
+  "type": "registry:item",
   "files": [
     {
       "path": "registry/ui/skeleton.tsx",

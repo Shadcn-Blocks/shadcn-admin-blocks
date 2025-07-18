@@ -54,7 +54,7 @@
     {
       "name": "dropdown",
       "files": [{ "path": "registry/ui/dropdown-menu.tsx", "type": "registry:ui" }],
-      "type": "registry:ui"
+      "type": "registry:lib"
     },
     {
       "name": "input",
@@ -64,17 +64,17 @@
     {
       "name": "label",
       "files": [{ "path": "registry/ui/label.tsx", "type": "registry:ui" }],
-      "type": "registry:ui"
+      "type": "registry:file"
     },
     {
       "name": "separator",
       "files": [{ "path": "registry/ui/separator.tsx", "type": "registry:ui" }],
-      "type": "registry:ui"
+      "type": "registry:page"
     },
     {
       "name": "sheet",
       "files": [{ "path": "registry/ui/sheet.tsx", "type": "registry:ui" }],
-      "type": "registry:ui"
+      "type": "registry:style"
     },
     {
       "name": "sidebar",
@@ -84,12 +84,12 @@
     {
       "name": "skeleton",
       "files": [{ "path": "registry/ui/skeleton.tsx", "type": "registry:ui" }],
-      "type": "registry:ui"
+      "type": "registry:item"
     },
     {
       "name": "tooltip",
       "files": [{ "path": "registry/ui/tooltip.tsx", "type": "registry:ui" }],
-      "type": "registry:ui"
+      "type": "registry:hook"
     }
   ]
 }

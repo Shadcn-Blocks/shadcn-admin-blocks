@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "sheet",
-  "type": "registry:ui",
+  "type": "registry:style",
   "files": [
     {
       "path": "registry/ui/sheet.tsx",
