@@ -1,0 +1,52 @@
+# Workflow name
+name: Build and Publish Storybook to GitHub Pages
+
+on:
+  # Event for the workflow to run on
+  push:
+    branches:
+      - 'feat/add-gh-actions'
+      - 'main'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# List of jobs
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # Job steps
+    steps:
+      # Manual Checkout
+      - uses: actions/checkout@v3
+
+      # Set up Node
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '24.x'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - run: pnpm i
+      - run: pnpm run prepare-gh-pages
+      - name: Upload static files as artifact
+        id: upload-artifact
+        uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
+        with:
+          path: gh-pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+      # - name: Deploy with gh-pages
+      #   run: |
+      #     git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+      #     npx gh-pages -d gh-pages -u "github-actions-bot <support+actions@github.com>"
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # #👇 Add Storybook build and deploy to GitHub Pages as a step in the workflow
+      # - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+      #   with:
+      #     path: storybook-static # default: dist/storybook

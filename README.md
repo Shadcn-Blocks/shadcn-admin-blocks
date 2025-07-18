@@ -1,5 +1,7 @@
 # React + TypeScript + Vite
 
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Documentation-blue)](https://shadcn-blocks.github.io/shadcn-admin-blocks/)
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

@@ -22,7 +22,7 @@
     },
     {
       "path": "registry/layout/Layout.tsx",
-      "content": "import { ReactNode } from 'react'\nimport { SidebarInset, SidebarProvider } from '../ui/sidebar'\nimport { AppHeader } from './AppHeader'\nimport { AppSidebar } from './AppSidebar'\n\ninterface RootLayoutProps {\n  children: ReactNode\n}\n\nexport function Layout({ children }: RootLayoutProps) {\n  return (\n    <>\n      <div className=\"[--header-height:calc(--spacing(14))]\">\n        <SidebarProvider className=\"flex flex-col\">\n          {/* <AppHeader /> */}\n          <div className=\"flex flex-1\">\n            <AppSidebar />\n            {/* <SidebarInset>\n              <div className=\"flex flex-1 flex-col gap-4 p-4\">{children}</div>\n            </SidebarInset> */}\n          </div>\n        </SidebarProvider>\n      </div>\n    </>\n  )\n}\n",
+      "content": "import { ReactNode } from 'react'\nimport { SidebarInset, SidebarProvider } from '../ui/sidebar'\nimport { AppHeader } from './AppHeader'\nimport { AppSidebar } from './AppSidebar'\n\ninterface RootLayoutProps {\n  children: ReactNode\n}\n\nexport function Layout({ children }: RootLayoutProps) {\n  return (\n    <>\n      <div className=\"[--header-height:calc(--spacing(14))]\">\n        <SidebarProvider className=\"flex flex-col\">\n          <AppHeader />\n          <div className=\"flex flex-1\">\n            {/* <AppSidebar /> */}\n            {/* <SidebarInset>\n              <div className=\"flex flex-1 flex-col gap-4 p-4\">{children}</div>\n            </SidebarInset> */}\n          </div>\n        </SidebarProvider>\n      </div>\n    </>\n  )\n}\n",
       "type": "registry:component"
     },
     {
