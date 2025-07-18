@@ -5,7 +5,7 @@
   "items": [
     {
       "name": "Layout",
-      "type": "registry:component",
+      "type": "registry:block",
       "title": "Layout",
       "description": "The whole layout.",
       "registryDependencies": [
@@ -33,63 +33,63 @@
     },
     {
       "name": "avatar",
-      "files": [{ "path": "registry/ui/avatar.tsx", "type": "registry:component" }],
-      "type": "registry:component"
+      "files": [{ "path": "registry/ui/avatar.tsx", "type": "registry:ui" }],
+      "type": "registry:ui"
     },
     {
       "name": "breadcrumb",
-      "files": [{ "path": "registry/ui/breadcrumb.tsx", "type": "registry:component" }],
-      "type": "registry:component"
+      "files": [{ "path": "registry/ui/breadcrumb.tsx", "type": "registry:ui" }],
+      "type": "registry:ui"
     },
     {
       "name": "button",
-      "files": [{ "path": "registry/ui/button.tsx", "type": "registry:component" }],
-      "type": "registry:component"
+      "files": [{ "path": "registry/ui/button.tsx", "type": "registry:ui" }],
+      "type": "registry:ui"
     },
     {
       "name": "collapsible",
-      "files": [{ "path": "registry/ui/collapsible.tsx", "type": "registry:component" }],
-      "type": "registry:component"
+      "files": [{ "path": "registry/ui/collapsible.tsx", "type": "registry:ui" }],
+      "type": "registry:ui"
     },
     {
       "name": "dropdown",
-      "files": [{ "path": "registry/ui/dropdown-menu.tsx", "type": "registry:component" }],
-      "type": "registry:component"
+      "files": [{ "path": "registry/ui/dropdown-menu.tsx", "type": "registry:ui" }],
+      "type": "registry:ui"
     },
     {
       "name": "input",
-      "files": [{ "path": "registry/ui/input.tsx", "type": "registry:component" }],
-      "type": "registry:component"
+      "files": [{ "path": "registry/ui/input.tsx", "type": "registry:ui" }],
+      "type": "registry:ui"
     },
     {
       "name": "label",
-      "files": [{ "path": "registry/ui/label.tsx", "type": "registry:component" }],
-      "type": "registry:component"
+      "files": [{ "path": "registry/ui/label.tsx", "type": "registry:ui" }],
+      "type": "registry:ui"
     },
     {
       "name": "separator",
-      "files": [{ "path": "registry/ui/separator.tsx", "type": "registry:component" }],
-      "type": "registry:component"
+      "files": [{ "path": "registry/ui/separator.tsx", "type": "registry:ui" }],
+      "type": "registry:ui"
     },
     {
       "name": "sheet",
-      "files": [{ "path": "registry/ui/sheet.tsx", "type": "registry:component" }],
-      "type": "registry:component"
+      "files": [{ "path": "registry/ui/sheet.tsx", "type": "registry:ui" }],
+      "type": "registry:ui"
     },
     {
       "name": "sidebar",
-      "files": [{ "path": "registry/ui/sidebar.tsx", "type": "registry:component" }],
-      "type": "registry:component"
+      "files": [{ "path": "registry/ui/sidebar.tsx", "type": "registry:ui" }],
+      "type": "registry:ui"
     },
     {
       "name": "skeleton",
-      "files": [{ "path": "registry/ui/skeleton.tsx", "type": "registry:component" }],
-      "type": "registry:component"
+      "files": [{ "path": "registry/ui/skeleton.tsx", "type": "registry:ui" }],
+      "type": "registry:ui"
     },
     {
       "name": "tooltip",
-      "files": [{ "path": "registry/ui/tooltip.tsx", "type": "registry:component" }],
-      "type": "registry:component"
+      "files": [{ "path": "registry/ui/tooltip.tsx", "type": "registry:ui" }],
+      "type": "registry:ui"
     }
   ]
 }
