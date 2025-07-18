@@ -90,6 +90,11 @@
       "name": "tooltip",
       "files": [{ "path": "registry/ui/tooltip.tsx", "type": "registry:ui" }],
       "type": "registry:hook"
+    },
+    {
+      "name": "useDynamicSidebar",
+      "files": [{ "path": "registry/layout/hooks/useDynamicSidebar.ts", "type": "registry:ui" }],
+      "type": "registry:hook"
     }
   ]
 }
