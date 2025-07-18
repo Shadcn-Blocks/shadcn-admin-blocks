@@ -4,7 +4,20 @@
   "type": "registry:component",
   "title": "Layout",
   "description": "The whole layout.",
-  "registryDependencies": [],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/avatar.tsx",
+    "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/breadcrumb.tsx",
+    "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/button.tsx",
+    "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/collapsible.tsx",
+    "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/dropdown-menu.tsx",
+    "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/input.tsx",
+    "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/label.tsx",
+    "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/separator.tsx",
+    "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/sheet.tsx",
+    "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/sidebar.tsx",
+    "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/skeleton.tsx",
+    "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/tooltip.tsx"
+  ],
   "files": [
     {
       "path": "registry/layout/AppHeader.tsx",
