@@ -2,7 +2,7 @@ import { ChevronRight, Link } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { useMemo } from 'react'
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '../ui/collapsible'
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible'
 import {
   SidebarMenuItem,
   SidebarMenuButton,
@@ -10,9 +10,9 @@ import {
   SidebarMenuSubItem,
   SidebarMenuSubButton,
   SidebarMenu,
-} from '../ui/sidebar'
-import { SidebarItem } from './hooks/useDynamicSidebar'
+} from '@/components/ui/sidebar'
 import { useMatches } from '@tanstack/react-router'
+import { SidebarItem } from '@/hooks/useDynamicSidebar'
 
 const CollapsibleSidebarItem = ({ item }: { item: SidebarItem }) => {
   const { t } = useTranslation()

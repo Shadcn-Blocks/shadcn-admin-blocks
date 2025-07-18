@@ -6,7 +6,11 @@
     "moduleResolution": "bundler",
     "strict": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./registry/*"]
+    }
   },
-  "include": ["src", "registry"]
+  "include": ["registry"]
 }

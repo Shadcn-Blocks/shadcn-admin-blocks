@@ -8,8 +8,8 @@ import {
   DropdownMenuItem,
   DropdownMenuShortcut,
   DropdownMenuSeparator,
-} from '../ui/dropdown-menu'
-import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '../ui/sidebar'
+} from '@/components/ui/dropdown-menu'
+import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar'
 
 const data = [
   {

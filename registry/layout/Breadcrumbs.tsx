@@ -1,6 +1,11 @@
 import React, { useMemo } from 'react'
 import { isMatch, Link, useMatches } from '@tanstack/react-router'
-import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from '../ui/breadcrumb'
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb'
 
 export const Breadcrumbs = () => {
   const matches = useMatches()

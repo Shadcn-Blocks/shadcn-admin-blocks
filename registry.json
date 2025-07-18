@@ -9,92 +9,23 @@
       "title": "Layout",
       "description": "The whole layout.",
       "registryDependencies": [
-        "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/avatar.json",
-        "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/breadcrumb.json",
-        "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/button.json",
-        "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/collapsible.json",
-        "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/dropdown.json",
-        "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/input.json",
-        "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/label.json",
-        "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/separator.json",
-        "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/sheet.json",
-        "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/sidebar.json",
-        "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/skeleton.json",
-        "https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/tooltip.json"
+        "button",
+        "separator",
+        "sidebar",
+        "breadcrumb",
+        "collapsible",
+        "dropdown-menu"
       ],
+      "dependencies": ["react-i18next"],
       "files": [
         { "path": "registry/layout/AppHeader.tsx", "type": "registry:component" },
         { "path": "registry/layout/AppSidebar.tsx", "type": "registry:component" },
         { "path": "registry/layout/Breadcrumbs.tsx", "type": "registry:component" },
         { "path": "registry/layout/Layout.tsx", "type": "registry:component" },
         { "path": "registry/layout/OrganizationSwitch.tsx", "type": "registry:component" },
-        { "path": "registry/layout/SidebarMainNav.tsx", "type": "registry:component" }
+        { "path": "registry/layout/SidebarMainNav.tsx", "type": "registry:component" },
+        { "path": "registry/hooks/useDynamicSidebar.ts", "type": "registry:hook" }
       ]
-    },
-    {
-      "name": "avatar",
-      "files": [{ "path": "registry/ui/avatar.tsx", "type": "registry:ui" }],
-      "type": "registry:ui"
-    },
-    {
-      "name": "breadcrumb",
-      "files": [{ "path": "registry/ui/breadcrumb.tsx", "type": "registry:ui" }],
-      "type": "registry:ui"
-    },
-    {
-      "name": "button",
-      "files": [{ "path": "registry/ui/button.tsx", "type": "registry:ui" }],
-      "type": "registry:ui"
-    },
-    {
-      "name": "collapsible",
-      "files": [{ "path": "registry/ui/collapsible.tsx", "type": "registry:ui" }],
-      "type": "registry:ui"
-    },
-    {
-      "name": "dropdown",
-      "files": [{ "path": "registry/ui/dropdown-menu.tsx", "type": "registry:ui" }],
-      "type": "registry:lib"
-    },
-    {
-      "name": "input",
-      "files": [{ "path": "registry/ui/input.tsx", "type": "registry:ui" }],
-      "type": "registry:ui"
-    },
-    {
-      "name": "label",
-      "files": [{ "path": "registry/ui/label.tsx", "type": "registry:ui" }],
-      "type": "registry:file"
-    },
-    {
-      "name": "separator",
-      "files": [{ "path": "registry/ui/separator.tsx", "type": "registry:ui" }],
-      "type": "registry:page"
-    },
-    {
-      "name": "sheet",
-      "files": [{ "path": "registry/ui/sheet.tsx", "type": "registry:ui" }],
-      "type": "registry:style"
-    },
-    {
-      "name": "sidebar",
-      "files": [{ "path": "registry/ui/sidebar.tsx", "type": "registry:ui" }],
-      "type": "registry:ui"
-    },
-    {
-      "name": "skeleton",
-      "files": [{ "path": "registry/ui/skeleton.tsx", "type": "registry:ui" }],
-      "type": "registry:item"
-    },
-    {
-      "name": "tooltip",
-      "files": [{ "path": "registry/ui/tooltip.tsx", "type": "registry:ui" }],
-      "type": "registry:hook"
-    },
-    {
-      "name": "useDynamicSidebar",
-      "files": [{ "path": "registry/layout/hooks/useDynamicSidebar.ts", "type": "registry:ui" }],
-      "type": "registry:hook"
     }
   ]
 }

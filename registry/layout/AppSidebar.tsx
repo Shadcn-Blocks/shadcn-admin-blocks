@@ -1,5 +1,5 @@
 import { ComponentProps } from 'react'
-import { Sidebar, SidebarContent, SidebarHeader } from '../ui/sidebar'
+import { Sidebar, SidebarContent, SidebarHeader } from '@/components/ui/sidebar'
 import { OrganizationSwitch } from './OrganizationSwitch'
 import { SidebarMainNav } from './SidebarMainNav'
 

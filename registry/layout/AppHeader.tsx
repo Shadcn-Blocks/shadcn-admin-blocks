@@ -1,8 +1,8 @@
 import { SidebarIcon } from 'lucide-react'
-import { Button } from '../ui/button'
-import { Separator } from '../ui/separator'
+import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 import { Breadcrumbs } from './Breadcrumbs'
-import { useSidebar } from '../ui/sidebar'
+import { useSidebar } from '@/components/ui/sidebar'
 
 export const AppHeader = () => {
   const { toggleSidebar } = useSidebar()
