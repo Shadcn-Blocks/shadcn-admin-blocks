@@ -5,29 +5,78 @@
   "items": [
     {
       "name": "Layout",
-      "type": "registry:block",
+      "type": "registry:component",
       "title": "Layout",
       "description": "The whole layout.",
+      "registryDependencies": [],
       "files": [
         { "path": "registry/layout/AppHeader.tsx", "type": "registry:component" },
         { "path": "registry/layout/AppSidebar.tsx", "type": "registry:component" },
         { "path": "registry/layout/Breadcrumbs.tsx", "type": "registry:component" },
         { "path": "registry/layout/Layout.tsx", "type": "registry:component" },
         { "path": "registry/layout/OrganizationSwitch.tsx", "type": "registry:component" },
-        { "path": "registry/layout/SidebarMainNav.tsx", "type": "registry:component" },
-        { "path": "registry/ui/avatar.tsx", "type": "registry:component" },
-        { "path": "registry/ui/breadcrumb.tsx", "type": "registry:component" },
-        { "path": "registry/ui/button.tsx", "type": "registry:component" },
-        { "path": "registry/ui/collapsible.tsx", "type": "registry:component" },
-        { "path": "registry/ui/dropdown-menu.tsx", "type": "registry:component" },
-        { "path": "registry/ui/input.tsx", "type": "registry:component" },
-        { "path": "registry/ui/label.tsx", "type": "registry:component" },
-        { "path": "registry/ui/separator.tsx", "type": "registry:component" },
-        { "path": "registry/ui/sheet.tsx", "type": "registry:component" },
-        { "path": "registry/ui/sidebar.tsx", "type": "registry:component" },
-        { "path": "registry/ui/skeleton.tsx", "type": "registry:component" },
-        { "path": "registry/ui/tooltip.tsx", "type": "registry:component" }
+        { "path": "registry/layout/SidebarMainNav.tsx", "type": "registry:component" }
       ]
+    },
+    {
+      "name": "avatar",
+      "files": [{ "path": "registry/ui/avatar.tsx", "type": "registry:component" }],
+      "type": "registry:component"
+    },
+    {
+      "name": "breadcrumb",
+      "files": [{ "path": "registry/ui/breadcrumb.tsx", "type": "registry:component" }],
+      "type": "registry:component"
+    },
+    {
+      "name": "button",
+      "files": [{ "path": "registry/ui/button.tsx", "type": "registry:component" }],
+      "type": "registry:component"
+    },
+    {
+      "name": "collapsible",
+      "files": [{ "path": "registry/ui/collapsible.tsx", "type": "registry:component" }],
+      "type": "registry:component"
+    },
+    {
+      "name": "dropdown",
+      "files": [{ "path": "registry/ui/dropdown-menu.tsx", "type": "registry:component" }],
+      "type": "registry:component"
+    },
+    {
+      "name": "input",
+      "files": [{ "path": "registry/ui/input.tsx", "type": "registry:component" }],
+      "type": "registry:component"
+    },
+    {
+      "name": "label",
+      "files": [{ "path": "registry/ui/label.tsx", "type": "registry:component" }],
+      "type": "registry:component"
+    },
+    {
+      "name": "separator",
+      "files": [{ "path": "registry/ui/separator.tsx", "type": "registry:component" }],
+      "type": "registry:component"
+    },
+    {
+      "name": "sheet",
+      "files": [{ "path": "registry/ui/sheet.tsx", "type": "registry:component" }],
+      "type": "registry:component"
+    },
+    {
+      "name": "sidebar",
+      "files": [{ "path": "registry/ui/sidebar.tsx", "type": "registry:component" }],
+      "type": "registry:component"
+    },
+    {
+      "name": "skeleton",
+      "files": [{ "path": "registry/ui/skeleton.tsx", "type": "registry:component" }],
+      "type": "registry:component"
+    },
+    {
+      "name": "tooltip",
+      "files": [{ "path": "registry/ui/tooltip.tsx", "type": "registry:component" }],
+      "type": "registry:component"
     }
   ]
 }

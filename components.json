@@ -5,17 +5,17 @@
   "tsx": true,
   "tailwind": {
     "config": "",
-    "css": "src/styles/globals.css",
+    "css": "registry/globals.css",
     "baseColor": "neutral",
     "cssVariables": true,
     "prefix": ""
   },
   "aliases": {
-    "components": "registry/components",
-    "utils": "lib/utils",
-    "ui": "registry/ui",
-    "lib": "registry.lib",
-    "hooks": "registry/hooks"
+    "components": "@registry/components",
+    "utils": "@lib/utils",
+    "ui": "@registry/ui",
+    "lib": "@registry.lib",
+    "hooks": "@registry/hooks"
   },
   "iconLibrary": "lucide"
 }
