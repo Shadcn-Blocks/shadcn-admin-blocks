@@ -5,7 +5,7 @@ import { SidebarMainNav } from './SidebarMainNav'
 
 export const AppSidebar = (props: ComponentProps<typeof Sidebar>) => {
   return (
-    <Sidebar className="top-(--header-height) h-[calc(100svh-var(--header-height))]!" {...props}>
+    <Sidebar className="h-[calc(100svh-var(--header-height))]!" {...props}>
       <SidebarHeader>
         <OrganizationSwitch />
       </SidebarHeader>

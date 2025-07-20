@@ -1,21 +1,20 @@
-import { ChevronRight, Link } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+import { Link, useMatches } from '@tanstack/react-router'
+import { ChevronRight } from 'lucide-react'
 
-import { useMemo } from 'react'
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import {
-  SidebarMenuItem,
-  SidebarMenuButton,
-  SidebarMenuSub,
-  SidebarMenuSubItem,
-  SidebarMenuSubButton,
   SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
 } from '@/components/ui/sidebar'
-import { useMatches } from '@tanstack/react-router'
-import { type SidebarItem } from '@/hooks/useDynamicSidebar'
+import { SidebarItem, useDynamicSidebar } from '@/hooks/useDynamicSidebar'
+import { useMemo } from 'react'
+import { TooltipContent } from '@/components/ui/tooltip'
 
 const CollapsibleSidebarItem = ({ item }: { item: SidebarItem }) => {
-  const { t } = useTranslation()
   const matches = useMatches()
 
   const defaultOpen = useMemo(() => {
@@ -26,9 +25,11 @@ const CollapsibleSidebarItem = ({ item }: { item: SidebarItem }) => {
     <Collapsible asChild className="group/collapsible" defaultOpen={defaultOpen}>
       <SidebarMenuItem>
         <CollapsibleTrigger asChild>
-          <SidebarMenuButton tooltip={t(`sideBar.mainNav.${item.title}` as any)}>
-            <item.icon />
-            <span className="text-sm">{t(`sideBar.mainNav.${item.title}` as any)}</span>
+          <SidebarMenuButton
+            tooltip={item.title ? <TooltipContent>{item.title}</TooltipContent> : undefined}
+          >
+            {item.icon}
+            <span className="text-sm">{item.title}</span>
             <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
           </SidebarMenuButton>
         </CollapsibleTrigger>
@@ -39,9 +40,7 @@ const CollapsibleSidebarItem = ({ item }: { item: SidebarItem }) => {
                 {({ isActive }) => (
                   <SidebarMenuSubItem>
                     <SidebarMenuSubButton asChild isActive={isActive}>
-                      <span className="font-inherit">
-                        {t(`sideBar.mainNav.${child.title}` as any)}
-                      </span>
+                      <span className="font-inherit">{child.title}</span>
                     </SidebarMenuSubButton>
                   </SidebarMenuSubItem>
                 )}
@@ -55,8 +54,6 @@ const CollapsibleSidebarItem = ({ item }: { item: SidebarItem }) => {
 }
 
 const SidebarItemComponent = ({ item }: { item: SidebarItem }) => {
-  const { t } = useTranslation()
-
   if (item.children.length > 0) {
     return <CollapsibleSidebarItem item={item} />
   }
@@ -64,11 +61,11 @@ const SidebarItemComponent = ({ item }: { item: SidebarItem }) => {
   return (
     <Link to={item.url} key={item.url}>
       {({ isActive }) => (
-        <SidebarMenuItem key={item.title}>
+        <SidebarMenuItem key={item.key}>
           <SidebarMenuButton asChild isActive={isActive}>
             <span>
-              <item.icon />
-              <span>{t(`sideBar.mainNav.${item.title}` as any)}</span>
+              {item.icon}
+              <span>{item.title}</span>
             </span>
           </SidebarMenuButton>
         </SidebarMenuItem>
@@ -84,17 +81,9 @@ export const SidebarMainNav = () => {
     <div className="p-2">
       <SidebarMenu>
         {sidebarItems.map((item) => (
-          <SidebarItemComponent key={item.url} item={item} />
+          <SidebarItemComponent key={item.key} item={item} />
         ))}
       </SidebarMenu>
     </div>
   )
-}
-
-function useDynamicSidebar() {
-  return [
-    { url: '/', title: 'Home', icon: Link, children: [] },
-    { url: '/', title: 'Home', icon: Link, children: [] },
-  ] as SidebarItem[]
-  // throw new Error('Function not implemented.')
 }

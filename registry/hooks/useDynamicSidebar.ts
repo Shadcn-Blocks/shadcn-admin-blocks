@@ -1,10 +1,12 @@
 import { type AnyRoute, useRouter } from '@tanstack/react-router'
 import { Home } from 'lucide-react'
+import { ReactNode } from 'react'
 
 export type SidebarItem = {
+  key: string
   url: string
-  icon: any
-  title: string
+  icon: ReactNode
+  title: ReactNode
   children: SidebarItem[]
 }
 
@@ -27,6 +29,7 @@ const buildSidebarItems = (allFlatRoutes: AnyRoute[]): SidebarItem[] => {
   )
   if (rootRoute && rootRoute.options?.staticData) {
     items.push({
+      key: 'root',
       url: '/',
       icon: rootRoute.options.staticData.icon || Home,
       title: rootRoute.options.staticData.title || 'Home',
@@ -41,6 +44,7 @@ const buildSidebarItems = (allFlatRoutes: AnyRoute[]): SidebarItem[] => {
     const parentStaticData = parentRoute.options.staticData
 
     const parentItem: SidebarItem = {
+      key: parentPath,
       url: parentPath,
       icon: parentStaticData.icon || Home,
       title: parentStaticData.title || 'untitled',
@@ -65,6 +69,7 @@ const buildSidebarItems = (allFlatRoutes: AnyRoute[]): SidebarItem[] => {
     childRoutes.forEach((childRoute) => {
       if (childRoute.options?.staticData) {
         parentItem.children.push({
+          key: childRoute.fullPath,
           url: childRoute.fullPath,
           icon: childRoute.options.staticData.icon || Home,
           title: childRoute.options.staticData.title || 'untitled',
