@@ -1,10 +1,15 @@
-import { SidebarIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { Breadcrumbs } from './Breadcrumbs'
 import { useSidebar } from '@/components/ui/sidebar'
+import { SidebarIcon } from 'lucide-react'
+import { Breadcrumbs } from './Breadcrumbs'
+import { UserDropdown, type UserDropdownProps } from './UserDropdown'
 
-export const AppHeader = () => {
+export interface AppHeaderProps {
+  userDropdown?: UserDropdownProps
+}
+
+export const AppHeader = ({ userDropdown }: AppHeaderProps) => {
   const { toggleSidebar } = useSidebar()
 
   return (
@@ -17,8 +22,7 @@ export const AppHeader = () => {
         <Breadcrumbs />
 
         <div className="ml-auto">
-          {/* TODO */}
-          {/* <UserDropdown /> */}
+          <UserDropdown {...userDropdown} />
         </div>
       </div>
     </header>

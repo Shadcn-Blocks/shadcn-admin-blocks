@@ -9,6 +9,7 @@
       "title": "Layout",
       "description": "The whole layout.",
       "registryDependencies": [
+        "avatar",
         "button",
         "separator",
         "sidebar",
@@ -24,7 +25,9 @@
         { "path": "registry/layout/Layout.tsx", "type": "registry:component" },
         { "path": "registry/layout/OrganizationSwitch.tsx", "type": "registry:component" },
         { "path": "registry/layout/SidebarMainNav.tsx", "type": "registry:component" },
-        { "path": "registry/hooks/useDynamicSidebar.ts", "type": "registry:hook" }
+        { "path": "registry/layout/UserDropdown.tsx", "type": "registry:component" },
+        { "path": "registry/hooks/useDynamicSidebar.ts", "type": "registry:hook" },
+        { "path": "registry/hooks/useTranslation.ts", "type": "registry:hook" }
       ]
     }
   ]
