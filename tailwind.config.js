@@ -4,11 +4,9 @@ import { fontFamily } from 'tailwindcss/defaultTheme'
 module.exports = {
   darkMode: ['class'],
   content: [
+    './src/**/*.{js,ts,jsx,tsx}',
+    './.storybook/**/*.{js,ts,jsx,tsx}',
     './registry/**/*.{ts,tsx}',
-    './.storybook/**/*.{ts,tsx}',
-    './**/*.stories.@(ts|tsx)',
-    './**/*.ts',
-    './**/*.tsx',
   ],
   safelist: ['@container/card-header', 'has-data-[slot=card-action]', 'grid-cols-[1fr_auto]'],
   theme: {

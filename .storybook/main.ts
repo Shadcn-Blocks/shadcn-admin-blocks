@@ -15,7 +15,7 @@ const config: StorybookConfig = {
     options: {},
   },
   viteFinal: async (config) => {
-    config.base = '/shadcn-repository/storybook/'
+    config.base = ''
 
     config.resolve = config.resolve || {}
     config.resolve.alias = {
