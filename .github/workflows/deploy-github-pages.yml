@@ -1,0 +1,40 @@
+# Workflow name
+name: Build and Publish Storybook to GitHub Pages
+
+on:
+  # Event for the workflow to run on
+  push:
+    branches:
+      - 'main'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# List of jobs
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # Job steps
+    steps:
+      # Manual Checkout
+      - uses: actions/checkout@v3
+
+      # Set up Node
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '24.2.0'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - run: pnpm i
+      - run: pnpm run build-storybook
+      - name: Upload static files as artifact
+        id: upload-artifact
+        uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
+        with:
+          path: storybook-static
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
