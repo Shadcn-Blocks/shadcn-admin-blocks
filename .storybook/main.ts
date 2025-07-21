@@ -20,14 +20,8 @@ const config: StorybookConfig = {
     config.resolve = config.resolve || {}
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@': resolve(__dirname, '../'),
-      '@/registry': resolve(__dirname, '../registry'),
-      '@/ui': resolve(__dirname, '../registry/ui'),
-      '@/components': resolve(__dirname, '../registry/components'),
-      '@/layout': resolve(__dirname, '../registry/layout'),
-      '@/lib': resolve(__dirname, '../registry/lib'),
-      // Mock pro react-i18next
-      'react-i18next': resolve(__dirname, './mocks/react-i18next.ts'),
+      '@': import.meta.resolve('../registry'),
+      'react-i18next': import.meta.resolve('./mocks/react-i18next.ts'),
     }
 
     // Vite define plugin pro globální replacement
@@ -42,7 +36,7 @@ const config: StorybookConfig = {
       name: 'mock-react-i18next',
       resolveId(id) {
         if (id === 'react-i18next') {
-          return resolve(__dirname, './mocks/react-i18next.ts')
+          return import.meta.resolve('./mocks/react-i18next.ts')
         }
         return null
       },
