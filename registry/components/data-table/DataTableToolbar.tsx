@@ -1,8 +1,5 @@
-'use client'
-
 import { ChevronDown } from 'lucide-react'
 
-import type { Table } from '@tanstack/react-table'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -10,12 +7,10 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { useDataTable } from '@/components/data-table/DataTableProvider'
 
-interface DataTableToolbarProps<TData> {
-  table: Table<TData>
-}
-
-export const DataTableToolbar = <RecordType,>({ table }: DataTableToolbarProps<RecordType>) => {
+export const DataTableToolbar = <RecordType,>() => {
+  const table = useDataTable<RecordType>()
   return (
     <div className="flex items-center py-4">
       <DropdownMenu>

@@ -7,6 +7,11 @@ import { PencilIcon, Trash } from 'lucide-react'
 import { DataTable } from './DataTable'
 import { Button } from './ui/button'
 import { DataTableColumn } from './data-table/DataTableColumn'
+import { DataTableToolbar } from './data-table/DataTableToolbar'
+import { DataTableContent } from './data-table/DataTableContent'
+import { DataTablePagination } from './data-table/DataTablePagination'
+import { DataTableFooter } from './data-table/DataTableFooter'
+import { DataTablePageSwitcher } from './data-table/DataTablePageSwitcher'
 
 const meta: Meta<typeof DataTable> = {
   component: DataTable,
@@ -84,7 +89,7 @@ const columns: DataTableColumn<Payment, any>[] = [
 const datasource = new StaticDataSource({ table: data })
 const query = Q.select().from('table')
 
-export const StaticDataExample: Story = {
+export const Default: Story = {
   args: {
     datasource,
     query,
@@ -92,11 +97,67 @@ export const StaticDataExample: Story = {
   },
 }
 
-export const WithToolbar: Story = {
+export const ContentOnly: Story = {
   args: {
     datasource,
     query,
     columns,
-    showToolbar: true,
+    children: (
+      <>
+        <DataTableContent />
+      </>
+    ),
+  },
+}
+
+export const ContentWithFooter: Story = {
+  args: {
+    datasource,
+    query,
+    columns,
+    children: (
+      <>
+        <DataTableContent />
+        <DataTableFooter />
+      </>
+    ),
+  },
+}
+
+export const WithToolbarAndFooter: Story = {
+  args: {
+    datasource,
+    query,
+    columns,
+    children: (
+      <>
+        <DataTableToolbar />
+        <DataTableContent />
+        <DataTableFooter />
+      </>
+    ),
+  },
+}
+
+export const Custom: Story = {
+  args: {
+    datasource,
+    query,
+    columns,
+    children: (
+      <>
+        <hr />
+        Page Switcher:
+        <DataTablePageSwitcher />
+        <hr />
+        Content:
+        <br />
+        <DataTableContent />
+        <hr />
+        Pagination:
+        <DataTablePagination />
+        <hr />
+      </>
+    ),
   },
 }

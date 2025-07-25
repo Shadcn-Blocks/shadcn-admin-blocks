@@ -51,7 +51,23 @@
           "type": "registry:component"
         },
         {
+          "path": "registry/components/data-table/DataTableContent.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/components/data-table/DataTableFooter.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/components/data-table/DataTablePageSwitcher.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "registry/components/data-table/DataTablePagination.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/components/data-table/DataTableProvider.tsx",
           "type": "registry:component"
         },
         {

@@ -6,10 +6,83 @@ import * as Stories from './DataTable.stories'
 
 # DataTable
 
+## Installation
+
 ```bash
 npx shadcn add https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/DataTable.json
 ```
 
-## Example
+## Usage
 
-<Canvas of={Stories.StaticDataExample} />
+Using static data source You can create table in following way:
+
+```jsx
+const datasource = new StaticDataSource({ users: usersDataMock })
+const query = Q.select().from('users')
+
+<DataTable
+    datasource={datasource}
+    query={query}
+    columns={[
+        {accessorKey:'status'},
+        {accessorKey:'email'},
+        {accessorKey:'amount',type:'number'}
+    ]}
+/>
+```
+
+<Canvas of={Stories.Default} />
+
+Or You can specify the composition of the table:
+
+```jsx
+const datasource = new StaticDataSource({ users: usersDataMock })
+const query = Q.select().from('users')
+
+<DataTable
+    datasource={datasource}
+    query={query}
+    columns={[
+        {accessorKey:'status'},
+        {accessorKey:'email'},
+        {accessorKey:'amount',type:'number'}
+    ]}
+>
+    <DataTableToolbar />
+    <DataTableContent />
+    <DataTableFooter />
+</DataTable>
+```
+
+<Canvas of={Stories.WithToolbarAndFooter} />
+
+Or You can build Your custom layout:
+
+```jsx
+const datasource = new StaticDataSource({ users: usersDataMock })
+const query = Q.select().from('users')
+
+<DataTable
+    datasource={datasource}
+    query={query}
+    columns={[
+        {accessorKey:'status'},
+        {accessorKey:'email'},
+        {accessorKey:'amount',type:'number'}
+    ]}
+>
+    <hr />
+    Page Switcher:
+    <DataTablePageSwitcher />
+    <hr />
+    Content:
+    <br />
+    <DataTableContent />
+    <hr />
+    Pagination:
+    <DataTablePagination />
+    <hr />
+</DataTable>
+```
+
+<Canvas of={Stories.Custom} />

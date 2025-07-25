@@ -1,13 +1,5 @@
 'use client'
 
-import type { Table } from '@tanstack/react-table'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import {
   Pagination,
   PaginationContent,
@@ -17,12 +9,10 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
+import { useDataTable } from '@/components/data-table/DataTableProvider'
 
-interface DataTablePaginationProps<TData> {
-  table: Table<TData>
-}
-
-export function DataTablePagination<TData>({ table }: DataTablePaginationProps<TData>) {
+export function DataTablePagination<TData>() {
+  const table = useDataTable<TData>()
   const currentPage = table.getState().pagination.pageIndex + 1
   const totalPages = table.getPageCount()
 
@@ -63,84 +53,60 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
   const visiblePages = getVisiblePages()
 
   return (
-    <div className="flex items-center justify-between px-2">
-      <Pagination className="text-sm">
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              href="#"
-              onClick={(e) => {
-                e.preventDefault()
-                table.previousPage()
-              }}
-              className={
-                !table.getCanPreviousPage() ? 'pointer-events-none opacity-50' : 'cursor-pointer'
-              }
-            />
-          </PaginationItem>
-
-          {visiblePages.map((page, index) => {
-            if (page === 'ellipsis') {
-              return (
-                <PaginationItem key={`ellipsis-${index}`}>
-                  <PaginationEllipsis />
-                </PaginationItem>
-              )
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious
+            href="#"
+            onClick={(e) => {
+              e.preventDefault()
+              table.previousPage()
+            }}
+            className={
+              !table.getCanPreviousPage() ? 'pointer-events-none opacity-50' : 'cursor-pointer'
             }
+          />
+        </PaginationItem>
 
+        {visiblePages.map((page, index) => {
+          if (page === 'ellipsis') {
             return (
-              <PaginationItem key={page}>
-                <PaginationLink
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    table.setPageIndex(page - 1)
-                  }}
-                  isActive={currentPage === page}
-                  className="cursor-pointer"
-                >
-                  {page}
-                </PaginationLink>
+              <PaginationItem key={`ellipsis-${index}`}>
+                <PaginationEllipsis />
               </PaginationItem>
             )
-          })}
+          }
 
-          <PaginationItem>
-            <PaginationNext
-              href="#"
-              onClick={(e) => {
-                e.preventDefault()
-                table.nextPage()
-              }}
-              className={
-                !table.getCanNextPage() ? 'pointer-events-none opacity-50' : 'cursor-pointer'
-              }
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+          return (
+            <PaginationItem key={page}>
+              <PaginationLink
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault()
+                  table.setPageIndex(page - 1)
+                }}
+                isActive={currentPage === page}
+                className="cursor-pointer"
+              >
+                {page}
+              </PaginationLink>
+            </PaginationItem>
+          )
+        })}
 
-      <div className="flex items-center space-x-6 lg:space-x-8">
-        <div className="flex items-center space-x-2">
-          <Select
-            value={`${table.getState().pagination.pageSize}`}
-            onValueChange={(value) => {
-              table.setPageSize(Number(value))
+        <PaginationItem>
+          <PaginationNext
+            href="#"
+            onClick={(e) => {
+              e.preventDefault()
+              table.nextPage()
             }}
-          >
-            <SelectTrigger className="h-8 w-[120px]" size="sm">
-              <SelectValue placeholder={table.getState().pagination.pageSize} />
-            </SelectTrigger>
-            <SelectContent side="top">
-              {[10, 20, 30, 40, 50].map((pageSize) => (
-                <SelectItem key={pageSize} value={`${pageSize}`}>
-                  {pageSize} / page
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-    </div>
+            className={
+              !table.getCanNextPage() ? 'pointer-events-none opacity-50' : 'cursor-pointer'
+            }
+          />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
   )
 }
