@@ -1,0 +1,2 @@
+storybook:
+	pnpm run storybook

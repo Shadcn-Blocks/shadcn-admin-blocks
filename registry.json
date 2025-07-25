@@ -29,6 +29,41 @@
         { "path": "registry/hooks/useDynamicSidebar.ts", "type": "registry:hook" },
         { "path": "registry/hooks/useTranslation.ts", "type": "registry:hook" }
       ]
+    },
+    {
+      "name": "DataTable",
+      "type": "registry:block",
+      "title": "DataTable",
+      "description": "Data table based on TanStack Table.",
+      "registryDependencies": ["button", "dropdown-menu", "select", "pagination", "table"],
+      "dependencies": [
+        "@tanstack/react-table",
+        "@tanstack/react-query",
+        "@jakub.knejzlik/ts-query",
+        "numeral",
+        "sql.js"
+      ],
+      "devDependencies": ["@types/numeral", "@types/sql.js"],
+      "files": [
+        { "path": "registry/components/DataTable.tsx", "type": "registry:component" },
+        {
+          "path": "registry/components/data-table/DataTableColumn.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/components/data-table/DataTablePagination.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/components/data-table/DataTableToolbar.tsx",
+          "type": "registry:component"
+        },
+        { "path": "registry/lib/data-sources/database-metadata.ts", "type": "registry:lib" },
+        { "path": "registry/lib/data-sources/DataSource.ts", "type": "registry:lib" },
+        { "path": "registry/lib/data-sources/index.ts", "type": "registry:lib" },
+        { "path": "registry/lib/data-sources/static-database.ts", "type": "registry:lib" },
+        { "path": "registry/lib/data-sources/StaticDataSource.ts", "type": "registry:lib" }
+      ]
     }
   ]
 }
