@@ -3,6 +3,9 @@ import { ChevronRight } from 'lucide-react'
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import {
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -11,8 +14,33 @@ import {
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar'
 import { SidebarItem, useDynamicSidebar } from '@/hooks/useDynamicSidebar'
-import { useMemo } from 'react'
+import { PropsWithChildren, useMemo } from 'react'
 import { TooltipContent } from '@/components/ui/tooltip'
+
+export const LayoutSidebarContent = ({ children }: PropsWithChildren) => {
+  const sidebarItems = useDynamicSidebar()
+
+  return (
+    <SidebarContent>
+      <SidebarGroup>
+        <SidebarGroupContent>
+          <SidebarMenu>
+            {sidebarItems.map((item) => (
+              <SidebarItemComponent key={item.key} item={item} />
+            ))}
+          </SidebarMenu>
+        </SidebarGroupContent>
+      </SidebarGroup>
+      {children && (
+        <SidebarGroup className="mt-auto">
+          <SidebarGroupContent>
+            <SidebarMenu>{children}</SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      )}
+    </SidebarContent>
+  )
+}
 
 const CollapsibleSidebarItem = ({ item }: { item: SidebarItem }) => {
   const matches = useMatches()
@@ -71,19 +99,5 @@ const SidebarItemComponent = ({ item }: { item: SidebarItem }) => {
         </SidebarMenuItem>
       )}
     </Link>
-  )
-}
-
-export const SidebarMainNav = () => {
-  const sidebarItems = useDynamicSidebar()
-
-  return (
-    <div className="p-2">
-      <SidebarMenu>
-        {sidebarItems.map((item) => (
-          <SidebarItemComponent key={item.key} item={item} />
-        ))}
-      </SidebarMenu>
-    </div>
   )
 }

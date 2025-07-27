@@ -86,7 +86,7 @@ const buildSidebarItems = (allFlatRoutes: AnyRoute[]): SidebarItem[] => {
 
 export const useDynamicSidebar = (): SidebarItem[] => {
   const router = useRouter()
-  const allRoutes = router.flatRoutes
+  const allRoutes = router?.flatRoutes
 
   if (!allRoutes) {
     return []
