@@ -1,10 +1,13 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks'
-
+import { Meta, Canvas } from '@storybook/addon-docs/blocks'
 import * as Stories from './Layout.stories'
 
 <Meta title="Layout" />
 
 # Layout
+
+A composable and flexible layout system for admin panels and dashboards. Includes a default layout with sidebar, header, content, and footer sections — or you can compose your own using individual building blocks.
+
+---
 
 ## Installation
 
@@ -12,11 +15,17 @@ import * as Stories from './Layout.stories'
 npx shadcn add https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/Layout.json
 ```
 
+---
+
 ## Usage
 
-Use default Layout:
+### 🧱 Default Layout
 
-```jsx
+The simplest way to use the layout is via the `Layout` component. It accepts a `sidebar` configuration which includes `header`, `footer`, and optional `organizations`.
+
+If you provide an `organizations` array, an organization switcher dropdown will be rendered in the sidebar header.
+
+```tsx
 <Layout
   sidebar={{
     footer: {
@@ -31,6 +40,18 @@ Use default Layout:
       title: 'Dashboard',
       subtitle: 'Welcome back!',
       icon: <HouseIcon />,
+      organizations: [
+        {
+          name: 'Acme Inc',
+          logo: HouseIcon,
+          plan: 'Enterprise',
+        },
+        {
+          name: 'Beta Corp',
+          logo: HouseIcon,
+          plan: 'Pro',
+        },
+      ],
     },
   }}
 >
@@ -40,18 +61,38 @@ Use default Layout:
 
 <Canvas of={Stories.Default} />
 
-Or You can fully customize it:
+---
 
-```jsx
+### 🔧 Fully Customized Layout
+
+Use `LayoutBase` and compose the structure manually when more control is needed:
+
+```tsx
 <LayoutBase>
   <LayoutSidebar>
-    <LayoutSidebarHeader title="Your company" subtitle="Your company tagline" icon={<HouseIcon />}>
+    <LayoutSidebarHeader
+      title="Your company"
+      subtitle="Your company tagline"
+      icon={<HouseIcon />}
+      organizations={[
+        {
+          name: 'Acme Inc',
+          logo: HouseIcon,
+          plan: 'Enterprise',
+        },
+        {
+          name: 'Beta Corp',
+          logo: HouseIcon,
+          plan: 'Pro',
+        },
+      ]}
+    >
       <SidebarMenuItem>
-        <SidebarMenuButton></SidebarMenuButton>
+        <SidebarMenuButton />
       </SidebarMenuItem>
     </LayoutSidebarHeader>
+
     <LayoutSidebarContent>
-      {/* Bottom Menu Items */}
       <SidebarMenuItem>
         <SidebarMenuButton asChild>
           <Link to="/">
@@ -69,6 +110,7 @@ Or You can fully customize it:
         </SidebarMenuButton>
       </SidebarMenuItem>
     </LayoutSidebarContent>
+
     <LayoutSidebarFooter
       user={{
         name: 'Hello world',
@@ -107,6 +149,7 @@ Or You can fully customize it:
       </DropdownMenuGroup>
     </LayoutSidebarFooter>
   </LayoutSidebar>
+
   <SidebarInset>
     <LayoutHeader />
     <LayoutContent>I am content</LayoutContent>

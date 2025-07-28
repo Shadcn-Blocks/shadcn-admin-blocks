@@ -7,11 +7,13 @@ import {
 import { Link } from '@tanstack/react-router'
 import { Command } from 'lucide-react'
 import { PropsWithChildren, ReactNode } from 'react'
+import { OrganizationList, OrganizationSwitch } from './OrganizationSwitch'
 
 export interface LayoutSidebarHeaderProps {
   title?: string
   subtitle?: string
   icon?: ReactNode
+  organizations?: OrganizationList
 }
 
 export const LayoutSidebarHeader = ({
@@ -19,6 +21,7 @@ export const LayoutSidebarHeader = ({
   title,
   subtitle,
   icon,
+  organizations,
 }: PropsWithChildren<LayoutSidebarHeaderProps>) => {
   return (
     <SidebarHeader>
@@ -37,6 +40,7 @@ export const LayoutSidebarHeader = ({
                 <span className="truncate font-medium">{title}</span>
                 <span className="truncate text-xs">{subtitle}</span>
               </div>
+              {organizations && <OrganizationSwitch data={organizations} />}
             </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>

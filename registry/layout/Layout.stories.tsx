@@ -17,6 +17,7 @@ import { LayoutSidebar } from './LayoutSidebar'
 import { LayoutSidebarContent } from './LayoutSidebarContent'
 import { LayoutSidebarFooter } from './LayoutSidebarFooter'
 import { LayoutSidebarHeader } from './LayoutSidebarHeader'
+import { OrganizationList } from './OrganizationSwitch'
 
 const meta: Meta<typeof Fragment> = {
   component: Fragment,
@@ -25,6 +26,24 @@ const meta: Meta<typeof Fragment> = {
 export default meta
 
 type Story = StoryObj<typeof Fragment>
+
+const organizations: OrganizationList = [
+  {
+    name: 'Acme Inc',
+    logo: HouseIcon,
+    plan: 'Enterprise',
+  },
+  {
+    name: 'Beta Corp',
+    logo: HouseIcon,
+    plan: 'Pro',
+  },
+  {
+    name: 'Gamma LLC',
+    logo: HouseIcon,
+    plan: 'Free',
+  },
+]
 
 export const Default: Story = {
   args: {
@@ -43,6 +62,7 @@ export const Default: Story = {
             title: 'Dashboard',
             subtitle: 'Welcome back!',
             icon: <HouseIcon />,
+            organizations,
           },
         }}
       >
