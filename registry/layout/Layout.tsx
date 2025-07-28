@@ -1,26 +1,42 @@
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import { PropsWithChildren } from 'react'
-import { AppHeader, type AppHeaderProps } from './AppHeader'
-import { AppSidebar } from './AppSidebar'
+import { LayoutHeader } from './LayoutHeader'
+import { LayoutSidebar } from './LayoutSidebar'
+import { LayoutSidebarFooter, LayoutSidebarFooterProps } from './LayoutSidebarFooter'
+import { LayoutSidebarHeader, LayoutSidebarHeaderProps } from './LayoutSidebarHeader'
+import { LayoutSidebarContent } from './LayoutSidebarContent'
+import { LayoutContent } from './LayoutContent'
 
-interface RootLayoutProps {
-  appHeader?: AppHeaderProps
-}
+interface LayoutBaseProps {}
 
-export function Layout({ children, appHeader }: PropsWithChildren<RootLayoutProps>) {
+export function LayoutBase({ children }: PropsWithChildren<LayoutBaseProps>) {
   return (
     <>
       <div className="[--header-height:calc(--spacing(14))]">
-        <SidebarProvider className="flex flex-col">
-          <div className="flex flex-1">
-            <AppSidebar />
-            <SidebarInset>
-              <AppHeader {...appHeader} />
-              <div className="flex flex-1 flex-col gap-4 p-4">{children}</div>
-            </SidebarInset>
-          </div>
+        <SidebarProvider>
+          <div className="flex flex-1">{children}</div>
         </SidebarProvider>
       </div>
     </>
+  )
+}
+
+interface LayoutProps extends LayoutBaseProps {
+  sidebar?: { footer?: LayoutSidebarFooterProps; header?: LayoutSidebarHeaderProps }
+}
+
+export function Layout({ sidebar, children }: PropsWithChildren<LayoutProps>) {
+  return (
+    <LayoutBase>
+      <LayoutSidebar>
+        <LayoutSidebarHeader {...sidebar?.header} />
+        <LayoutSidebarContent />
+        <LayoutSidebarFooter {...sidebar?.footer} />
+      </LayoutSidebar>
+      <SidebarInset>
+        <LayoutHeader />
+        <LayoutContent>{children}</LayoutContent>
+      </SidebarInset>
+    </LayoutBase>
   )
 }

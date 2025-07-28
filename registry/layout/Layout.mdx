@@ -1,0 +1,117 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks'
+
+import * as Stories from './Layout.stories'
+
+<Meta title="Layout" />
+
+# Layout
+
+## Installation
+
+```bash
+npx shadcn add https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/Layout.json
+```
+
+## Usage
+
+Use default Layout:
+
+```jsx
+<Layout
+  sidebar={{
+    footer: {
+      signOut: () => alert('logging out'),
+      user: {
+        avatar: 'https://cat-avatars.vercel.app/api/cat?name=John%20Doe',
+        email: 'john.doe@example.com',
+        name: 'John Doe',
+      },
+    },
+    header: {
+      title: 'Dashboard',
+      subtitle: 'Welcome back!',
+      icon: <HouseIcon />,
+    },
+  }}
+>
+  I am content
+</Layout>
+```
+
+<Canvas of={Stories.Default} />
+
+Or You can fully customize it:
+
+```jsx
+<LayoutBase>
+  <LayoutSidebar>
+    <LayoutSidebarHeader title="Your company" subtitle="Your company tagline" icon={<HouseIcon />}>
+      <SidebarMenuItem>
+        <SidebarMenuButton></SidebarMenuButton>
+      </SidebarMenuItem>
+    </LayoutSidebarHeader>
+    <LayoutSidebarContent>
+      {/* Bottom Menu Items */}
+      <SidebarMenuItem>
+        <SidebarMenuButton asChild>
+          <Link to="/">
+            <LifeBuoy />
+            Support
+          </Link>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+      <SidebarMenuItem>
+        <SidebarMenuButton asChild>
+          <Link to="/">
+            <Send />
+            Feedback
+          </Link>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+    </LayoutSidebarContent>
+    <LayoutSidebarFooter
+      user={{
+        name: 'Hello world',
+        email: 'hello@example.com',
+        avatar: 'https://cat-avatars.vercel.app/api/cat?name=Hello%20World',
+      }}
+    >
+      <DropdownMenuGroup>
+        <DropdownMenuItem asChild>
+          <Link to="/">
+            <Sparkles />
+            Upgrade to Pro
+          </Link>
+        </DropdownMenuItem>
+      </DropdownMenuGroup>
+      <DropdownMenuSeparator />
+      <DropdownMenuGroup>
+        <DropdownMenuItem asChild>
+          <Link to="/">
+            <BadgeCheck />
+            Account
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link to="/">
+            <CreditCard />
+            Billing
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link to="/">
+            <Bell />
+            Notifications
+          </Link>
+        </DropdownMenuItem>
+      </DropdownMenuGroup>
+    </LayoutSidebarFooter>
+  </LayoutSidebar>
+  <SidebarInset>
+    <LayoutHeader />
+    <LayoutContent>I am content</LayoutContent>
+  </SidebarInset>
+</LayoutBase>
+```
+
+<Canvas of={Stories.Customized} />

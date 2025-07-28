@@ -19,9 +19,7 @@ const data = [
   },
 ]
 
-export const OrganizationSwitch = () => {
-  // const { t } = useTranslation()
-  // const { isMobile } = useSidebar()
+export const WorkspaceSwitch = () => {
   const [activeTeam, setActiveTeam] = React.useState(data[0])
 
   if (!activeTeam) {

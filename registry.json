@@ -19,13 +19,14 @@
       ],
       "dependencies": ["react-i18next"],
       "files": [
-        { "path": "registry/layout/AppHeader.tsx", "type": "registry:component" },
-        { "path": "registry/layout/AppSidebar.tsx", "type": "registry:component" },
-        { "path": "registry/layout/Breadcrumbs.tsx", "type": "registry:component" },
         { "path": "registry/layout/Layout.tsx", "type": "registry:component" },
-        { "path": "registry/layout/OrganizationSwitch.tsx", "type": "registry:component" },
-        { "path": "registry/layout/SidebarMainNav.tsx", "type": "registry:component" },
-        { "path": "registry/layout/UserDropdown.tsx", "type": "registry:component" },
+        { "path": "registry/layout/LayoutContent.tsx", "type": "registry:component" },
+        { "path": "registry/layout/LayoutHeader.tsx", "type": "registry:component" },
+        { "path": "registry/layout/LayoutSidebar.tsx", "type": "registry:component" },
+        { "path": "registry/layout/LayoutSidebarContent.tsx", "type": "registry:component" },
+        { "path": "registry/layout/LayoutSidebarFooter.tsx", "type": "registry:component" },
+        { "path": "registry/layout/LayoutSidebarHeader.tsx", "type": "registry:component" },
+        { "path": "registry/layout/LayoutUserDropdown.tsx", "type": "registry:component" },
         { "path": "registry/hooks/useDynamicSidebar.ts", "type": "registry:hook" },
         { "path": "registry/hooks/useTranslation.ts", "type": "registry:hook" }
       ]
