@@ -1,14 +1,19 @@
 import { ISequelizable, ISerializable } from '@jakub.knejzlik/ts-query'
 import { StaticDatabase } from './database-metadata'
 import { DataSource } from './DataSource'
-import { createStaticDatabase, executeQueries, StaticDataTables } from './static-database'
+import {
+  createDatabaseDatabaseOpts,
+  createStaticDatabase,
+  executeQueries,
+  StaticDataTables,
+} from './static-database'
 
 export class StaticDataSource implements DataSource {
   private db: Promise<StaticDatabase>
 
-  constructor(tables: StaticDataTables) {
+  constructor(tables: StaticDataTables, opts?: createDatabaseDatabaseOpts) {
     // Initialize with static data if needed
-    this.db = createStaticDatabase(tables)
+    this.db = createStaticDatabase(tables, opts)
   }
   async executeQueries(queries: Array<ISequelizable & ISerializable>): Promise<any> {
     const db = await this.db
