@@ -5,9 +5,9 @@ export const useTranslation = () => ({
   t: (key: string, options?: any) => {
     console.log('Mock useTranslation called with key:', key)
     const translations: Record<string, string> = {
-      'organization.switch': 'Switch Organization',
-      'organization.current': 'Current Organization',
-      'organization.select': 'Select Organization',
+      'workspaceSwitch.switch': 'Switch Workspace',
+      'workspaceSwitch.label': 'Select Workspace',
+      'workspaceSwitch.addWorkspace': 'Add Workspace',
       'common.loading': 'Loading...',
       'common.error': 'Error',
       'common.save': 'Save',

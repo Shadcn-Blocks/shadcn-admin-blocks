@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { ChevronsUpDown, Plus, Command } from 'lucide-react'
+import React from 'react'
+import { ChevronsUpDown, Plus } from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -10,21 +10,14 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
 import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar'
+import { useWorkspaces, Workspace } from '@/components/WorkspaceContext'
+import { useTranslation } from 'react-i18next'
 
-const data = [
-  {
-    name: 'Acme Inc',
-    logo: Command,
-    plan: 'Enterprise',
-  },
-]
+export const WorkspaceSwitch: React.FC = () => {
+  const { workspaces, activeWorkspace, switchWorkspace } = useWorkspaces()
+  const { t } = useTranslation()
 
-export const WorkspaceSwitch = () => {
-  const [activeTeam, setActiveTeam] = React.useState(data[0])
-
-  if (!activeTeam) {
-    return null
-  }
+  if (!activeWorkspace) return null
 
   return (
     <SidebarMenu>
@@ -36,35 +29,35 @@ export const WorkspaceSwitch = () => {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                <activeTeam.logo className="size-4" />
+                <activeWorkspace.logo className="size-4" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{activeTeam.name}</span>
-                <span className="truncate text-xs">{activeTeam.plan}</span>
+                <span className="truncate font-medium">{activeWorkspace.name}</span>
+                <span className="truncate text-xs">{activeWorkspace.plan}</span>
               </div>
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
+
           <DropdownMenuContent
-            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+            className="w-[var(--radix-dropdown-menu-trigger-width)] min-w-56 rounded-lg"
             align="start"
-            // side={isMobile ? 'bottom' : 'right'}
             sideOffset={4}
           >
             <DropdownMenuLabel className="text-muted-foreground text-xs">
-              organizationSwitch.label
+              {t('workspaceSwitch.label')}
             </DropdownMenuLabel>
-            {data.map((team, index) => (
+            {workspaces.map((ws: Workspace, i: number) => (
               <DropdownMenuItem
-                key={team.name}
-                onClick={() => setActiveTeam(team)}
+                key={ws.name}
+                onClick={() => switchWorkspace(ws)}
                 className="gap-2 p-2"
               >
                 <div className="flex size-6 items-center justify-center rounded-md border">
-                  <team.logo className="size-3.5 shrink-0" />
+                  <ws.logo className="size-3.5 shrink-0" />
                 </div>
-                {team.name}
-                <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
+                {ws.name}
+                <DropdownMenuShortcut>⌘{i + 1}</DropdownMenuShortcut>
               </DropdownMenuItem>
             ))}
             <DropdownMenuSeparator />
@@ -73,7 +66,7 @@ export const WorkspaceSwitch = () => {
                 <Plus className="size-4" />
               </div>
               <div className="text-muted-foreground font-medium">
-                organizationSwitch.addOrganization
+                {t('workspaceSwitch.addWorkspace')}
               </div>
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -81,11 +74,4 @@ export const WorkspaceSwitch = () => {
       </SidebarMenuItem>
     </SidebarMenu>
   )
-}
-function useTranslation(): { t: any } {
-  throw new Error('Function not implemented.')
-}
-
-function useSidebar(): { isMobile: any } {
-  throw new Error('Function not implemented.')
 }
