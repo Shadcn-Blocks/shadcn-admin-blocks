@@ -17,6 +17,7 @@ import { LayoutSidebarFooter } from './LayoutSidebarFooter'
 import { LayoutSidebarHeader } from './LayoutSidebarHeader'
 import { Workspace, WorkspacesProvider } from '@/components/WorkspaceContext'
 import { WorkspaceSwitch } from '@/components/WorkspaceSwitch'
+import { FC } from 'react'
 
 const meta: Meta<typeof Fragment> = {
   component: Fragment,
@@ -57,7 +58,7 @@ const workspacesData: Workspace[] = [
   { name: 'Beta Co', logo: Send, plan: 'Pro' },
 ]
 
-const CustomLayoutStoryContent: React.FC = () => (
+const CustomLayoutStoryContent: FC = () => (
   <WorkspacesProvider workspaces={workspacesData}>
     <LayoutBase>
       <LayoutSidebar>

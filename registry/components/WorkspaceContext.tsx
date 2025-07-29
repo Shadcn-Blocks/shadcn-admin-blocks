@@ -22,12 +22,9 @@ const WorkspacesContext = createContext<WorkspacesContextValue | undefined>(unde
 
 export const WorkspacesProvider: React.FC<WorkspacesProviderProps> = ({
   children,
-  workspaces: initialWorkspaces = [],
+  workspaces = [],
 }) => {
-  const [workspaces, setWorkspaces] = useState<Workspace[]>(initialWorkspaces)
-  const [activeWorkspace, setActiveWorkspace] = useState<Workspace | null>(
-    initialWorkspaces[0] ?? null
-  )
+  const [activeWorkspace, setActiveWorkspace] = useState<Workspace | null>(workspaces[0] ?? null)
 
   const switchWorkspace = useCallback((workspace: Workspace) => {
     setActiveWorkspace(workspace)
