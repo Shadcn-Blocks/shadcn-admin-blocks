@@ -4,7 +4,7 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
 import { SidebarInset, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
-import type { Meta, StoryFn, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
 import { Link } from '@tanstack/react-router'
 import { BadgeCheck, Bell, CreditCard, HouseIcon, LifeBuoy, Send, Sparkles } from 'lucide-react'
 import { Fragment } from 'react/jsx-runtime'

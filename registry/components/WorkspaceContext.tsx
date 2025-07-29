@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback, ElementType, ReactNode } from 'react'
+import { createContext, useContext, useState, useCallback, ElementType, ReactNode, FC } from 'react'
 
 export type Workspace = {
   name: string
@@ -20,7 +20,7 @@ interface WorkspacesProviderProps {
 
 const WorkspacesContext = createContext<WorkspacesContextValue | undefined>(undefined)
 
-export const WorkspacesProvider: React.FC<WorkspacesProviderProps> = ({
+export const WorkspacesProvider: FC<WorkspacesProviderProps> = ({
   children,
   workspaces = [],
 }) => {
