@@ -1,5 +1,3 @@
-// registry/my-component/MyComponent.stories.ts
-
 import {
   DropdownMenuGroup,
   DropdownMenuItem,
@@ -17,9 +15,8 @@ import { LayoutSidebar } from './LayoutSidebar'
 import { LayoutSidebarContent } from './LayoutSidebarContent'
 import { LayoutSidebarFooter } from './LayoutSidebarFooter'
 import { LayoutSidebarHeader } from './LayoutSidebarHeader'
-import { useWorkspaces, Workspace, WorkspacesProvider } from '@/components/WorkspaceContext'
+import { Workspace, WorkspacesProvider } from '@/components/WorkspaceContext'
 import { WorkspaceSwitch } from '@/components/WorkspaceSwitch'
-import { useEffect } from 'react'
 
 const meta: Meta<typeof Fragment> = {
   component: Fragment,
@@ -55,17 +52,13 @@ export const Default: Story = {
   },
 }
 
-const CustomLayoutStoryContent: React.FC = () => {
-  const { initializeWorkspaces } = useWorkspaces()
-  useEffect(() => {
-    const data: Workspace[] = [
-      { name: 'Acme Inc', logo: LifeBuoy, plan: 'Enterprise' },
-      { name: 'Beta Co', logo: Send, plan: 'Pro' },
-    ]
-    initializeWorkspaces(data)
-  }, [initializeWorkspaces])
+const workspacesData: Workspace[] = [
+  { name: 'Acme Inc', logo: LifeBuoy, plan: 'Enterprise' },
+  { name: 'Beta Co', logo: Send, plan: 'Pro' },
+]
 
-  return (
+const CustomLayoutStoryContent: React.FC = () => (
+  <WorkspacesProvider workspaces={workspacesData}>
     <LayoutBase>
       <LayoutSidebar>
         <LayoutSidebarHeader>
@@ -133,15 +126,9 @@ const CustomLayoutStoryContent: React.FC = () => {
         <LayoutContent>I am content</LayoutContent>
       </SidebarInset>
     </LayoutBase>
-  )
-}
-
-const TemplateWithWorkspaceProvider: StoryFn = (args) => (
-  <WorkspacesProvider>
-    <CustomLayoutStoryContent />
   </WorkspacesProvider>
 )
 
 export const Customized = {
-  render: TemplateWithWorkspaceProvider,
+  render: CustomLayoutStoryContent,
 }

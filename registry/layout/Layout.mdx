@@ -5,7 +5,7 @@ import * as Stories from './Layout.stories'
 
 # Layout
 
-A composable and flexible layout system for admin panels and dashboards. Use `LayoutBase` and individual building blocks for full control, or wrap `WorkspacesProvider` and `WorkspaceSwitch` to enable workspace switching.
+A composable and flexible layout system for admin panels and dashboards. Use `LayoutBase` and individual building blocks for full control, or wrap `WorkspacesProvider` and include `WorkspaceSwitch` to enable workspace switching.
 
 ---
 
@@ -19,9 +19,9 @@ npx shadcn add https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-bloc
 
 ## Usage
 
-### 🧱 Default Layout Without Organizations
+### 🧱 Default Layout Without Workspace Switcher
 
-By default, the `Layout` component does **not** include an organization switcher on its own. It renders the sidebar header and footer based solely on the provided `sidebar` configuration:
+By default, the `Layout` component does **not** include an organization or workspace switcher on its own. It renders the sidebar header and footer based solely on the provided `sidebar` configuration:
 
 ```tsx
 <Layout
@@ -49,115 +49,27 @@ By default, the `Layout` component does **not** include an organization switcher
 
 ---
 
-## Loading Workspaces
-
-To populate the switcher, you need to fetch or define your workspace/organization data and initialize the context. Typically you:
-
-1. Wrap your app in `<WorkspacesProvider>`.
-2. Call `initializeWorkspaces()` with your fetched array of `{ name, logo, plan }`.
-
-Example:
-
-```tsx
-import { WorkspacesProvider, useWorkspaces, Workspace } from '@/contexts/WorkspacesContext'
-
-const App: React.FC = () => {
-  return (
-    <WorkspacesProvider>
-      <Initializer />
-      <LayoutBase>
-        <LayoutSidebar>...</LayoutSidebar>
-      </LayoutBase>
-    </WorkspacesProvider>
-  )
-}
-
-const Initializer: React.FC = () => {
-  const { initializeWorkspaces } = useWorkspaces()
-
-  React.useEffect(() => {
-    async function load() {
-      const resp = await fetch('/api/workspaces')
-      const data: Workspace[] = await resp.json()
-      initializeWorkspaces(data)
-    }
-    load()
-  }, [initializeWorkspaces])
-
-  return null
-}
-```
-
----
-
 ### 🔧 Layout With Workspace Switcher
 
-To add workspace/organization switching, wrap the layout with `WorkspacesProvider` and insert `<WorkspaceSwitch />` in the sidebar header:
+To add workspace switching into your sidebar, simply include `<WorkspaceSwitch />` inside your sidebar header. Your provider will already have the data from `initialWorkspaces`:
 
 ```tsx
-<WorkspacesProvider>
+
+const workspacesData: Workspace[] = [
+  { name: 'Acme Inc', logo: LifeBuoy, plan: 'Enterprise' },
+  { name: 'Beta Co', logo: Send, plan: 'Pro' },
+]
+
+<WorkspacesProvider workspaces={workspacesData}>
   <LayoutBase>
     <LayoutSidebar>
       <LayoutSidebarHeader>
         <WorkspaceSwitch />
       </LayoutSidebarHeader>
-      <LayoutSidebarContent>
-        {/* Bottom Menu Items */}
-        <SidebarMenuItem>
-          <SidebarMenuButton asChild>
-            <Link to="/">
-              <LifeBuoy />
-              Support
-            </Link>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
-        <SidebarMenuItem>
-          <SidebarMenuButton asChild>
-            <Link to="/">
-              <Send />
-              Feedback
-            </Link>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
-      </LayoutSidebarContent>
-      <LayoutSidebarFooter
-        user={{
-          name: 'Hello world',
-          email: 'hello@example.com',
-          avatar: 'https://cat-avatars.vercel.app/api/cat?name=Hello%20World',
-        }}
-      >
-        <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
-            <Link to="/">
-              <Sparkles />
-              Upgrade to Pro
-            </Link>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
-            <Link to="/">
-              <BadgeCheck />
-              Account
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link to="/">
-              <CreditCard />
-              Billing
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link to="/">
-              <Bell />
-              Notifications
-            </Link>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-      </LayoutSidebarFooter>
+      <LayoutSidebarContent>{/* bottom menu items */}</LayoutSidebarContent>
+      <LayoutSidebarFooter user={user}>/* footer controls */</LayoutSidebarFooter>
     </LayoutSidebar>
+
     <SidebarInset>
       <LayoutHeader />
       <LayoutContent>I am content</LayoutContent>

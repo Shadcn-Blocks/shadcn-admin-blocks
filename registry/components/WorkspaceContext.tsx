@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback, ElementType } from 'react'
+import { createContext, useContext, useState, useCallback, ElementType, ReactNode } from 'react'
 
 export type Workspace = {
   name: string
@@ -9,29 +9,32 @@ export type Workspace = {
 interface WorkspacesContextValue {
   workspaces: Workspace[]
   activeWorkspace: Workspace | null
-  initializeWorkspaces: (data: Workspace[]) => void
   switchWorkspace: (workspace: Workspace) => void
+}
+
+interface WorkspacesProviderProps {
+  children: ReactNode
+  /** Initial list of workspaces to load */
+  workspaces?: Workspace[]
 }
 
 const WorkspacesContext = createContext<WorkspacesContextValue | undefined>(undefined)
 
-export const WorkspacesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [workspaces, setWorkspaces] = useState<Workspace[]>([])
-  const [activeWorkspace, setActiveWorkspace] = useState<Workspace | null>(null)
-
-  const initializeWorkspaces = useCallback((data: Workspace[]) => {
-    setWorkspaces(data)
-    setActiveWorkspace(data[0] || null)
-  }, [])
+export const WorkspacesProvider: React.FC<WorkspacesProviderProps> = ({
+  children,
+  workspaces: initialWorkspaces = [],
+}) => {
+  const [workspaces, setWorkspaces] = useState<Workspace[]>(initialWorkspaces)
+  const [activeWorkspace, setActiveWorkspace] = useState<Workspace | null>(
+    initialWorkspaces[0] ?? null
+  )
 
   const switchWorkspace = useCallback((workspace: Workspace) => {
     setActiveWorkspace(workspace)
   }, [])
 
   return (
-    <WorkspacesContext.Provider
-      value={{ workspaces, activeWorkspace, initializeWorkspaces, switchWorkspace }}
-    >
+    <WorkspacesContext.Provider value={{ workspaces, activeWorkspace, switchWorkspace }}>
       {children}
     </WorkspacesContext.Provider>
   )
