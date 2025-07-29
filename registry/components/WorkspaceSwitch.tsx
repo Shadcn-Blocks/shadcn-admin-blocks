@@ -10,10 +10,12 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
 import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar'
-import { useWorkspaces, Workspace } from './WorkspaceContext'
+import { useWorkspaces, Workspace } from '@/components/WorkspaceContext'
+import { useTranslation } from 'react-i18next'
 
 export const WorkspaceSwitch: React.FC = () => {
   const { workspaces, activeWorkspace, switchWorkspace } = useWorkspaces()
+  const { t } = useTranslation()
 
   if (!activeWorkspace) return null
 
@@ -43,7 +45,7 @@ export const WorkspaceSwitch: React.FC = () => {
             sideOffset={4}
           >
             <DropdownMenuLabel className="text-muted-foreground text-xs">
-              organizationSwitch.label
+              {t('workspaceSwitch.label')}
             </DropdownMenuLabel>
             {workspaces.map((ws: Workspace, i: number) => (
               <DropdownMenuItem
@@ -64,7 +66,7 @@ export const WorkspaceSwitch: React.FC = () => {
                 <Plus className="size-4" />
               </div>
               <div className="text-muted-foreground font-medium">
-                organizationSwitch.addOrganization
+                {t('workspaceSwitch.addWorkspace')}
               </div>
             </DropdownMenuItem>
           </DropdownMenuContent>

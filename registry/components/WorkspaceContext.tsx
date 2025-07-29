@@ -1,15 +1,15 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
-import { Command } from 'lucide-react'
+import { createContext, useContext, useState, useCallback, ElementType } from 'react'
 
 export type Workspace = {
   name: string
-  logo: React.ElementType
+  logo: ElementType
   plan: string
 }
 
 interface WorkspacesContextValue {
   workspaces: Workspace[]
   activeWorkspace: Workspace | null
+  initializeWorkspaces: (data: Workspace[]) => void
   switchWorkspace: (workspace: Workspace) => void
 }
 
@@ -19,22 +19,19 @@ export const WorkspacesProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [workspaces, setWorkspaces] = useState<Workspace[]>([])
   const [activeWorkspace, setActiveWorkspace] = useState<Workspace | null>(null)
 
-  useEffect(() => {
-    // TODO: nahradit skutečným fetch requestem
-    const data: Workspace[] = [
-      { name: 'Acme Inc', logo: Command, plan: 'Enterprise' },
-      // další workspaces...
-    ]
+  const initializeWorkspaces = useCallback((data: Workspace[]) => {
     setWorkspaces(data)
-    setActiveWorkspace(data[0])
+    setActiveWorkspace(data[0] || null)
   }, [])
 
-  const switchWorkspace = (workspace: Workspace) => {
+  const switchWorkspace = useCallback((workspace: Workspace) => {
     setActiveWorkspace(workspace)
-  }
+  }, [])
 
   return (
-    <WorkspacesContext.Provider value={{ workspaces, activeWorkspace, switchWorkspace }}>
+    <WorkspacesContext.Provider
+      value={{ workspaces, activeWorkspace, initializeWorkspaces, switchWorkspace }}
+    >
       {children}
     </WorkspacesContext.Provider>
   )
@@ -43,7 +40,7 @@ export const WorkspacesProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 export const useWorkspaces = (): WorkspacesContextValue => {
   const context = useContext(WorkspacesContext)
   if (!context) {
-    throw new Error('useWorkspaces musí být použit uvnitř WorkspacesProvider')
+    throw new Error('useWorkspaces must be inside a WorkspacesProvider')
   }
   return context
 }

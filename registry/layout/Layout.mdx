@@ -5,7 +5,7 @@ import * as Stories from './Layout.stories'
 
 # Layout
 
-A composable and flexible layout system for admin panels and dashboards. Includes a default layout with sidebar, header, content, and footer sections — or you can compose your own using individual building blocks.
+A composable and flexible layout system for admin panels and dashboards. Use `LayoutBase` and individual building blocks for full control, or wrap `WorkspacesProvider` and `WorkspaceSwitch` to enable workspace switching.
 
 ---
 
@@ -17,17 +17,59 @@ npx shadcn add https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-bloc
 
 ---
 
+## Loading Workspaces
+
+To populate the switcher, you need to fetch or define your workspace/organization data and initialize the context. Typically you:
+
+1. Wrap your app (or story) in `<WorkspacesProvider>`.
+2. Call `initializeWorkspaces()` with your fetched array of `{ name, logo, plan }`.
+
+Example:
+
+```tsx
+import { WorkspacesProvider, useWorkspaces, Workspace } from '@/contexts/WorkspacesContext'
+
+const App: React.FC = () => {
+  return (
+    <WorkspacesProvider>
+      <Initializer />
+      <Layout />
+    </WorkspacesProvider>
+  )
+}
+
+const Initializer: React.FC = () => {
+  const { initializeWorkspaces } = useWorkspaces()
+
+  React.useEffect(() => {
+    async function load() {
+      const resp = await fetch('/api/workspaces')
+      const data: Workspace[] = await resp.json()
+      initializeWorkspaces(data)
+    }
+    load()
+  }, [initializeWorkspaces])
+
+  return null
+}
+```
+
+---
+
 ## Usage
 
-### 🧱 Default Layout
+### 🧱 Default Layout Without Organizations
 
-The simplest way to use the layout is via the `Layout` component. It accepts a `sidebar` configuration which includes `header`, `footer`, and optional `organizations`.
-
-If you provide an `organizations` array, an organization switcher dropdown will be rendered in the sidebar header.
+By default, the `Layout` component does **not** include an organization switcher on its own. It renders the sidebar header and footer based solely on the provided `sidebar` configuration:
 
 ```tsx
 <Layout
   sidebar={{
+    header: {
+      title: 'Dashboard',
+      subtitle: 'Welcome back!',
+      icon: <HouseIcon />,
+    },
     footer: {
       signOut: () => alert('logging out'),
       user: {
@@ -35,23 +77,6 @@ If you provide an `organizations` array, an organization switcher dropdown will 
         email: 'john.doe@example.com',
         name: 'John Doe',
       },
-    },
-    header: {
-      title: 'Dashboard',
-      subtitle: 'Welcome back!',
-      icon: <HouseIcon />,
-      organizations: [
-        {
-          name: 'Acme Inc',
-          logo: HouseIcon,
-          plan: 'Enterprise',
-        },
-        {
-          name: 'Beta Corp',
-          logo: HouseIcon,
-          plan: 'Pro',
-        },
-      ],
     },
   }}
 >
@@ -63,98 +88,27 @@ If you provide an `organizations` array, an organization switcher dropdown will 
 
 ---
 
-### 🔧 Fully Customized Layout
+### 🔧 Layout With Workspace Switcher
 
-Use `LayoutBase` and compose the structure manually when more control is needed:
+To add workspace/organization switching, wrap the layout with `WorkspacesProvider` and insert `<WorkspaceSwitch />` in the sidebar header:
 
 ```tsx
-<LayoutBase>
-  <LayoutSidebar>
-    <LayoutSidebarHeader
-      title="Your company"
-      subtitle="Your company tagline"
-      icon={<HouseIcon />}
-      organizations={[
-        {
-          name: 'Acme Inc',
-          logo: HouseIcon,
-          plan: 'Enterprise',
-        },
-        {
-          name: 'Beta Corp',
-          logo: HouseIcon,
-          plan: 'Pro',
-        },
-      ]}
-    >
-      <SidebarMenuItem>
-        <SidebarMenuButton />
-      </SidebarMenuItem>
-    </LayoutSidebarHeader>
+<WorkspacesProvider>
+  <LayoutBase>
+    <LayoutSidebar>
+      <LayoutSidebarHeader>
+        <WorkspaceSwitch />
+      </LayoutSidebarHeader>
+      <LayoutSidebarContent>{/* ...menu items... */}</LayoutSidebarContent>
+      <LayoutSidebarFooter user={/* user props */}>{/* footer items... */}</LayoutSidebarFooter>
+    </LayoutSidebar>
 
-    <LayoutSidebarContent>
-      <SidebarMenuItem>
-        <SidebarMenuButton asChild>
-          <Link to="/">
-            <LifeBuoy />
-            Support
-          </Link>
-        </SidebarMenuButton>
-      </SidebarMenuItem>
-      <SidebarMenuItem>
-        <SidebarMenuButton asChild>
-          <Link to="/">
-            <Send />
-            Feedback
-          </Link>
-        </SidebarMenuButton>
-      </SidebarMenuItem>
-    </LayoutSidebarContent>
-
-    <LayoutSidebarFooter
-      user={{
-        name: 'Hello world',
-        email: 'hello@example.com',
-        avatar: 'https://cat-avatars.vercel.app/api/cat?name=Hello%20World',
-      }}
-    >
-      <DropdownMenuGroup>
-        <DropdownMenuItem asChild>
-          <Link to="/">
-            <Sparkles />
-            Upgrade to Pro
-          </Link>
-        </DropdownMenuItem>
-      </DropdownMenuGroup>
-      <DropdownMenuSeparator />
-      <DropdownMenuGroup>
-        <DropdownMenuItem asChild>
-          <Link to="/">
-            <BadgeCheck />
-            Account
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link to="/">
-            <CreditCard />
-            Billing
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link to="/">
-            <Bell />
-            Notifications
-          </Link>
-        </DropdownMenuItem>
-      </DropdownMenuGroup>
-    </LayoutSidebarFooter>
-  </LayoutSidebar>
-
-  <SidebarInset>
-    <LayoutHeader />
-    <LayoutContent>I am content</LayoutContent>
-  </SidebarInset>
-</LayoutBase>
+    <SidebarInset>
+      <LayoutHeader />
+      <LayoutContent>I am content</LayoutContent>
+    </SidebarInset>
+  </LayoutBase>
+</WorkspacesProvider>
 ```
 
 <Canvas of={Stories.Customized} />
