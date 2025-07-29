@@ -8,7 +8,7 @@ import {
 import { SidebarInset, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
 import type { Meta, StoryFn, StoryObj } from '@storybook/react'
 import { Link } from '@tanstack/react-router'
-import { HouseIcon, LifeBuoy, Send, Sparkles } from 'lucide-react'
+import { BadgeCheck, Bell, CreditCard, HouseIcon, LifeBuoy, Send, Sparkles } from 'lucide-react'
 import { Fragment } from 'react/jsx-runtime'
 import { Layout, LayoutBase } from './Layout'
 import { LayoutContent } from './LayoutContent'
@@ -55,7 +55,7 @@ export const Default: Story = {
   },
 }
 
-const StoryContent: React.FC = () => {
+const CustomLayoutStoryContent: React.FC = () => {
   const { initializeWorkspaces } = useWorkspaces()
   useEffect(() => {
     const data: Workspace[] = [
@@ -72,7 +72,23 @@ const StoryContent: React.FC = () => {
           <WorkspaceSwitch />
         </LayoutSidebarHeader>
         <LayoutSidebarContent>
-          <SidebarInset>{/* Bottom Menu Items */}</SidebarInset>
+          {/* Bottom Menu Items */}
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <Link to="/">
+                <LifeBuoy />
+                Support
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <Link to="/">
+                <Send />
+                Feedback
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
         </LayoutSidebarContent>
         <LayoutSidebarFooter
           user={{
@@ -81,7 +97,35 @@ const StoryContent: React.FC = () => {
             avatar: 'https://cat-avatars.vercel.app/api/cat?name=Hello%20World',
           }}
         >
-          {/* footer items... */}
+          <DropdownMenuGroup>
+            <DropdownMenuItem asChild>
+              <Link to="/">
+                <Sparkles />
+                Upgrade to Pro
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>
+            <DropdownMenuItem asChild>
+              <Link to="/">
+                <BadgeCheck />
+                Account
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link to="/">
+                <CreditCard />
+                Billing
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link to="/">
+                <Bell />
+                Notifications
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
         </LayoutSidebarFooter>
       </LayoutSidebar>
       <SidebarInset>
@@ -92,12 +136,12 @@ const StoryContent: React.FC = () => {
   )
 }
 
-const Template: StoryFn = (args) => (
+const TemplateWithWorkspaceProvider: StoryFn = (args) => (
   <WorkspacesProvider>
-    <StoryContent />
+    <CustomLayoutStoryContent />
   </WorkspacesProvider>
 )
 
 export const Customized = {
-  render: Template,
+  render: TemplateWithWorkspaceProvider,
 }
