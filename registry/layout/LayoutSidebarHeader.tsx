@@ -23,7 +23,7 @@ export const LayoutSidebarHeader = ({
   return (
     <SidebarHeader>
       <SidebarMenu>
-        {title && subtitle && icon && (
+        {(title || subtitle) && (
           <SidebarMenuItem>
             <SidebarMenuButton
               size="lg"
@@ -35,8 +35,8 @@ export const LayoutSidebarHeader = ({
                   {icon ? <>{icon}</> : <Command className="size-4" />}
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{title}</span>
-                  <span className="truncate text-xs">{subtitle}</span>
+                  {title && <span className="truncate font-medium">{title}</span>}
+                  {subtitle && <span className="truncate text-xs">{subtitle}</span>}
                 </div>
               </Link>
             </SidebarMenuButton>
