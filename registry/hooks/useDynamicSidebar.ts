@@ -1,87 +1,60 @@
 import { type AnyRoute, useRouter } from '@tanstack/react-router'
-import { Home } from 'lucide-react'
 import { ReactNode } from 'react'
+
+declare module '@tanstack/react-router' {
+  interface StaticDataRouteOption {
+    title?: string
+    icon?: any
+    showInSidebar?: boolean
+  }
+}
 
 export type SidebarItem = {
   key: string
   url: string
-  icon: ReactNode
+  icon?: ReactNode
   title: ReactNode
   children: SidebarItem[]
 }
 
 const buildSidebarItems = (allFlatRoutes: AnyRoute[]): SidebarItem[] => {
-  const items: SidebarItem[] = []
-
-  const parents = allFlatRoutes.filter((route) => {
-    if (!route.fullPath) return false
-
-    // remove initial "/" and trailing "/" if present
-    const cleanPath = route.fullPath.replace(/^\/+/, '').replace(/\/+$/, '')
-
-    const segments = cleanPath.split('/')
-    return segments.length === 1 && segments[0] !== ''
+  const sidebarRoutes = allFlatRoutes.filter((route) => {
+    return route.options?.staticData?.showInSidebar
   })
 
-  // root route
-  const rootRoute = allFlatRoutes.find(
-    (route) => route.fullPath === '/' && route.options?.staticData?.showInSidebar
-  )
-  if (rootRoute && rootRoute.options?.staticData) {
-    items.push({
-      key: 'root',
-      url: '/',
-      icon: rootRoute.options.staticData.icon || Home,
-      title: rootRoute.options.staticData.title || 'Home',
-      children: [],
-    })
+  return getSidebarItemsForParent(sidebarRoutes)
+}
+
+const getSidebarItemsForParent = (flatRoutes: AnyRoute[], parentFullPath = '/'): SidebarItem[] => {
+  const fullPaths = flatRoutes.map((r) => r.fullPath)
+  const validFullPaths = fullPaths.filter((p) => {
+    return p.startsWith(parentFullPath) && p !== parentFullPath
+  })
+  if (validFullPaths.length === 0) {
+    return []
   }
-
-  parents.forEach((parentRoute) => {
-    if (!parentRoute.options?.staticData?.showInSidebar) return
-
-    const parentPath = parentRoute.fullPath
-    const parentStaticData = parentRoute.options.staticData
-
-    const parentItem: SidebarItem = {
-      key: parentPath,
-      url: parentPath,
-      icon: parentStaticData.icon || Home,
-      title: parentStaticData.title || 'untitled',
-      children: [],
-    }
-
-    const childRoutes = allFlatRoutes.filter((route) => {
-      if (!route.fullPath || !route.options?.staticData?.showInSidebar) return false
-      if (route.fullPath === parentPath) return false // skip the parent itself
-      if (route.fullPath.includes('$')) return false // skip dynamic routes
-
-      // check if this route is a child of the current parent
-      const cleanPath = route.fullPath.replace(/^\/+/, '').replace(/\/+$/, '')
-      const segments = cleanPath.split('/')
-
-      // child routes should have more than 1 segment and start with the parent segment
-      return (
-        segments.length > 1 && segments[0] === parentPath.replace(/^\/+/, '').replace(/\/+$/, '')
-      )
+  const validClosestPaths = validFullPaths.filter((p) => {
+    return !validFullPaths.some((other) => {
+      return other !== p && p.startsWith(other)
     })
-
-    childRoutes.forEach((childRoute) => {
-      if (childRoute.options?.staticData) {
-        parentItem.children.push({
-          key: childRoute.fullPath,
-          url: childRoute.fullPath,
-          icon: childRoute.options.staticData.icon || Home,
-          title: childRoute.options.staticData.title || 'untitled',
-          children: [],
-        })
-      }
-    })
-
-    items.push(parentItem)
   })
+  const closestRoutes = validClosestPaths
+    .map((r) => {
+      return flatRoutes.find((route) => route.fullPath === r)
+    })
+    .filter(Boolean) as AnyRoute[]
 
-  return items
+  return [
+    ...closestRoutes.map((r) => {
+      return {
+        key: r.fullPath,
+        url: r.fullPath,
+        icon: r.options?.staticData?.icon,
+        title: r.options?.staticData?.title || 'untitled',
+        children: getSidebarItemsForParent(flatRoutes, r.fullPath),
+      }
+    }),
+  ]
 }
 
 export const useDynamicSidebar = (): SidebarItem[] => {
