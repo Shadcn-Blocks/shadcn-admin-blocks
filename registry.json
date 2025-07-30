@@ -27,6 +27,8 @@
         { "path": "registry/layout/LayoutSidebarFooter.tsx", "type": "registry:component" },
         { "path": "registry/layout/LayoutSidebarHeader.tsx", "type": "registry:component" },
         { "path": "registry/layout/LayoutUserDropdown.tsx", "type": "registry:component" },
+        { "path": "registry/components/WorkspaceContext.tsx", "type": "registry:component" },
+        { "path": "registry/components/WorkspaceSwitch.tsx", "type": "registry:component" },
         { "path": "registry/hooks/useDynamicSidebar.ts", "type": "registry:hook" },
         { "path": "registry/hooks/useTranslation.ts", "type": "registry:hook" }
       ]
