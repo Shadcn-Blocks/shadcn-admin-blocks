@@ -1,7 +1,7 @@
 'use client'
 
 import { SidebarFooter, SidebarMenu, SidebarMenuItem } from '@/components/ui/sidebar'
-import { PropsWithChildren, use } from 'react'
+import { PropsWithChildren } from 'react'
 import { LayoutUserDropdown, LayoutUserDropdownProps } from './LayoutUserDropdown'
 
 export interface LayoutSidebarFooterProps extends LayoutUserDropdownProps {}
