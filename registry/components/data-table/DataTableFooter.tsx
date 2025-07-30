@@ -3,7 +3,7 @@
 import { DataTablePageSwitcher } from '@/components/data-table/DataTablePageSwitcher'
 import { DataTablePagination } from '@/components/data-table/DataTablePagination'
 
-export function DataTableFooter<TData>() {
+export function DataTableFooter() {
   return (
     <div className="flex items-center justify-between px-2 text-sm">
       <DataTablePagination />
