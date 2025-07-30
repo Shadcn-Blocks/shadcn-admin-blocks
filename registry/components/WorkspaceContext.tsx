@@ -16,18 +16,21 @@ interface WorkspacesProviderProps {
   children: ReactNode
   /** Initial list of workspaces to load */
   workspaces?: Workspace[]
+  onWorkspaceChange?: (workspace: Workspace) => void
 }
 
 const WorkspacesContext = createContext<WorkspacesContextValue | undefined>(undefined)
 
 export const WorkspacesProvider: FC<WorkspacesProviderProps> = ({
   children,
+  onWorkspaceChange = () => {},
   workspaces = [],
 }) => {
   const [activeWorkspace, setActiveWorkspace] = useState<Workspace | null>(workspaces[0] ?? null)
 
   const switchWorkspace = useCallback((workspace: Workspace) => {
     setActiveWorkspace(workspace)
+    onWorkspaceChange(workspace)
   }, [])
 
   return (
