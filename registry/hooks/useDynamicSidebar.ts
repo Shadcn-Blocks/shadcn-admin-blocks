@@ -26,7 +26,7 @@ const buildSidebarItems = (allFlatRoutes: AnyRoute[]): SidebarItem[] => {
 }
 
 const getSidebarItemsForParent = (flatRoutes: AnyRoute[], parentFullPath = '/'): SidebarItem[] => {
-  const fullPaths = flatRoutes.map((r) => r.fullPath)
+  const fullPaths = flatRoutes.map((r) => r.fullPath).filter((p): p is string => typeof p === 'string')
   const validFullPaths = fullPaths.filter((p) => {
     return p.startsWith(parentFullPath) && p !== parentFullPath
   })
