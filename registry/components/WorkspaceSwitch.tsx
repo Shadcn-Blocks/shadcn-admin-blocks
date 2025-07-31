@@ -6,18 +6,37 @@ import {
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuItem,
-  DropdownMenuShortcut,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
 import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar'
 import { useWorkspaces, Workspace } from '@/components/WorkspaceContext'
 import { useTranslation } from 'react-i18next'
 
-export const WorkspaceSwitch: React.FC = () => {
+interface WorkspaceSwitchProps {
+  onAddWorkspace?: () => void
+}
+
+export const WorkspaceSwitch: React.FC<WorkspaceSwitchProps> = ({ onAddWorkspace }) => {
   const { workspaces, activeWorkspace, switchWorkspace } = useWorkspaces()
   const { t } = useTranslation()
 
   if (!activeWorkspace) return null
+
+  const handleWorkspaceSwitch = (workspace: Workspace) => {
+    // Only switch if it's different from current active workspace
+    if (workspace.id !== activeWorkspace.id) {
+      switchWorkspace(workspace)
+    }
+  }
+
+  const handleAddWorkspace = () => {
+    if (onAddWorkspace) {
+      onAddWorkspace()
+    } else {
+      // Default behavior - you might want to navigate to a create workspace page
+      console.log('Add workspace clicked - no handler provided')
+    }
+  }
 
   return (
     <SidebarMenu>
@@ -38,7 +57,6 @@ export const WorkspaceSwitch: React.FC = () => {
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
-
           <DropdownMenuContent
             className="w-[var(--radix-dropdown-menu-trigger-width)] min-w-56 rounded-lg"
             align="start"
@@ -49,19 +67,25 @@ export const WorkspaceSwitch: React.FC = () => {
             </DropdownMenuLabel>
             {workspaces.map((ws: Workspace, i: number) => (
               <DropdownMenuItem
-                key={ws.name}
-                onClick={() => switchWorkspace(ws)}
-                className="gap-2 p-2"
+                key={ws.id} // Use id instead of name for better uniqueness
+                onClick={() => handleWorkspaceSwitch(ws)}
+                className={`gap-2 p-2 ${
+                  ws.id === activeWorkspace.id ? 'bg-accent text-accent-foreground' : ''
+                }`}
               >
                 <div className="flex size-6 items-center justify-center rounded-md border">
                   <ws.logo className="size-3.5 shrink-0" />
                 </div>
                 {ws.name}
-                <DropdownMenuShortcut>⌘{i + 1}</DropdownMenuShortcut>
+                {ws.id === activeWorkspace.id && (
+                  <span className="ml-auto text-xs text-muted-foreground">
+                    {t('workspaceSwitch.current', { defaultValue: 'Current' })}
+                  </span>
+                )}
               </DropdownMenuItem>
             ))}
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="gap-2 p-2">
+            <DropdownMenuItem className="gap-2 p-2" onClick={handleAddWorkspace}>
               <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
                 <Plus className="size-4" />
               </div>
