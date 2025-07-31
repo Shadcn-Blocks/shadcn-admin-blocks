@@ -10,7 +10,7 @@ declare module '@tanstack/react-router' {
 
 export const LayoutContent = ({ children }: PropsWithChildren) => {
   const matches = useMatches()
-  const currentMatch = matches[matches.length - 1]
+  const currentMatch = matches.length > 0 ? matches[matches.length - 1] : undefined
   const staticData = currentMatch?.staticData
   return (
     <div className={cn('flex flex-1 flex-col gap-4', !staticData?.noLayoutContentPadding && 'p-4')}>
