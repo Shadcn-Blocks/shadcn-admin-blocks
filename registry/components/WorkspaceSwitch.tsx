@@ -65,7 +65,7 @@ export const WorkspaceSwitch: React.FC<WorkspaceSwitchProps> = ({ onAddWorkspace
             <DropdownMenuLabel className="text-muted-foreground text-xs">
               {t('workspaceSwitch.label')}
             </DropdownMenuLabel>
-            {workspaces.map((ws: Workspace, i: number) => (
+            {workspaces.map((ws: Workspace) => (
               <DropdownMenuItem
                 key={ws.id} // Use id instead of name for better uniqueness
                 onClick={() => handleWorkspaceSwitch(ws)}

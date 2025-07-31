@@ -21,6 +21,7 @@ export default [
         tsconfigRootDir: __dirname,
       },
       globals: {
+        React: 'readonly',
         ...globals.browser,
         ...globals.node,
       },

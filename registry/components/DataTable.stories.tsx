@@ -38,8 +38,8 @@ const emails = [
 const data: Payment[] = Array.from({ length: 123 }, (_, i) => ({
   id: `id${i + 1}`,
   amount: Math.floor(Math.random() * 1000) + 100,
-  status: statuses[i % statuses.length],
-  email: emails[i % emails.length],
+  status: statuses[i % statuses.length] ?? 'pending',
+  email: emails[i % emails.length] ?? 'unknown@example.com',
 }))
 
 type Payment = {
@@ -71,7 +71,7 @@ const columns: DataTableColumn<Payment, any>[] = [
         <Button variant="ghost">Actions</Button>
       </div>
     ),
-    cell: ({ row }) => {
+    cell: () => {
       return (
         <div className="text-center space-x-2">
           <Button variant={'outline'} size={'icon'}>
