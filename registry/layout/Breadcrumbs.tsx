@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { Suspense, useMemo } from 'react'
 import { isMatch, Link, useMatches } from '@tanstack/react-router'
 import {
   Breadcrumb,
@@ -6,6 +6,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
+import { Skeleton } from '@/components/ui/skeleton'
 
 declare module '@tanstack/react-router' {
   interface StaticDataRouteOption {
@@ -15,7 +16,6 @@ declare module '@tanstack/react-router' {
 }
 
 export const Breadcrumbs = () => {
-  // const router = useRouter()
   const matches = useMatches()
 
   const items = useMemo(() => {
@@ -25,22 +25,37 @@ export const Breadcrumbs = () => {
       href: pathname,
       label: staticData.crumb,
       isClickable: staticData.hasClickableBreadcrumb,
-    }))
+    })) as BreadcrumbsItem[]
   }, [matches])
 
+  return <BreadcrumbsBase items={items} />
+}
+
+type BreadcrumbsItem = {
+  href: string
+  label: React.ReactNode
+  isClickable: boolean
+}
+interface BreadcrumbsBaseProps {
+  items: BreadcrumbsItem[]
+}
+
+export const BreadcrumbsBase = ({ items }: BreadcrumbsBaseProps) => {
   return (
     <Breadcrumb>
       <BreadcrumbList>
         {items.map((item, index) => (
           <React.Fragment key={index}>
             <BreadcrumbItem key={index}>
-              {item.isClickable ? (
-                <Link to={item.href} className="breadcrumb-link">
-                  {item.label}
-                </Link>
-              ) : (
-                <span className="breadcrumb-link">{item.label}</span>
-              )}
+              <Suspense fallback={<Skeleton className="h-4 w-32" />}>
+                {item.isClickable ? (
+                  <Link to={item.href} className="breadcrumb-link">
+                    {item.label}
+                  </Link>
+                ) : (
+                  <span className="breadcrumb-link">{item.label}</span>
+                )}
+              </Suspense>
             </BreadcrumbItem>
             {index < items.length - 1 && <BreadcrumbSeparator />}
           </React.Fragment>
