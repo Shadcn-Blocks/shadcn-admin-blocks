@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "storybook": "storybook dev",
-    "lint": "eslint .",
+    "lint": "eslint registry --max-warnings=0",
     "format": "prettier --write .",
     "build-storybook": "storybook build",
     "build-registry": "shadcn build",
