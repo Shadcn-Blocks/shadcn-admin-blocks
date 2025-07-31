@@ -40,7 +40,7 @@
     },
     {
       "path": "registry/components/data-table/DataTableFooter.tsx",
-      "content": "'use client'\n\nimport { DataTablePageSwitcher } from '@/components/data-table/DataTablePageSwitcher'\nimport { DataTablePagination } from '@/components/data-table/DataTablePagination'\n\nexport function DataTableFooter<TData>() {\n  return (\n    <div className=\"flex items-center justify-between px-2 text-sm\">\n      <DataTablePagination />\n      <div className=\"flex items-center space-x-6 lg:space-x-8\">\n        <div className=\"flex items-center space-x-2\">\n          <DataTablePageSwitcher />\n        </div>\n      </div>\n    </div>\n  )\n}\n",
+      "content": "'use client'\n\nimport { DataTablePageSwitcher } from '@/components/data-table/DataTablePageSwitcher'\nimport { DataTablePagination } from '@/components/data-table/DataTablePagination'\n\nexport function DataTableFooter() {\n  return (\n    <div className=\"flex items-center justify-between px-2 text-sm\">\n      <DataTablePagination />\n      <div className=\"flex items-center space-x-6 lg:space-x-8\">\n        <div className=\"flex items-center space-x-2\">\n          <DataTablePageSwitcher />\n        </div>\n      </div>\n    </div>\n  )\n}\n",
       "type": "registry:component"
     },
     {
