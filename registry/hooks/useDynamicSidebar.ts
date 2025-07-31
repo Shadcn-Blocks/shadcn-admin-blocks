@@ -4,7 +4,7 @@ import { ReactNode } from 'react'
 declare module '@tanstack/react-router' {
   interface StaticDataRouteOption {
     title?: string
-    icon?: any
+    icon?: ReactNode
     showInSidebar?: boolean
   }
 }
