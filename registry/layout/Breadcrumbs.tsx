@@ -21,10 +21,10 @@ export const Breadcrumbs = () => {
   const items = useMemo(() => {
     const matchesWithCrumbs = matches.filter((match) => isMatch(match, 'staticData.crumb'))
 
-    return matchesWithCrumbs.map(({ pathname, staticData }) => ({
+    return matchesWithCrumbs.map(({ pathname, staticData }, index) => ({
       href: pathname,
       label: staticData.crumb,
-      isClickable: staticData.hasClickableBreadcrumb,
+      isClickable: staticData.hasClickableBreadcrumb ?? matchesWithCrumbs.length > index + 1,
     })) as BreadcrumbsItem[]
   }, [matches])
 
