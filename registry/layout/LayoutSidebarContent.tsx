@@ -67,7 +67,11 @@ const CollapsibleSidebarItem = ({ item }: { item: SidebarItem }) => {
               <Link to={child.url} key={child.url}>
                 {({ isActive }) => (
                   <SidebarMenuSubItem>
-                    <SidebarMenuSubButton asChild isActive={isActive}>
+                    <SidebarMenuSubButton 
+                      asChild 
+                      isActive={isActive}
+                      className="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground"
+                    >
                       <span className="font-inherit">{child.title}</span>
                     </SidebarMenuSubButton>
                   </SidebarMenuSubItem>
@@ -90,7 +94,11 @@ const SidebarItemComponent = ({ item }: { item: SidebarItem }) => {
     <Link to={item.url} key={item.url}>
       {({ isActive }) => (
         <SidebarMenuItem key={item.key}>
-          <SidebarMenuButton asChild isActive={isActive}>
+          <SidebarMenuButton 
+            asChild 
+            isActive={isActive}
+            className="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground"
+          >
             <span>
               {item.icon}
               <span>{item.title}</span>
