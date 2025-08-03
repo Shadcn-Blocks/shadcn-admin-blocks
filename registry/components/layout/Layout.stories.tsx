@@ -15,8 +15,8 @@ import { LayoutSidebar } from './LayoutSidebar'
 import { LayoutSidebarContent } from './LayoutSidebarContent'
 import { LayoutSidebarFooter } from './LayoutSidebarFooter'
 import { LayoutSidebarHeader } from './LayoutSidebarHeader'
-import { Workspace, WorkspacesProvider } from '@/components/WorkspaceContext'
-import { WorkspaceSwitch } from '@/components/WorkspaceSwitch'
+import { Workspace, WorkspacesProvider } from './WorkspaceContext'
+import { WorkspaceSwitch } from './WorkspaceSwitch'
 import { FC } from 'react'
 
 const meta: Meta<typeof Fragment> = {

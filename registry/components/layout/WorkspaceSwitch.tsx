@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
 import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar'
-import { useWorkspaces, Workspace } from '@/components/WorkspaceContext'
+import { useWorkspaces, Workspace } from '@/components/layout/WorkspaceContext'
 import { useTranslation } from 'react-i18next'
 
 interface WorkspaceSwitchProps {
