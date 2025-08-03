@@ -4,8 +4,8 @@ import { LayoutSidebarHeader } from './LayoutSidebarHeader'
 import { Layout, LayoutBase } from './Layout'
 import { LifeBuoy } from 'lucide-react'
 import { LayoutSidebar } from './LayoutSidebar'
-import { WorkspacesProvider } from '@/components/WorkspaceContext'
-import { WorkspaceSwitch } from '@/components/WorkspaceSwitch'
+import { WorkspacesProvider } from './WorkspaceContext'
+import { WorkspaceSwitch } from './WorkspaceSwitch'
 
 const meta: Meta<typeof Fragment> = {
   component: Fragment,

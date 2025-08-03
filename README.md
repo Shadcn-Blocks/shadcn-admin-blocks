@@ -23,7 +23,7 @@ Update your `src/routes/__root.tsx` file as follows:
 ```tsx
 import { Outlet, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
-import { Layout } from '@/components/Layout'
+import { Layout } from '@/components/layout/Layout'
 
 export const Route = createRootRoute({
   component: () => (

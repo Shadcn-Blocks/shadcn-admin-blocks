@@ -54,7 +54,7 @@ export const WorkspacesProvider: FC<WorkspacesProviderProps> = ({
       }
     } else if (workspaces.length > 0 && !activeWorkspace) {
       // Set first workspace if no active workspace and workspaces are available
-      setActiveWorkspace(workspaces[0])
+      setActiveWorkspace(workspaces[0] ?? null)
     }
   }, [selectedWorkspaceId, workspaces, activeWorkspace])
 

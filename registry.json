@@ -19,17 +19,17 @@
       ],
       "dependencies": ["react-i18next"],
       "files": [
-        { "path": "registry/layout/Breadcrumbs.tsx", "type": "registry:component" },
-        { "path": "registry/layout/Layout.tsx", "type": "registry:component" },
-        { "path": "registry/layout/LayoutContent.tsx", "type": "registry:component" },
-        { "path": "registry/layout/LayoutHeader.tsx", "type": "registry:component" },
-        { "path": "registry/layout/LayoutSidebar.tsx", "type": "registry:component" },
-        { "path": "registry/layout/LayoutSidebarContent.tsx", "type": "registry:component" },
-        { "path": "registry/layout/LayoutSidebarFooter.tsx", "type": "registry:component" },
-        { "path": "registry/layout/LayoutSidebarHeader.tsx", "type": "registry:component" },
-        { "path": "registry/layout/LayoutUserDropdown.tsx", "type": "registry:component" },
-        { "path": "registry/components/WorkspaceContext.tsx", "type": "registry:component" },
-        { "path": "registry/components/WorkspaceSwitch.tsx", "type": "registry:component" },
+        { "path": "registry/components/layout/Breadcrumbs.tsx", "type": "registry:component" },
+        { "path": "registry/components/layout/Layout.tsx", "type": "registry:component" },
+        { "path": "registry/components/layout/LayoutContent.tsx", "type": "registry:component" },
+        { "path": "registry/components/layout/LayoutHeader.tsx", "type": "registry:component" },
+        { "path": "registry/components/layout/LayoutSidebar.tsx", "type": "registry:component" },
+        { "path": "registry/components/layout/LayoutSidebarContent.tsx", "type": "registry:component" },
+        { "path": "registry/components/layout/LayoutSidebarFooter.tsx", "type": "registry:component" },
+        { "path": "registry/components/layout/LayoutSidebarHeader.tsx", "type": "registry:component" },
+        { "path": "registry/components/layout/LayoutUserDropdown.tsx", "type": "registry:component" },
+        { "path": "registry/components/layout/WorkspaceContext.tsx", "type": "registry:component" },
+        { "path": "registry/components/layout/WorkspaceSwitch.tsx", "type": "registry:component" },
         { "path": "registry/hooks/useDynamicSidebar.ts", "type": "registry:hook" },
         { "path": "registry/hooks/useTranslation.ts", "type": "registry:hook" }
       ]
@@ -49,7 +49,7 @@
       ],
       "devDependencies": ["@types/numeral", "@types/sql.js"],
       "files": [
-        { "path": "registry/components/DataTable.tsx", "type": "registry:component" },
+        { "path": "registry/components/data-table/DataTable.tsx", "type": "registry:component" },
         {
           "path": "registry/components/data-table/DataTableColumn.tsx",
           "type": "registry:component"
