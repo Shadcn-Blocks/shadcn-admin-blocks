@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils'
 import { useMatches } from '@tanstack/react-router'
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, Suspense } from 'react'
+import { LoadingOverlay } from './LoadingOverlay'
 
 declare module '@tanstack/react-router' {
   interface StaticDataRouteOption {
@@ -14,7 +15,7 @@ export const LayoutContent = ({ children }: PropsWithChildren) => {
   const staticData = currentMatch?.staticData
   return (
     <div className={cn('flex flex-1 flex-col gap-4', !staticData?.noLayoutContentPadding && 'p-4')}>
-      {children}
+      <Suspense fallback={<LoadingOverlay />}>{children}</Suspense>
     </div>
   )
 }
