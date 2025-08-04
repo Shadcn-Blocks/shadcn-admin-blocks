@@ -24,11 +24,26 @@
         { "path": "registry/components/layout/LayoutContent.tsx", "type": "registry:component" },
         { "path": "registry/components/layout/LayoutHeader.tsx", "type": "registry:component" },
         { "path": "registry/components/layout/LayoutSidebar.tsx", "type": "registry:component" },
-        { "path": "registry/components/layout/LayoutSidebarContent.tsx", "type": "registry:component" },
-        { "path": "registry/components/layout/LayoutSidebarFooter.tsx", "type": "registry:component" },
-        { "path": "registry/components/layout/LayoutSidebarHeader.tsx", "type": "registry:component" },
-        { "path": "registry/components/layout/LayoutUserDropdown.tsx", "type": "registry:component" },
-        { "path": "registry/components/layout/LayoutUserDropdown.tsx", "type": "registry:component" },
+        {
+          "path": "registry/components/layout/LayoutSidebarContent.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/components/layout/LayoutSidebarFooter.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/components/layout/LayoutSidebarHeader.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/components/layout/LayoutUserDropdown.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/components/layout/LayoutUserDropdown.tsx",
+          "type": "registry:component"
+        },
         { "path": "registry/components/layout/LoadingOverlay.tsx", "type": "registry:component" },
         { "path": "registry/components/layout/LoadingSpinner.tsx", "type": "registry:component" },
         { "path": "registry/components/layout/WorkspaceContext.tsx", "type": "registry:component" },
@@ -86,6 +101,37 @@
         { "path": "registry/lib/data-sources/index.ts", "type": "registry:lib" },
         { "path": "registry/lib/data-sources/static-database.ts", "type": "registry:lib" },
         { "path": "registry/lib/data-sources/StaticDataSource.ts", "type": "registry:lib" }
+      ]
+    },
+    {
+      "name": "Form",
+      "type": "registry:block",
+      "title": "Form",
+      "description": "Enhanced form field components that wrap the entire shadcn/ui FormField pattern into single, easy-to-use components. Dramatically reduces boilerplate while maintaining full React Hook Form compatibility.",
+      "registryDependencies": [
+        "button",
+        "input",
+        "label",
+        "select",
+        "checkbox",
+        "textarea",
+        "form",
+        "calendar",
+        "popover"
+      ],
+      "dependencies": ["react-hook-form", "@hookform/resolvers", "zod", "date-fns", "lucide-react"],
+      "files": [
+        { "path": "registry/components/form/FormFieldWrapper.tsx", "type": "registry:component" },
+        { "path": "registry/components/form/Form.tsx", "type": "registry:component" },
+        { "path": "registry/components/form/FormSubmitButton.tsx", "type": "registry:component" },
+        { "path": "registry/components/form/FormFieldInput.tsx", "type": "registry:component" },
+        { "path": "registry/components/form/FormFieldTextarea.tsx", "type": "registry:component" },
+        { "path": "registry/components/form/FormFieldSelect.tsx", "type": "registry:component" },
+        { "path": "registry/components/form/FormFieldCheckbox.tsx", "type": "registry:component" },
+        { "path": "registry/components/form/FormFieldDatePicker.tsx", "type": "registry:component" },
+        { "path": "registry/components/form/FormDatePicker.tsx", "type": "registry:component" },
+        { "path": "registry/components/form/date-utils.ts", "type": "registry:lib" },
+        { "path": "registry/components/form/index.ts", "type": "registry:lib" }
       ]
     }
   ]

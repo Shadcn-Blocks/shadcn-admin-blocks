@@ -70,7 +70,7 @@
     },
     {
       "path": "registry/lib/data-sources/DataSource.ts",
-      "content": "import { ISequelizable, ISerializable } from \"@jakub.knejzlik/ts-query\";\n\nexport interface DataSource {\n  execute: (query: ISequelizable & ISerializable) => Promise<any>;\n  executeQueries: (\n    queries: Array<ISequelizable & ISerializable>\n  ) => Promise<any>;\n}\n",
+      "content": "import { ISequelizable, ISerializable } from '@jakub.knejzlik/ts-query'\n\nexport interface DataSource {\n  execute: (query: ISequelizable & ISerializable) => Promise<any>\n  executeQueries: (queries: Array<ISequelizable & ISerializable>) => Promise<any>\n}\n",
       "type": "registry:lib"
     },
     {
