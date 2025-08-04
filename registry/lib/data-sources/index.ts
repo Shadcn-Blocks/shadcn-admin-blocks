@@ -1,1 +1,1 @@
-export { StaticDataSource } from './StaticDataSource'
+export { StaticDataSource } from '@/lib/data-sources/StaticDataSource'

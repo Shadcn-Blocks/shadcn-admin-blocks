@@ -1,12 +1,11 @@
 import initSqlJs, { Database, QueryExecResult } from 'sql.js'
-// import { Resource } from './models/Resource';
 import { ISequelizable, SQLiteFlavor } from '@jakub.knejzlik/ts-query'
 import {
   StaticDatabaseMetadata,
   StaticDatabaseMetadataTable,
   createDatabaseMetadata,
   transformValueForDataType,
-} from './database-metadata'
+} from '@/lib/data-sources/database-metadata'
 
 export type StaticDataType =
   | 'TEXT'

@@ -1,11 +1,11 @@
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 import { PropsWithChildren } from 'react'
-import { LayoutHeader } from './LayoutHeader'
-import { LayoutSidebar } from './LayoutSidebar'
-import { LayoutSidebarFooter, LayoutSidebarFooterProps } from './LayoutSidebarFooter'
-import { LayoutSidebarHeader, LayoutSidebarHeaderProps } from './LayoutSidebarHeader'
-import { LayoutSidebarContent } from './LayoutSidebarContent'
-import { LayoutContent } from './LayoutContent'
+import { LayoutHeader } from '@/components/layout/LayoutHeader'
+import { LayoutSidebar } from '@/components/layout/LayoutSidebar'
+import { LayoutSidebarFooter, LayoutSidebarFooterProps } from '@/components/layout/LayoutSidebarFooter'
+import { LayoutSidebarHeader, LayoutSidebarHeaderProps } from '@/components/layout/LayoutSidebarHeader'
+import { LayoutSidebarContent } from '@/components/layout/LayoutSidebarContent'
+import { LayoutContent } from '@/components/layout/LayoutContent'
 
 interface LayoutBaseProps {}
 

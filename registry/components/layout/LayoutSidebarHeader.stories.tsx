@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Fragment } from 'react'
-import { LayoutSidebarHeader } from './LayoutSidebarHeader'
-import { Layout, LayoutBase } from './Layout'
+import { LayoutSidebarHeader } from '@/components/layout/LayoutSidebarHeader'
+import { Layout, LayoutBase } from '@/components/layout/Layout'
 import { LifeBuoy } from 'lucide-react'
-import { LayoutSidebar } from './LayoutSidebar'
-import { WorkspacesProvider } from './WorkspaceContext'
-import { WorkspaceSwitch } from './WorkspaceSwitch'
+import { LayoutSidebar } from '@/components/layout/LayoutSidebar'
+import { WorkspacesProvider } from '@/components/layout/WorkspaceContext'
+import { WorkspaceSwitch } from '@/components/layout/WorkspaceSwitch'
 
 const meta: Meta<typeof Fragment> = {
   component: Fragment,

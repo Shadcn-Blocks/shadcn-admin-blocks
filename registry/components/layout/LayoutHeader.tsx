@@ -1,7 +1,7 @@
 import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 import { PropsWithChildren } from 'react'
-import { Breadcrumbs } from './Breadcrumbs'
+import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 
 export const LayoutHeader = ({ children }: PropsWithChildren) => {
   return (

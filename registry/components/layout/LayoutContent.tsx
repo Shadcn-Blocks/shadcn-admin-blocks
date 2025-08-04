@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import { useMatches } from '@tanstack/react-router'
 import { PropsWithChildren, Suspense } from 'react'
-import { LoadingOverlay } from './LoadingOverlay'
+import { LoadingOverlay } from '@/components/layout/LoadingOverlay'
 
 declare module '@tanstack/react-router' {
   interface StaticDataRouteOption {

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { Fragment } from 'react/jsx-runtime'
-import { BreadcrumbsBase } from './Breadcrumbs'
+import { BreadcrumbsBase } from '@/components/layout/Breadcrumbs'
 
 const meta: Meta<typeof Fragment> = {
   component: Fragment,

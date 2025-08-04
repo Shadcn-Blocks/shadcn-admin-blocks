@@ -1,4 +1,4 @@
-import { LoadingSpinner } from './LoadingSpinner'
+import { LoadingSpinner } from '@/components/layout/LoadingSpinner'
 
 interface LoadingOverlayProps {
   visible?: boolean

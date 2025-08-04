@@ -1,12 +1,12 @@
 import { ISequelizable, ISerializable } from '@jakub.knejzlik/ts-query'
-import { StaticDatabase } from './database-metadata'
-import { DataSource } from './DataSource'
+import { StaticDatabase } from '@/lib/data-sources/database-metadata'
+import { DataSource } from '@/lib/data-sources/DataSource'
 import {
   createDatabaseDatabaseOpts,
   createStaticDatabase,
   executeQueries,
   StaticDataTables,
-} from './static-database'
+} from '@/lib/data-sources/static-database'
 
 export class StaticDataSource implements DataSource {
   private db: Promise<StaticDatabase>
