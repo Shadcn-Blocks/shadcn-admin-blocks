@@ -47,8 +47,8 @@ export const createDatabaseMetadata = ({
     tables: Object.keys(tables).reduce(
       (result, tableName) => {
         result[tableName] = {
-          columns: Object.keys(tables[tableName][0]).map((col, i) => {
-            const type = dataTypeForColumn(col, tables[tableName], enforcePrimaryID ?? false)
+          columns: Object.keys(tables[tableName]?.[0] ?? {}).map((col, i) => {
+            const type = dataTypeForColumn(col, tables[tableName] ?? [], enforcePrimaryID ?? false)
             return {
               name:
                 col
