@@ -1,0 +1,49 @@
+# Deploy Storybook previews for pull requests
+name: Deploy PR Preview
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+
+# Prevent multiple concurrent deployments for the same PR
+concurrency: preview-${{ github.ref }}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  pull-requests: write
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.2.0'
+        if: github.event.action != 'closed'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+        if: github.event.action != 'closed'
+
+      - name: Install dependencies
+        run: pnpm install
+        if: github.event.action != 'closed'
+
+      - name: Build Storybook
+        run: pnpm build-storybook
+        if: github.event.action != 'closed'
+
+      - name: Deploy PR Preview
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: storybook-static
+          preview-branch: gh-pages
+          umbrella-dir: pr-preview
