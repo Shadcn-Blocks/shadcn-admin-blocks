@@ -7,6 +7,100 @@ import { Meta } from '@storybook/blocks'
 Get up and running with shadcn Admin Blocks in your project. This guide will walk you through
 installation, setup, and basic usage patterns.
 
+<div className="mb-8 p-6 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg">
+  <h2 className="text-xl font-semibold mb-2">Choose Your Starting Point</h2>
+  <div className="grid md:grid-cols-3 gap-4 mt-4">
+    <div className="p-4 bg-background border rounded">
+      <h3 className="font-semibold">🚀 Quick Start</h3>
+      <p className="text-sm text-muted-foreground mt-1 mb-3">
+        Get a working layout in 2 minutes
+      </p>
+      <a href="#quick-start" className="text-primary text-sm underline">Start here →</a>
+    </div>
+    
+    <div className="p-4 bg-background border rounded">
+      <h3 className="font-semibold">📊 With DataTable</h3>
+      <p className="text-sm text-muted-foreground mt-1 mb-3">
+        Add powerful data tables
+      </p>
+      <a href="#datatable-setup" className="text-primary text-sm underline">Add tables →</a>
+    </div>
+    
+    <div className="p-4 bg-background border rounded">
+      <h3 className="font-semibold">📝 Complete Setup</h3>
+      <p className="text-sm text-muted-foreground mt-1 mb-3">
+        Full installation with forms
+      </p>
+      <a href="#complete-setup" className="text-primary text-sm underline">Full setup →</a>
+    </div>
+  </div>
+</div>
+
+## 🚀 Quick Start (2 minutes)
+
+**Goal:** Get a working admin layout with minimal setup.
+
+### Step 1: Install Basic Dependencies
+```bash
+# Essential shadcn/ui components (copy all at once)
+npx shadcn add button sidebar breadcrumb avatar separator
+```
+
+### Step 2: Add Layout System
+```bash
+npx shadcn add https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/Layout.json
+```
+
+### Step 3: Use It
+```tsx
+import { Layout } from '@/components/layout/Layout'
+
+export function App() {
+  return (
+    <Layout sidebar={{ 
+      header: { title: 'My App' },
+      footer: { user: { name: 'John', email: 'john@example.com' }}
+    }}>
+      <div className="p-6">
+        <h1>Welcome to your admin panel!</h1>
+      </div>
+    </Layout>
+  )
+}
+```
+
+<div className="mt-4 p-4 bg-green-50 border border-green-200 rounded">
+  <strong>✅ Done!</strong> You now have a responsive admin layout. 
+  <a href="/?path=/story/layout-layout--default" className="text-primary underline ml-1">See it in action</a>
+</div>
+
+---
+
+## 📊 DataTable Setup
+
+**Goal:** Add data tables to your existing layout.
+
+### Prerequisites
+- Completed Quick Start above
+- Have some data to display
+
+### Additional Dependencies
+```bash
+npm install @tanstack/react-table @tanstack/react-query
+npm install @jakub.knejzlik/ts-query
+```
+
+### Install DataTable
+```bash
+npx shadcn add https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/DataTable.json
+```
+
+---
+
+## 📝 Complete Setup
+
+**Goal:** Full installation with all components.
+
 ## Prerequisites
 
 Before installing shadcn Admin Blocks, ensure your project has:
@@ -249,6 +343,57 @@ Ensure your `tsconfig.json` includes:
     <li>Join our community for support and updates</li>
   </ul>
 </div>
+
+## Common Issues & Solutions
+
+### ❌ "Cannot resolve @/components/layout/Layout"
+
+**Problem:** TypeScript can't find the component after installation.
+
+**Solution:** Ensure your `tsconfig.json` has the correct path mapping:
+```json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]  // or your source directory
+    }
+  }
+}
+```
+
+### ❌ Styling looks broken or unstyled
+
+**Problem:** Tailwind CSS classes aren't being applied.
+
+**Solutions:**
+1. Ensure Tailwind is installed and configured
+2. Add to your `tailwind.config.js`:
+```js
+module.exports = {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    // Add this if components are copied to a different directory
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+}
+```
+
+### ❌ "Module not found" errors for dependencies
+
+**Problem:** Missing npm packages for specific components.
+
+**Solution:** Install the required dependencies based on which components you're using:
+```bash
+# For Layout components
+npm install react-i18next
+
+# For DataTable components  
+npm install @tanstack/react-table @tanstack/react-query @jakub.knejzlik/ts-query
+
+# For Form components
+npm install react-hook-form @hookform/resolvers zod date-fns
+```
 
 <div className="mt-8 p-6 border border-primary/20 rounded-lg">
   <h3 className="font-semibold mb-2">💡 Pro Tip</h3>

@@ -54,11 +54,11 @@ export const Variations: Story = {
 // Example with shadcn/ui Form integration
 const formSchema = z.object({
   birthDate: z.date({
-    required_error: 'Please select your birth date',
+    message: 'Please select your birth date',
   }),
   appointmentDate: z
     .date({
-      required_error: 'Please select an appointment date',
+      message: 'Please select an appointment date',
     })
     .refine((date) => date > new Date(), {
       message: 'Appointment must be in the future',

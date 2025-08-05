@@ -22,12 +22,117 @@ import { FC } from 'react'
 const meta: Meta<typeof Fragment> = {
   component: Fragment,
   title: 'Layout/Layout',
+  parameters: {
+    docs: {
+      description: {
+        component: `
+# Layout System
+
+<div className="mb-8 p-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl border">
+  <h2 className="text-xl font-semibold mb-3">Built for Real Admin Applications</h2>
+  <p className="text-muted-foreground mb-4">
+    This layout system handles the complex requirements of modern admin interfaces: 
+    workspace switching, responsive navigation, user management, and breadcrumbs.
+  </p>
+  
+  <div className="grid md:grid-cols-3 gap-4">
+    <div className="text-center">
+      <div className="text-2xl mb-2">📱</div>
+      <h4 className="font-semibold">Mobile-First</h4>
+      <p className="text-sm text-muted-foreground">Collapsible sidebar, touch-friendly navigation</p>
+    </div>
+    <div className="text-center">
+      <div className="text-2xl mb-2">🏢</div>
+      <h4 className="font-semibold">Multi-Workspace</h4>
+      <p className="text-sm text-muted-foreground">Switch between organizations seamlessly</p>
+    </div>
+    <div className="text-center">
+      <div className="text-2xl mb-2">🧩</div>
+      <h4 className="font-semibold">Composable</h4>
+      <p className="text-sm text-muted-foreground">Mix and match components as needed</p>
+    </div>
+  </div>
+</div>
+
+## Installation
+
+\`\`\`bash
+npx shadcn add https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/Layout.json
+\`\`\`
+
+## Common Navigation Patterns
+
+### 1. Simple App Navigation
+Perfect for single-purpose admin tools:
+
+\`\`\`tsx
+const navigation = [
+  { name: 'Dashboard', href: '/', icon: HomeIcon },
+  { name: 'Users', href: '/users', icon: UsersIcon },
+  { name: 'Settings', href: '/settings', icon: SettingsIcon },
+]
+\`\`\`
+
+### 2. Grouped Navigation
+For complex applications with multiple sections:
+
+\`\`\`tsx
+const navigation = [
+  {
+    name: 'Core',
+    items: [
+      { name: 'Dashboard', href: '/' },
+      { name: 'Analytics', href: '/analytics' },
+    ]
+  },
+  {
+    name: 'Management', 
+    items: [
+      { name: 'Users', href: '/users' },
+      { name: 'Roles', href: '/roles' },
+    ]
+  }
+]
+\`\`\`
+
+### 3. With Secondary Actions
+Add workspace-specific actions:
+
+\`\`\`tsx
+<LayoutSidebarContent>
+  {/* Main navigation */}
+  <NavigationItems items={navigation} />
+  
+  {/* Secondary actions */}
+  <div className="mt-auto pt-4 border-t">
+    <SidebarMenuItem>
+      <SidebarMenuButton>
+        <LifeBuoy />
+        Support
+      </SidebarMenuButton>
+    </SidebarMenuItem>
+  </div>
+</LayoutSidebarContent>
+\`\`\`
+        `,
+      },
+    },
+  },
 }
 export default meta
 
 type Story = StoryObj<typeof Fragment>
 
-export const Default: Story = {
+export const SimpleLayout: Story = {
+  name: '1. Simple Layout',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The simplest possible layout setup. Just pass sidebar configuration and content - responsive behavior and user management are handled automatically.',
+      },
+    },
+  },
   args: {
     children: (
       <Layout
@@ -47,7 +152,13 @@ export const Default: Story = {
           },
         }}
       >
-        I am content
+        <div className="p-6">
+          <h1 className="text-2xl font-semibold mb-4">Welcome to your admin panel!</h1>
+          <p className="text-muted-foreground">
+            This is your main content area. The sidebar automatically handles responsive behavior,
+            user management, and navigation state.
+          </p>
+        </div>
       </Layout>
     ),
   },
@@ -130,6 +241,15 @@ const CustomLayoutStoryContent: FC = () => (
   </WorkspacesProvider>
 )
 
-export const Customized = {
+export const AdvancedLayout: Story = {
+  name: '2. Advanced with Workspaces',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Fully composable layout with workspace switching, custom navigation, and advanced user dropdown. This shows the full power of the layout system.',
+      },
+    },
+  },
   render: CustomLayoutStoryContent,
 }
