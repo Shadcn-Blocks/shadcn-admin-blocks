@@ -24,6 +24,11 @@ const preview: Preview = {
     a11y: {
       test: 'todo',
     },
+    options: {
+      storySort: {
+        order: ['Introduction', 'Getting Started', '*'],
+      },
+    },
   },
   decorators: [
     (Story, context) => {

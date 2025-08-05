@@ -21,7 +21,7 @@ import { FC } from 'react'
 
 const meta: Meta<typeof Fragment> = {
   component: Fragment,
-  title: 'Example/Layout',
+  title: 'Layout/Layout',
 }
 export default meta
 

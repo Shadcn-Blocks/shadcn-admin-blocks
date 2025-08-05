@@ -1,0 +1,124 @@
+import { Meta } from '@storybook/blocks'
+
+<Meta title="Introduction" />
+
+# shadcn Admin Blocks
+
+A comprehensive collection of admin dashboard building blocks built on top of shadcn/ui.
+This library provides production-ready components for building modern admin interfaces with
+React, TypeScript, and Tailwind CSS.
+
+## Why shadcn Admin Blocks?
+
+<div className="grid gap-4 my-8">
+  <div className="border-l-4 border-primary pl-4">
+    <h3 className="font-semibold">🏗️ Built on shadcn/ui</h3>
+    <p className="text-muted-foreground">
+      Extends the popular shadcn/ui component library with admin-specific patterns and enhanced
+      components.
+    </p>
+  </div>
+
+<div className="border-l-4 border-primary pl-4">
+  <h3 className="font-semibold">📦 Copy & Paste Architecture</h3>
+  <p className="text-muted-foreground">
+    Following shadcn's philosophy - components are yours to customize. No external dependencies or
+    versioning issues.
+  </p>
+</div>
+
+<div className="border-l-4 border-primary pl-4">
+  <h3 className="font-semibold">🎯 Admin-Focused</h3>
+  <p className="text-muted-foreground">
+    Purpose-built for admin dashboards with data tables, forms, layouts, and navigation patterns.
+  </p>
+</div>
+
+  <div className="border-l-4 border-primary pl-4">
+    <h3 className="font-semibold">🔧 Production Ready</h3>
+    <p className="text-muted-foreground">
+      TypeScript, accessibility, and performance optimizations built-in. Ready for real-world
+      applications.
+    </p>
+  </div>
+</div>
+
+## Component Categories
+
+<div className="grid gap-6 my-8">
+  <div className="p-6 border rounded-lg">
+    <h3 className="text-xl font-semibold mb-3">Layout System</h3>
+    <p className="text-muted-foreground mb-4">
+      A comprehensive layout system with responsive sidebar, header, and content areas. Built on shadcn/ui's 
+      new Sidebar primitives with workspace switching, breadcrumbs, and user management.
+    </p>
+    <ul className="list-disc list-inside text-muted-foreground space-y-1">
+      <li>Modular layout components (Layout, LayoutSidebar, LayoutHeader, LayoutContent)</li>
+      <li>Responsive sidebar with collapsible navigation</li>
+      <li>Workspace context and switching</li>
+      <li>Integrated breadcrumb navigation</li>
+      <li>Loading states with Suspense integration</li>
+    </ul>
+  </div>
+
+<div className="p-6 border rounded-lg">
+  <h3 className="text-xl font-semibold mb-3">Advanced DataTable</h3>
+  <p className="text-muted-foreground mb-4">
+    Powerful data table built on TanStack Table with server-side operations, SQL query building, and
+    seamless integration with databases.
+  </p>
+  <ul className="list-disc list-inside text-muted-foreground space-y-1">
+    <li>Server-side pagination, sorting, and filtering</li>
+    <li>SQL query generation with @jakub.knejzlik/ts-query</li>
+    <li>Column configuration with type safety</li>
+    <li>Custom cell renderers and actions</li>
+    <li>Export functionality and bulk operations</li>
+  </ul>
+</div>
+
+  <div className="p-6 border rounded-lg">
+    <h3 className="text-xl font-semibold mb-3">Enhanced Form Components</h3>
+    <p className="text-muted-foreground mb-4">
+      Simplified form field components that reduce boilerplate while maintaining full React Hook Form 
+      compatibility. Each component integrates label, control, and error handling.
+    </p>
+    <ul className="list-disc list-inside text-muted-foreground space-y-1">
+      <li>FormFieldInput, FormFieldTextarea, FormFieldSelect</li>
+      <li>FormFieldCheckbox with integrated label</li>
+      <li>FormFieldDatePicker with calendar and constraints</li>
+      <li>Automatic error handling and validation</li>
+      <li>Full TypeScript and Zod integration</li>
+    </ul>
+  </div>
+</div>
+
+## Technology Stack
+
+<div className="grid grid-cols-2 gap-4 my-8">
+  <div>
+    <h4 className="font-semibold mb-2">Core</h4>
+    <ul className="text-muted-foreground space-y-1 text-sm">
+      <li>• React 19</li>
+      <li>• TypeScript</li>
+      <li>• Tailwind CSS v4</li>
+      <li>• Radix UI (via shadcn/ui)</li>
+    </ul>
+  </div>
+  <div>
+    <h4 className="font-semibold mb-2">Data & State</h4>
+    <ul className="text-muted-foreground space-y-1 text-sm">
+      <li>• TanStack Table</li>
+      <li>• TanStack Query</li>
+      <li>• React Hook Form</li>
+      <li>• Zod validation</li>
+    </ul>
+  </div>
+</div>
+
+<div className="mt-12 p-6 bg-muted rounded-lg">
+  <h3 className="font-semibold mb-2">Ready to get started?</h3>
+  <p className="text-muted-foreground">
+    Check out the <strong>Getting Started</strong> guide to learn how to install and use these
+    components in your project. Each component section includes live examples and code snippets.
+  </p>
+</div>

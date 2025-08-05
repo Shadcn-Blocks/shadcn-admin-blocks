@@ -9,7 +9,7 @@ import { WorkspaceSwitch } from '@/components/layout/WorkspaceSwitch'
 
 const meta: Meta<typeof Fragment> = {
   component: Fragment,
-  title: 'Example/LayoutSidebarHeader',
+  title: 'Layout/LayoutSidebarHeader',
 }
 export default meta
 

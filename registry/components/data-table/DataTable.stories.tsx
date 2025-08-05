@@ -15,7 +15,7 @@ import { DataTablePageSwitcher } from '@/components/data-table/DataTablePageSwit
 
 const meta: Meta<typeof DataTable> = {
   component: DataTable,
-  title: 'Example/DataTable',
+  title: 'DataTable/DataTable',
 }
 export default meta
 

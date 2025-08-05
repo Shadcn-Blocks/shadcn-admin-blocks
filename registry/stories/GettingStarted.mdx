@@ -1,0 +1,259 @@
+import { Meta } from '@storybook/blocks'
+
+<Meta title="Getting Started" />
+
+# Getting Started
+
+Get up and running with shadcn Admin Blocks in your project. This guide will walk you through
+installation, setup, and basic usage patterns.
+
+## Prerequisites
+
+Before installing shadcn Admin Blocks, ensure your project has:
+
+- React 18 or later
+- TypeScript configured
+- Tailwind CSS v3 or v4
+- shadcn/ui CLI installed (`npx shadcn@latest init`)
+
+## Installation
+
+### 1. Install Base Dependencies
+
+First, ensure you have the required base shadcn/ui components:
+
+```bash
+npx shadcn add button input form label select
+npx shadcn add checkbox textarea calendar popover
+npx shadcn add table pagination dropdown-menu
+npx shadcn add sidebar breadcrumb avatar separator
+```
+
+### 2. Install Admin Blocks
+
+Install individual component blocks using the shadcn CLI with our registry:
+
+#### Layout System
+
+```bash
+npx shadcn add https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/Layout.json
+```
+
+#### DataTable
+
+```bash
+npx shadcn add https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/DataTable.json
+```
+
+#### Enhanced Form Components
+
+```bash
+npx shadcn add https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-blocks/refs/heads/main/public/r/Form.json
+```
+
+### 3. Install Additional Dependencies
+
+Some components require additional npm packages. Install them based on your needs:
+
+**For Layout:**
+
+```bash
+npm install react-i18next
+```
+
+**For DataTable:**
+
+```bash
+npm install @tanstack/react-table @tanstack/react-query
+npm install @jakub.knejzlik/ts-query numeral sql.js
+npm install -D @types/numeral @types/sql.js
+```
+
+**For Forms:**
+
+```bash
+npm install react-hook-form @hookform/resolvers zod
+npm install date-fns lucide-react
+```
+
+## Basic Usage
+
+### Layout Example
+
+Create a basic admin layout with sidebar navigation:
+
+```tsx
+import { Layout } from '@/components/layout/Layout'
+import { LayoutHeader } from '@/components/layout/LayoutHeader'
+import { LayoutSidebar } from '@/components/layout/LayoutSidebar'
+import { LayoutContent } from '@/components/layout/LayoutContent'
+
+export function AdminLayout({ children }) {
+  return (
+    <Layout>
+      <LayoutSidebar>{/* Add navigation items */}</LayoutSidebar>
+      <div className="flex-1">
+        <LayoutHeader />
+        <LayoutContent>{children}</LayoutContent>
+      </div>
+    </Layout>
+  )
+}
+```
+
+### DataTable Example
+
+Create a data table with server-side operations:
+
+```tsx
+import { DataTable } from '@/components/data-table/DataTable'
+import { StaticDataSource } from '@/lib/data-sources/StaticDataSource'
+
+const dataSource = new StaticDataSource({
+  data: users,
+  columns: {
+    id: { type: 'number' },
+    name: { type: 'string' },
+    email: { type: 'string' },
+    role: { type: 'string' },
+  },
+})
+
+export function UsersTable() {
+  return (
+    <DataTable
+      dataSource={dataSource}
+      columns={[
+        { key: 'name', label: 'Name' },
+        { key: 'email', label: 'Email' },
+        { key: 'role', label: 'Role' },
+      ]}
+    />
+  )
+}
+```
+
+### Enhanced Form Example
+
+Create forms with less boilerplate using enhanced components:
+
+```tsx
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import { Form } from '@/components/ui/form'
+import { FormFieldInput } from '@/components/form/FormFieldInput'
+import { FormFieldCheckbox } from '@/components/form/FormFieldCheckbox'
+import { FormSubmitButton } from '@/components/form/FormSubmitButton'
+
+const schema = z.object({
+  username: z.string().min(3),
+  email: z.string().email(),
+  terms: z.boolean(),
+})
+
+export function SignupForm() {
+  const form = useForm({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      username: '',
+      email: '',
+      terms: false,
+    },
+  })
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <FormFieldInput
+          control={form.control}
+          name="username"
+          label="Username"
+          placeholder="Enter username"
+        />
+
+        <FormFieldInput
+          control={form.control}
+          name="email"
+          label="Email"
+          type="email"
+          placeholder="Enter email"
+        />
+
+        <FormFieldCheckbox control={form.control} name="terms">
+          I agree to the terms and conditions
+        </FormFieldCheckbox>
+
+        <FormSubmitButton>Sign Up</FormSubmitButton>
+      </form>
+    </Form>
+  )
+}
+```
+
+## Project Structure
+
+After installation, components will be added to your project:
+
+```
+src/
+├── components/
+│   ├── layout/
+│   │   ├── Layout.tsx
+│   │   ├── LayoutSidebar.tsx
+│   │   ├── LayoutHeader.tsx
+│   │   └── ...
+│   ├── data-table/
+│   │   ├── DataTable.tsx
+│   │   ├── DataTableColumn.tsx
+│   │   └── ...
+│   ├── form/
+│   │   ├── FormFieldInput.tsx
+│   │   ├── FormFieldCheckbox.tsx
+│   │   └── ...
+│   └── ui/
+│       └── (shadcn/ui components)
+├── lib/
+│   ├── data-sources/
+│   │   ├── DataSource.ts
+│   │   └── StaticDataSource.ts
+│   └── form/
+│       └── types.ts
+└── hooks/
+    ├── useDynamicSidebar.ts
+    └── useTranslation.ts
+```
+
+## TypeScript Configuration
+
+Ensure your `tsconfig.json` includes:
+
+```json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+```
+
+<div className="mt-12 p-6 bg-muted rounded-lg">
+  <h3 className="font-semibold mb-2">Next Steps</h3>
+  <p className="text-muted-foreground mb-3">Now that you have the components installed, explore:</p>
+  <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+    <li>Browse the component examples in this Storybook</li>
+    <li>Check out the live demos and code snippets</li>
+    <li>Customize components to match your design system</li>
+    <li>Join our community for support and updates</li>
+  </ul>
+</div>
+
+<div className="mt-8 p-6 border border-primary/20 rounded-lg">
+  <h3 className="font-semibold mb-2">💡 Pro Tip</h3>
+  <p className="text-muted-foreground">
+    Components are copied directly into your project, giving you full control. Feel free to modify
+    them to suit your specific needs - they're yours to customize!
+  </p>
+</div>

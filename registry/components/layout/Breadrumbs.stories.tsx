@@ -5,7 +5,7 @@ import { BreadcrumbsBase } from '@/components/layout/Breadcrumbs'
 
 const meta: Meta<typeof Fragment> = {
   component: Fragment,
-  title: 'Example/Breadcrumbs',
+  title: 'Layout/Breadcrumbs',
 }
 export default meta
 
