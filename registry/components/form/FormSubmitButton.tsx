@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Button, ButtonProps } from '@/components/ui/button'
 import { Loader2 } from 'lucide-react'
-import { useFormSubmissionState } from './Form'
+import { useFormSubmissionState } from '@/components/form/Form'
 
 interface FormSubmitButtonProps extends Omit<ButtonProps, 'type'> {
   /**

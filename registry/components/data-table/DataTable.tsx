@@ -16,7 +16,7 @@ import { DataTableContent } from '@/components/data-table/DataTableContent'
 import { DataTableFooter } from '@/components/data-table/DataTableFooter'
 import { DataTableProvider } from '@/components/data-table/DataTableProvider'
 
-interface DataTableProps<RecordType> {
+export interface DataTableProps<RecordType> {
   columns: DataTableColumn<RecordType, any>[]
   datasource: StaticDataSource
   query: SelectQuery

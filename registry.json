@@ -130,8 +130,9 @@
         { "path": "registry/components/form/FormFieldCheckbox.tsx", "type": "registry:component" },
         { "path": "registry/components/form/FormFieldDatePicker.tsx", "type": "registry:component" },
         { "path": "registry/components/form/FormDatePicker.tsx", "type": "registry:component" },
-        { "path": "registry/components/form/date-utils.ts", "type": "registry:lib" },
-        { "path": "registry/components/form/index.ts", "type": "registry:lib" }
+        { "path": "registry/components/form/index.ts", "type": "registry:component" },
+        { "path": "registry/lib/form/date-utils.ts", "type": "registry:lib" },
+        { "path": "registry/lib/form/types.ts", "type": "registry:lib" }
       ]
     }
   ]

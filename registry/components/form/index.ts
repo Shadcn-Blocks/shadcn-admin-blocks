@@ -6,7 +6,7 @@ export type {
   FieldValueType,
   TypedFormFieldProps,
   InputPropsExclude,
-} from './types'
+} from '../../lib/form/types'
 
 // Form wrapper to eliminate boilerplate
 export { Form, useFormSubmissionState } from './Form'

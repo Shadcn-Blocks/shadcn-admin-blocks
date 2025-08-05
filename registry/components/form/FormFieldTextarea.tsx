@@ -1,17 +1,13 @@
 import * as React from 'react'
 import { FieldPath, FieldValues } from 'react-hook-form'
 import { Textarea } from '@/components/ui/textarea'
-import { FormFieldWrapper } from './FormFieldWrapper'
-import { TypedFormFieldProps } from './types'
+import { FormFieldWrapper } from '@/components/form/FormFieldWrapper'
+import { TypedFormFieldProps } from '@/lib/form/types'
 
 interface FormFieldTextareaProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> extends TypedFormFieldProps<
-    TFieldValues,
-    TName,
-    React.ComponentProps<typeof Textarea>
-  > {}
+> extends TypedFormFieldProps<TFieldValues, TName, React.ComponentProps<typeof Textarea>> {}
 
 export const FormFieldTextarea = <
   TFieldValues extends FieldValues = FieldValues,

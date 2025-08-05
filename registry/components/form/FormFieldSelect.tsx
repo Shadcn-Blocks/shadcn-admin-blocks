@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { FieldPath, FieldValues } from 'react-hook-form'
 import { Select, SelectContent, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { FormFieldWrapper } from './FormFieldWrapper'
-import { BaseFormFieldProps, FieldValueType } from './types'
+import { FormFieldWrapper } from '@/components/form/FormFieldWrapper'
+import { BaseFormFieldProps, FieldValueType } from '@/lib/form/types'
 
 interface FormFieldSelectProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -52,9 +52,7 @@ export const FormFieldSelect = <
           <SelectTrigger>
             <SelectValue placeholder={placeholder} />
           </SelectTrigger>
-          <SelectContent>
-            {children}
-          </SelectContent>
+          <SelectContent>{children}</SelectContent>
         </Select>
       )}
     </FormFieldWrapper>

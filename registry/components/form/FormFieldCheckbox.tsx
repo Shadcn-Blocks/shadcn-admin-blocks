@@ -2,8 +2,8 @@ import * as React from 'react'
 import { FieldPath, FieldValues } from 'react-hook-form'
 import { FormControl, FormDescription, FormLabel } from '@/components/ui/form'
 import { Checkbox } from '@/components/ui/checkbox'
-import { FormFieldWrapper } from './FormFieldWrapper'
-import { BaseFormFieldProps, FieldValueType } from './types'
+import { FormFieldWrapper } from '@/components/form/FormFieldWrapper'
+import { BaseFormFieldProps, FieldValueType } from '@/lib/form/types'
 
 interface FormFieldCheckboxProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -49,15 +49,10 @@ export const FormFieldCheckbox = <
           const checkboxId = `${name}-checkbox`
           return (
             <div className="flex flex-row items-start space-x-3 space-y-0">
-              <FormControl>
-                {React.cloneElement(checkbox, { id: checkboxId })}
-              </FormControl>
+              <FormControl>{React.cloneElement(checkbox, { id: checkboxId })}</FormControl>
               <div className="space-y-1 leading-none">
                 {(children || label) && (
-                  <FormLabel 
-                    htmlFor={checkboxId}
-                    className="cursor-pointer font-normal leading-5"
-                  >
+                  <FormLabel htmlFor={checkboxId} className="cursor-pointer font-normal leading-5">
                     {children || label}
                   </FormLabel>
                 )}
@@ -68,11 +63,7 @@ export const FormFieldCheckbox = <
         }}
       >
         {(field) => (
-          <Checkbox
-            checked={field.value}
-            onCheckedChange={field.onChange}
-            disabled={disabled}
-          />
+          <Checkbox checked={field.value} onCheckedChange={field.onChange} disabled={disabled} />
         )}
       </FormFieldWrapper>
     )
@@ -92,11 +83,7 @@ export const FormFieldCheckbox = <
       className={className}
     >
       {(field) => (
-        <Checkbox
-          checked={field.value}
-          onCheckedChange={field.onChange}
-          disabled={disabled}
-        />
+        <Checkbox checked={field.value} onCheckedChange={field.onChange} disabled={disabled} />
       )}
     </FormFieldWrapper>
   )
