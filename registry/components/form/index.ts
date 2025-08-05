@@ -23,6 +23,7 @@ export { FormFieldTextarea } from './FormFieldTextarea'
 export { FormFieldSelect } from './FormFieldSelect'
 export { FormFieldCheckbox } from './FormFieldCheckbox'
 export { FormFieldDatePicker } from './FormFieldDatePicker'
+export { FormFieldNumber } from './FormFieldNumber'
 
 // Standalone date picker component (has substantial logic worth keeping)
 export { FormDatePicker } from './FormDatePicker'
