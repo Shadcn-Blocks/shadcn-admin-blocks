@@ -1,5 +1,3 @@
-'use client'
-
 import { ColumnDef } from '@tanstack/react-table'
 import { ChevronDownIcon, ChevronsUpDownIcon, ChevronUpIcon } from 'lucide-react'
 

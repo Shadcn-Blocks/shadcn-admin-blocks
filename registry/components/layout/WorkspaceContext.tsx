@@ -30,7 +30,9 @@ interface WorkspacesProviderProps {
   selectedWorkspaceId?: string
 }
 
-const WorkspacesContext = createContext<WorkspacesContextValue | undefined>(undefined)
+const WorkspacesContext = createContext<WorkspacesContextValue | undefined>(
+  undefined,
+)
 
 export const WorkspacesProvider: FC<WorkspacesProviderProps> = ({
   children,
@@ -39,16 +41,20 @@ export const WorkspacesProvider: FC<WorkspacesProviderProps> = ({
   selectedWorkspaceId,
 }) => {
   // Find workspace by id
-  const selectedWorkspace = workspaces.find((ws) => ws.id === selectedWorkspaceId)
+  const selectedWorkspace = workspaces.find(
+    (ws) => ws.id === selectedWorkspaceId,
+  )
 
   const [activeWorkspace, setActiveWorkspace] = useState<Workspace | null>(
-    selectedWorkspace ?? workspaces[0] ?? null
+    selectedWorkspace ?? workspaces[0] ?? null,
   )
 
   // Update active workspace when selectedWorkspaceId or workspaces change
   useEffect(() => {
     if (selectedWorkspaceId && workspaces.length > 0) {
-      const foundWorkspace = workspaces.find((ws) => ws.id === selectedWorkspaceId)
+      const foundWorkspace = workspaces.find(
+        (ws) => ws.id === selectedWorkspaceId,
+      )
       if (foundWorkspace && foundWorkspace.id !== activeWorkspace?.id) {
         setActiveWorkspace(foundWorkspace)
       }
@@ -63,11 +69,12 @@ export const WorkspacesProvider: FC<WorkspacesProviderProps> = ({
       setActiveWorkspace(workspace)
       onWorkspaceChange(workspace)
     },
-    [onWorkspaceChange]
+    [onWorkspaceChange],
   )
 
   return (
-    <WorkspacesContext.Provider value={{ workspaces, activeWorkspace, switchWorkspace }}>
+    <WorkspacesContext.Provider
+      value={{ workspaces, activeWorkspace, switchWorkspace }}>
       {children}
     </WorkspacesContext.Provider>
   )
@@ -79,4 +86,12 @@ export const useWorkspaces = (): WorkspacesContextValue => {
     throw new Error('useWorkspaces must be used inside a WorkspacesProvider')
   }
   return context
+}
+
+export const useCurrentWorkspace = (): Workspace => {
+  const { activeWorkspace } = useWorkspaces()
+  if (!activeWorkspace) {
+    throw new Error('No active workspace found')
+  }
+  return activeWorkspace
 }

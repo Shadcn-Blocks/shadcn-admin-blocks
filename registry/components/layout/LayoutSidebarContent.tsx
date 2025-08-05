@@ -65,7 +65,7 @@ const CollapsibleSidebarItem = ({ item }: { item: SidebarItem }) => {
           <SidebarMenuSub>
             {item.children.map((child) => (
               <Link to={child.url} key={child.url}>
-                {({ isActive }) => (
+                {({ isActive }: { isActive: boolean }) => (
                   <SidebarMenuSubItem>
                     <SidebarMenuSubButton 
                       asChild 
@@ -92,7 +92,7 @@ const SidebarItemComponent = ({ item }: { item: SidebarItem }) => {
 
   return (
     <Link to={item.url} key={item.url}>
-      {({ isActive }) => (
+      {({ isActive }: { isActive: boolean }) => (
         <SidebarMenuItem key={item.key}>
           <SidebarMenuButton 
             asChild 

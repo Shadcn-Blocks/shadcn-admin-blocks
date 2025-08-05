@@ -49,7 +49,7 @@ export const FormFieldCheckbox = <
           const checkboxId = `${name}-checkbox`
           return (
             <div className="flex flex-row items-start space-x-3 space-y-0">
-              <FormControl>{React.cloneElement(checkbox, { id: checkboxId })}</FormControl>
+              <FormControl>{React.cloneElement(checkbox as React.ReactElement<any>, { id: checkboxId })}</FormControl>
               <div className="space-y-1 leading-none">
                 {(children || label) && (
                   <FormLabel htmlFor={checkboxId} className="cursor-pointer font-normal leading-5">

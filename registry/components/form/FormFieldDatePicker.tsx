@@ -81,7 +81,7 @@ export const FormFieldDatePicker = <
                 if (max && date > max) return true
                 return false
               }}
-              initialFocus
+              autoFocus
             />
           </PopoverContent>
         </Popover>

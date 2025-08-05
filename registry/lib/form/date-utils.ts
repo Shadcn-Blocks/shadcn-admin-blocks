@@ -28,14 +28,14 @@ export const dateUtils = {
    * Format a date for display
    * Supports both dayjs and date-fns format patterns for compatibility
    */
-  formatForDisplay: (date: string | Date | dayjs.Dayjs, format = dateFormats.display) => {
+  formatForDisplay: (date: string | Date | dayjs.Dayjs, format: string = dateFormats.display) => {
     // Map common date-fns patterns to dayjs equivalents
     const formatMap: Record<string, string> = {
-      'PPP': dateFormats.PPP,
-      'PP': 'MMM D, YYYY',
-      'P': 'MM/DD/YYYY',
+      PPP: dateFormats.PPP,
+      PP: 'MMM D, YYYY',
+      P: 'MM/DD/YYYY',
     }
-    
+
     const dayJsFormat = formatMap[format] || format
     return dayjs(date).format(dayJsFormat)
   },

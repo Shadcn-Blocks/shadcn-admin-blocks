@@ -1,5 +1,10 @@
 import * as React from 'react'
-import { FieldPath, FieldValues, useFormContext, ControllerRenderProps } from 'react-hook-form'
+import {
+  FieldPath,
+  FieldValues,
+  useFormContext,
+  ControllerRenderProps,
+} from 'react-hook-form'
 import {
   FormField,
   FormItem,
@@ -8,7 +13,11 @@ import {
   FormDescription,
   FormMessage,
 } from '@/components/ui/form'
-import { BaseFormFieldProps, FieldRenderFunction, LayoutRenderFunction } from '@/lib/form/types'
+import {
+  BaseFormFieldProps,
+  FieldRenderFunction,
+  LayoutRenderFunction,
+} from '@/lib/form/types'
 
 interface FormFieldWrapperProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -49,7 +58,12 @@ export const FormFieldWrapper = React.memo(
         if (renderLayout) {
           return (
             <FormItem className={className}>
-              {renderLayout({ field, label, description, children: childElement })}
+              {renderLayout({
+                field,
+                label,
+                description,
+                children: childElement,
+              })}
               <FormMessage />
             </FormItem>
           )
@@ -64,7 +78,7 @@ export const FormFieldWrapper = React.memo(
           </FormItem>
         )
       },
-      [children, renderLayout, className, label, description]
+      [children, renderLayout, className, label, description],
     )
 
     return (
@@ -78,9 +92,7 @@ export const FormFieldWrapper = React.memo(
         render={renderField}
       />
     )
-  }
+  },
 ) as <TFieldValues extends FieldValues, TName extends FieldPath<TFieldValues>>(
-  props: FormFieldWrapperProps<TFieldValues, TName>
+  props: FormFieldWrapperProps<TFieldValues, TName>,
 ) => React.ReactElement
-
-FormFieldWrapper.displayName = 'FormFieldWrapper'

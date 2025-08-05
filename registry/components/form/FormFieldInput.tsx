@@ -7,7 +7,11 @@ import { TypedFormFieldProps } from '@/lib/form/types'
 interface FormFieldInputProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> extends TypedFormFieldProps<TFieldValues, TName, React.ComponentProps<typeof Input>> {}
+> extends TypedFormFieldProps<
+    TFieldValues,
+    TName,
+    React.ComponentProps<typeof Input>
+  > {}
 
 export const FormFieldInput = React.memo(
   <
@@ -27,8 +31,10 @@ export const FormFieldInput = React.memo(
   }: FormFieldInputProps<TFieldValues, TName>) => {
     // Memoize the input render function
     const renderInput = React.useCallback(
-      (field: ControllerRenderProps<TFieldValues, TName>) => <Input {...field} {...inputProps} />,
-      [inputProps]
+      (field: ControllerRenderProps<TFieldValues, TName>) => (
+        <Input {...field} {...inputProps} />
+      ),
+      [inputProps],
     )
 
     return (
@@ -41,14 +47,11 @@ export const FormFieldInput = React.memo(
         disabled={disabled}
         label={label}
         description={description}
-        className={className}
-      >
+        className={className}>
         {renderInput}
       </FormFieldWrapper>
     )
-  }
+  },
 ) as <TFieldValues extends FieldValues, TName extends FieldPath<TFieldValues>>(
-  props: FormFieldInputProps<TFieldValues, TName>
+  props: FormFieldInputProps<TFieldValues, TName>,
 ) => React.ReactElement
-
-FormFieldInput.displayName = 'FormFieldInput'

@@ -65,9 +65,9 @@ function FormWithSchema<TSchema extends z.ZodType<any, any, any>>({
   const [isSubmitting, setIsSubmitting] = React.useState(false)
 
   // Create the form instance internally
-  const form = useForm({
-    resolver: zodResolver(schema),
-    defaultValues,
+  const form = useForm<z.infer<TSchema>>({
+    resolver: zodResolver(schema) as any,
+    defaultValues: defaultValues as z.infer<TSchema>,
     ...formOptions,
   })
 
@@ -80,15 +80,13 @@ function FormWithSchema<TSchema extends z.ZodType<any, any, any>>({
     }
   }, [onSubmit])
 
-  const submitHandler = preventDefault 
-    ? form.handleSubmit(handleSubmit)
-    : handleSubmit
+  const submitHandler = form.handleSubmit(handleSubmit)
 
   return (
     <FormSubmissionContext.Provider value={{ isSubmitting }}>
       <ShadcnForm {...form}>
         <form 
-          onSubmit={submitHandler} 
+          onSubmit={preventDefault ? submitHandler : undefined}
           className={className}
           noValidate
         >
@@ -118,15 +116,13 @@ function FormWithForm<TFieldValues extends FieldValues = FieldValues>({
     }
   }, [onSubmit])
 
-  const submitHandler = preventDefault 
-    ? form.handleSubmit(handleSubmit)
-    : handleSubmit
+  const submitHandler = form.handleSubmit(handleSubmit)
 
   return (
     <FormSubmissionContext.Provider value={{ isSubmitting }}>
       <ShadcnForm {...form}>
         <form 
-          onSubmit={submitHandler} 
+          onSubmit={preventDefault ? submitHandler : undefined}
           className={className}
           noValidate
         >

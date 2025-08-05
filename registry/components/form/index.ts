@@ -1,4 +1,3 @@
-// Type definitions for strongly typed form fields
 export type {
   BaseFormFieldProps,
   FieldRenderFunction,
