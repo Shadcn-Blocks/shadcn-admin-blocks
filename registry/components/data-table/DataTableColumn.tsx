@@ -5,6 +5,7 @@ import { ChevronDownIcon, ChevronsUpDownIcon, ChevronUpIcon } from 'lucide-react
 
 import { Button } from '@/components/ui/button'
 import numeral from 'numeral'
+import dayjs from 'dayjs'
 
 export type DataTableColumnString<Data, Value = unknown> = ColumnDef<Data, Value> & {
   type: 'string'
@@ -76,6 +77,11 @@ export const mapColumn = <Data, Value>(
     case 'date':
       return {
         ...res,
+        cell: ({ getValue }) => (
+          <div className={`text-center`}>
+            {dayjs(`${getValue()}`).format('DD.MM.YYYY HH:mm:ss')}
+          </div>
+        ),
       }
     case 'boolean':
       return {

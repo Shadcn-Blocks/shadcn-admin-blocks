@@ -12,6 +12,7 @@ import { DataTableContent } from '@/components/data-table/DataTableContent'
 import { DataTablePagination } from '@/components/data-table/DataTablePagination'
 import { DataTableFooter } from '@/components/data-table/DataTableFooter'
 import { DataTablePageSwitcher } from '@/components/data-table/DataTablePageSwitcher'
+import dayjs from 'dayjs'
 
 const meta: Meta<typeof DataTable> = {
   component: DataTable,
@@ -149,6 +150,7 @@ const data: Payment[] = Array.from({ length: 123 }, (_, i) => ({
   amount: Math.floor(Math.random() * 1000) + 100,
   status: statuses[i % statuses.length] ?? 'pending',
   email: emails[i % emails.length] ?? 'unknown@example.com',
+  createdat: dayjs().add(-14, 'day').toISOString(),
 }))
 
 type Payment = {
@@ -156,6 +158,7 @@ type Payment = {
   amount: number
   status: 'pending' | 'processing' | 'success' | 'failed'
   email: string
+  createdat: string
 }
 
 const columns: DataTableColumn<Payment, any>[] = [
@@ -170,6 +173,10 @@ const columns: DataTableColumn<Payment, any>[] = [
   {
     accessorKey: 'amount',
     type: 'number',
+  },
+  {
+    accessorKey: 'createdat',
+    type: 'date',
   },
   {
     id: 'actions',
