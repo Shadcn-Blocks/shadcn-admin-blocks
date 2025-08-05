@@ -1,4 +1,4 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks'
+import { Canvas, Meta } from '@storybook/blocks'
 import * as Stories from './DataTable.stories'
 
 <Meta title="DataTable" />
@@ -30,7 +30,7 @@ const query = Q.select().from('users')
 />
 ```
 
-<Canvas of={Stories.Default} />
+<Canvas of={Stories.BasicTable} />
 
 Or You can specify the composition of the table:
 
@@ -53,7 +53,7 @@ const query = Q.select().from('users')
 </DataTable>
 ```
 
-<Canvas of={Stories.WithToolbarAndFooter} />
+<Canvas of={Stories.WithToolbar} />
 
 Or You can build Your custom layout:
 
@@ -84,4 +84,4 @@ const query = Q.select().from('users')
 </DataTable>
 ```
 
-<Canvas of={Stories.Custom} />
+<Canvas of={Stories.CustomLayout} />

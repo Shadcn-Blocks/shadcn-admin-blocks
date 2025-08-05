@@ -1,4 +1,4 @@
-import { Meta, Canvas } from '@storybook/addon-docs/blocks'
+import { Meta, Canvas } from '@storybook/blocks'
 import * as Stories from './Layout.stories'
 
 <Meta title="Layout" />
@@ -45,7 +45,7 @@ By default, the `Layout` component does **not** include an organization or works
 </Layout>
 ```
 
-<Canvas of={Stories.Default} />
+<Canvas of={Stories.SimpleLayout} />
 
 ---
 
@@ -78,4 +78,4 @@ const workspacesData: Workspace[] = [
 </WorkspacesProvider>
 ```
 
-<Canvas of={Stories.Customized} />
+<Canvas of={Stories.AdvancedLayout} />
