@@ -7,7 +7,7 @@ import { LayoutSidebarHeader, LayoutSidebarHeaderProps } from '@/components/layo
 import { LayoutSidebarContent } from '@/components/layout/LayoutSidebarContent'
 import { LayoutContent } from '@/components/layout/LayoutContent'
 
-interface LayoutBaseProps {}
+interface LayoutBaseProps { }
 
 export function LayoutBase({ children }: PropsWithChildren<LayoutBaseProps>) {
   return (
@@ -22,7 +22,12 @@ export function LayoutBase({ children }: PropsWithChildren<LayoutBaseProps>) {
 }
 
 interface LayoutProps extends LayoutBaseProps {
-  sidebar?: { footer?: LayoutSidebarFooterProps; header?: LayoutSidebarHeaderProps }
+  sidebar?: {
+    footer?: LayoutSidebarFooterProps
+    header?: LayoutSidebarHeaderProps
+    /** Dynamic parameters to pass to all sidebar links */
+    dynamicParams?: Record<string, string>
+  }
 }
 
 export function Layout({ sidebar, children }: PropsWithChildren<LayoutProps>) {
@@ -30,7 +35,7 @@ export function Layout({ sidebar, children }: PropsWithChildren<LayoutProps>) {
     <LayoutBase>
       <LayoutSidebar>
         <LayoutSidebarHeader {...sidebar?.header} />
-        <LayoutSidebarContent />
+        <LayoutSidebarContent dynamicParams={sidebar?.dynamicParams} />
         <LayoutSidebarFooter {...sidebar?.footer} />
       </LayoutSidebar>
       <SidebarInset>
