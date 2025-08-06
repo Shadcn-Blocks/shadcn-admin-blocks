@@ -1,0 +1,77 @@
+# Deploy Storybook previews for pull requests using hybrid approach
+name: Deploy PR Preview
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+
+# Prevent multiple concurrent deployments for the same PR
+concurrency: 
+  group: preview-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  pull-requests: write
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}pr-preview/pr-${{ github.event.number }}/
+    if: github.event.action != 'closed'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.2.0'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build Storybook
+        run: pnpm build-storybook
+
+      # Use the pr-preview-action to handle the branch deployment
+      - name: Deploy PR Preview to gh-pages branch
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: storybook-static
+          preview-branch: gh-pages
+          umbrella-dir: pr-preview
+
+      # Also create an artifact for backup/manual download
+      - name: Upload Storybook artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: storybook-preview-pr-${{ github.event.number }}
+          path: storybook-static
+          retention-days: 7
+
+  cleanup-preview:
+    runs-on: ubuntu-latest
+    if: github.event.action == 'closed'
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Clean up PR Preview
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: storybook-static
+          preview-branch: gh-pages
+          umbrella-dir: pr-preview
+          action: remove
