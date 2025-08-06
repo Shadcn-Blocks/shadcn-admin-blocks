@@ -56,8 +56,8 @@ To add workspace switching into your sidebar, simply include `<WorkspaceSwitch /
 ```tsx
 
 const workspacesData: Workspace[] = [
-  { name: 'Acme Inc', logo: LifeBuoy, plan: 'Enterprise' },
-  { name: 'Beta Co', logo: Send, plan: 'Pro' },
+  { id: 'acme-inc', name: 'Acme Inc', logo: LifeBuoy, plan: 'Enterprise' },
+  { id: 'beta-co', name: 'Beta Co', logo: Send, plan: 'Pro' },
 ]
 
 <WorkspacesProvider workspaces={workspacesData}>
@@ -79,3 +79,159 @@ const workspacesData: Workspace[] = [
 ```
 
 <Canvas of={Stories.AdvancedLayout} />
+
+---
+
+### 🚀 Dynamic Routing Support
+
+The layout system now supports dynamic routing parameters for multi-tenant or workspace-based applications. Use the `dynamicParams` prop on `LayoutSidebarContent` to enable this functionality:
+
+#### Workspace-based Applications
+
+```tsx
+<Layout
+  sidebar={{
+    header: {
+      title: 'Multi-Tenant App',
+      subtitle: 'Workspace: Acme Corp',
+      icon: <HouseIcon />,
+    },
+    footer: {
+      signOut: () => alert('logging out'),
+      user: {
+        avatar: 'https://cat-avatars.vercel.app/api/cat?name=John%20Doe',
+        email: 'john.doe@example.com',
+        name: 'John Doe',
+      },
+    },
+    dynamicParams: {
+      workspaceId: 'workspace-123',
+      tenantId: 'tenant-456'
+    }
+  }}
+>
+  I am content
+</Layout>
+```
+
+This enables URLs like:
+- `/workspace/$workspaceId/dashboard`
+- `/workspace/$workspaceId/users`
+- `/workspace/$workspaceId/settings`
+
+#### Tenant-based Applications
+
+```tsx
+<LayoutSidebarContent dynamicParams={{ tenantId: "tenant-456" }} />
+```
+
+This enables URLs like:
+- `/tenant/$tenantId/dashboard`
+- `/tenant/$tenantId/users`
+- `/tenant/$tenantId/settings`
+
+#### Simple Applications
+
+For applications without dynamic routing:
+
+```tsx
+<LayoutSidebarContent />
+```
+
+The sidebar automatically handles URL pattern matching and active state detection for dynamic routes.
+
+<Canvas of={Stories.DynamicRoutingLayout} />
+
+---
+
+## API Reference
+
+### Layout
+
+The main `Layout` component accepts a `sidebar` prop with the following structure:
+
+```tsx
+interface LayoutProps {
+  sidebar?: {
+    header?: LayoutSidebarHeaderProps
+    footer?: LayoutSidebarFooterProps
+    /** Dynamic parameters to pass to all sidebar links */
+    dynamicParams?: Record<string, string>
+  }
+}
+```
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `sidebar` | `object` | - | Sidebar configuration including header, footer, and dynamic parameters |
+| `children` | `ReactNode` | - | Main content to render |
+
+#### Sidebar Configuration
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `header` | `LayoutSidebarHeaderProps` | - | Sidebar header configuration |
+| `footer` | `LayoutSidebarFooterProps` | - | Sidebar footer configuration |
+| `dynamicParams` | `Record<string, string>` | - | Dynamic routing parameters for multi-tenant apps |
+
+### LayoutSidebarContent
+
+The `LayoutSidebarContent` component now accepts an optional `dynamicParams` prop:
+
+```tsx
+interface LayoutSidebarContentProps extends PropsWithChildren {
+  /** Dynamic parameters to pass to all sidebar links */
+  dynamicParams?: Record<string, string>
+}
+```
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | - | Additional sidebar content (secondary actions, etc.) |
+| `dynamicParams` | `Record<string, string>` | `{}` | Dynamic routing parameters for multi-tenant apps |
+
+#### Examples
+
+**Workspace-based app:**
+```tsx
+<LayoutSidebarContent dynamicParams={{ workspaceId: "workspace-123" }} />
+```
+
+**Tenant-based app:**
+```tsx
+<LayoutSidebarContent dynamicParams={{ tenantId: "tenant-456" }} />
+```
+
+**Simple app:**
+```tsx
+<LayoutSidebarContent />
+```
+
+---
+
+## Route Configuration
+
+To use dynamic routing with the layout system, configure your routes with the appropriate static data:
+
+```tsx
+// In your route configuration
+{
+  path: '/workspace/$workspaceId/dashboard',
+  staticData: {
+    title: 'Dashboard',
+    icon: <DashboardIcon />,
+    showInSidebar: true,
+    sidebarOrder: 1
+  }
+}
+```
+
+The sidebar will automatically:
+- Generate navigation items from routes with `showInSidebar: true`
+- Handle dynamic parameter substitution in URLs
+- Maintain active state for current route
+- Support nested/collapsible navigation structure

@@ -95,7 +95,21 @@ const navigation = [
 ]
 \`\`\`
 
-### 3. With Secondary Actions
+### 3. Dynamic Routing Support
+For multi-tenant or workspace-based applications:
+
+\`\`\`tsx
+// Workspace-based app
+<LayoutSidebarContent dynamicParams={{ workspaceId: "workspace-123" }} />
+
+// Tenant-based app  
+<LayoutSidebarContent dynamicParams={{ tenantId: "tenant-456" }} />
+
+// Simple app without dynamic parameters
+<LayoutSidebarContent />
+\`\`\`
+
+### 4. With Secondary Actions
 Add workspace-specific actions:
 
 \`\`\`tsx
@@ -165,8 +179,8 @@ export const SimpleLayout: Story = {
 }
 
 const workspacesData: Workspace[] = [
-  { name: 'Acme Inc', logo: LifeBuoy, plan: 'Enterprise' },
-  { name: 'Beta Co', logo: Send, plan: 'Pro' },
+  { id: 'acme-inc', name: 'Acme Inc', logo: LifeBuoy, plan: 'Enterprise' },
+  { id: 'beta-co', name: 'Beta Co', logo: Send, plan: 'Pro' },
 ]
 
 const CustomLayoutStoryContent: FC = () => (
@@ -251,5 +265,63 @@ export const AdvancedLayout: Story = {
       },
     },
   },
-  render: CustomLayoutStoryContent,
+  render: () => <CustomLayoutStoryContent />,
+}
+
+export const DynamicRoutingLayout: Story = {
+  name: '3. Dynamic Routing Layout',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Layout with dynamic routing support for multi-tenant or workspace-based applications. The sidebar automatically handles URL pattern matching for dynamic parameters.',
+      },
+    },
+  },
+  args: {
+    children: (
+      <Layout
+        sidebar={{
+          footer: {
+            signOut: () => alert('logging out'),
+            user: {
+              avatar: 'https://cat-avatars.vercel.app/api/cat?name=John%20Doe',
+              email: 'john.doe@example.com',
+              name: 'John Doe',
+            },
+          },
+          header: {
+            title: 'Multi-Tenant App',
+            subtitle: 'Workspace: Acme Corp',
+            icon: <HouseIcon />,
+          },
+          dynamicParams: {
+            workspaceId: 'workspace-123',
+            tenantId: 'tenant-456'
+          }
+        }}
+      >
+        <div className="p-6">
+          <h1 className="text-2xl font-semibold mb-4">Dynamic Routing Example</h1>
+          <p className="text-muted-foreground mb-4">
+            This layout demonstrates support for dynamic routing parameters. The sidebar can handle URLs like:
+          </p>
+          <div className="space-y-2 text-sm">
+            <div className="p-3 bg-muted rounded-md">
+              <code>/workspace/$workspaceId/dashboard</code>
+            </div>
+            <div className="p-3 bg-muted rounded-md">
+              <code>/tenant/$tenantId/users</code>
+            </div>
+            <div className="p-3 bg-muted rounded-md">
+              <code>/organization/$orgId/settings</code>
+            </div>
+          </div>
+          <p className="text-muted-foreground mt-4">
+            Pass dynamic parameters through the sidebar configuration to enable this functionality.
+          </p>
+        </div>
+      </Layout>
+    ),
+  },
 }

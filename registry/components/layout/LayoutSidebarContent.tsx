@@ -17,7 +17,27 @@ import { SidebarItem, useDynamicSidebar } from '@/hooks/useDynamicSidebar'
 import { PropsWithChildren, useMemo } from 'react'
 import { TooltipContent } from '@/components/ui/tooltip'
 
-export const LayoutSidebarContent = ({ children }: PropsWithChildren) => {
+interface LayoutSidebarContentProps extends PropsWithChildren {
+  /** Dynamic parameters to pass to all sidebar links */
+  dynamicParams?: Record<string, string>
+}
+
+/**
+ * Universal sidebar content component that works with any dynamic routing parameters.
+ * 
+ * @example
+ * // For a workspace-based app:
+ * <LayoutSidebarContent dynamicParams={{ workspaceId: "workspace-123" }} />
+ * 
+ * @example
+ * // For a tenant-based app:
+ * <LayoutSidebarContent dynamicParams={{ tenantId: "tenant-456" }} />
+ * 
+ * @example
+ * // For a simple app without dynamic parameters:
+ * <LayoutSidebarContent />
+ */
+export const LayoutSidebarContent = ({ children, dynamicParams = {} }: LayoutSidebarContentProps) => {
   const sidebarItems = useDynamicSidebar()
 
   return (
@@ -26,7 +46,7 @@ export const LayoutSidebarContent = ({ children }: PropsWithChildren) => {
         <SidebarGroupContent>
           <SidebarMenu>
             {sidebarItems.map((item) => (
-              <SidebarItemComponent key={item.key} item={item} />
+              <SidebarItemComponent key={item.key} item={item} dynamicParams={dynamicParams} />
             ))}
           </SidebarMenu>
         </SidebarGroupContent>
@@ -42,12 +62,32 @@ export const LayoutSidebarContent = ({ children }: PropsWithChildren) => {
   )
 }
 
-const CollapsibleSidebarItem = ({ item }: { item: SidebarItem }) => {
+const CollapsibleSidebarItem = ({
+  item,
+  dynamicParams
+}: {
+  item: SidebarItem
+  dynamicParams: Record<string, string>
+}) => {
   const matches = useMatches()
 
   const defaultOpen = useMemo(() => {
-    return matches.some((match) => match.pathname === item.url)
-  }, [matches, item.url])
+    return matches.some((match) => {
+      // Check if the current pathname matches the item URL pattern
+      // For dynamic URLs, we need to handle the pattern matching
+      if (item.url.includes('/$')) {
+        // If the item URL contains dynamic parameters, check if current path matches the pattern
+        let urlPattern = item.url
+        // Replace all dynamic parameters with regex patterns
+        Object.keys(dynamicParams).forEach(param => {
+          urlPattern = urlPattern.replace(`/$${param}`, '/[^/]+')
+        })
+        const regex = new RegExp(`^${urlPattern}$`)
+        return regex.test(match.pathname)
+      }
+      return match.pathname === item.url
+    })
+  }, [matches, item.url, dynamicParams])
 
   return (
     <Collapsible asChild className="group/collapsible" defaultOpen={defaultOpen}>
@@ -64,11 +104,11 @@ const CollapsibleSidebarItem = ({ item }: { item: SidebarItem }) => {
         <CollapsibleContent>
           <SidebarMenuSub>
             {item.children.map((child) => (
-              <Link to={child.url} key={child.url}>
-                {({ isActive }: { isActive: boolean }) => (
+              <Link to={child.url} key={child.url} params={dynamicParams}>
+                {({ isActive }) => (
                   <SidebarMenuSubItem>
-                    <SidebarMenuSubButton 
-                      asChild 
+                    <SidebarMenuSubButton
+                      asChild
                       isActive={isActive}
                       className="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground"
                     >
@@ -85,17 +125,23 @@ const CollapsibleSidebarItem = ({ item }: { item: SidebarItem }) => {
   )
 }
 
-const SidebarItemComponent = ({ item }: { item: SidebarItem }) => {
+const SidebarItemComponent = ({
+  item,
+  dynamicParams
+}: {
+  item: SidebarItem
+  dynamicParams: Record<string, string>
+}) => {
   if (item.children.length > 0) {
-    return <CollapsibleSidebarItem item={item} />
+    return <CollapsibleSidebarItem item={item} dynamicParams={dynamicParams} />
   }
 
   return (
-    <Link to={item.url} key={item.url}>
-      {({ isActive }: { isActive: boolean }) => (
+    <Link to={item.url} key={item.url} params={dynamicParams}>
+      {({ isActive }) => (
         <SidebarMenuItem key={item.key}>
-          <SidebarMenuButton 
-            asChild 
+          <SidebarMenuButton
+            asChild
             isActive={isActive}
             className="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground"
           >
