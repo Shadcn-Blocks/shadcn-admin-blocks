@@ -84,9 +84,9 @@ const workspacesData: Workspace[] = [
 
 ### 🚀 Dynamic Routing Support
 
-The layout system now supports dynamic routing parameters for multi-tenant or workspace-based applications. Use the `dynamicParams` prop on `LayoutSidebarContent` to enable this functionality:
+The layout system automatically supports dynamic routing parameters for multi-tenant or workspace-based applications through TanStack Router's `useParams` hook. No manual configuration needed:
 
-#### Workspace-based Applications
+#### Automatic Parameter Extraction
 
 ```tsx
 <Layout
@@ -104,41 +104,22 @@ The layout system now supports dynamic routing parameters for multi-tenant or wo
         name: 'John Doe',
       },
     },
-    dynamicParams: {
-      workspaceId: 'workspace-123',
-      tenantId: 'tenant-456'
-    }
   }}
 >
   I am content
 </Layout>
 ```
 
-This enables URLs like:
+This automatically handles URLs like:
 - `/workspace/$workspaceId/dashboard`
-- `/workspace/$workspaceId/users`
-- `/workspace/$workspaceId/settings`
-
-#### Tenant-based Applications
-
-```tsx
-<LayoutSidebarContent dynamicParams={{ tenantId: "tenant-456" }} />
-```
-
-This enables URLs like:
-- `/tenant/$tenantId/dashboard`
 - `/tenant/$tenantId/users`
-- `/tenant/$tenantId/settings`
+- `/organization/$orgId/settings`
 
-#### Simple Applications
-
-For applications without dynamic routing:
-
-```tsx
-<LayoutSidebarContent />
-```
-
-The sidebar automatically handles URL pattern matching and active state detection for dynamic routes.
+The sidebar automatically:
+- Extracts parameters from the current route using `useParams`
+- Applies them to all navigation links
+- Handles pattern matching for active states
+- Maintains consistency across navigation
 
 <Canvas of={Stories.DynamicRoutingLayout} />
 
@@ -155,8 +136,6 @@ interface LayoutProps {
   sidebar?: {
     header?: LayoutSidebarHeaderProps
     footer?: LayoutSidebarFooterProps
-    /** Dynamic parameters to pass to all sidebar links */
-    dynamicParams?: Record<string, string>
   }
 }
 ```
@@ -165,7 +144,7 @@ interface LayoutProps {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `sidebar` | `object` | - | Sidebar configuration including header, footer, and dynamic parameters |
+| `sidebar` | `object` | - | Sidebar configuration including header and footer |
 | `children` | `ReactNode` | - | Main content to render |
 
 #### Sidebar Configuration
@@ -174,16 +153,14 @@ interface LayoutProps {
 |------|------|---------|-------------|
 | `header` | `LayoutSidebarHeaderProps` | - | Sidebar header configuration |
 | `footer` | `LayoutSidebarFooterProps` | - | Sidebar footer configuration |
-| `dynamicParams` | `Record<string, string>` | - | Dynamic routing parameters for multi-tenant apps |
 
 ### LayoutSidebarContent
 
-The `LayoutSidebarContent` component now accepts an optional `dynamicParams` prop:
+The `LayoutSidebarContent` component automatically handles dynamic routing:
 
 ```tsx
 interface LayoutSidebarContentProps extends PropsWithChildren {
-  /** Dynamic parameters to pass to all sidebar links */
-  dynamicParams?: Record<string, string>
+  // No manual params needed - automatically extracted from route
 }
 ```
 
@@ -192,22 +169,13 @@ interface LayoutSidebarContentProps extends PropsWithChildren {
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `children` | `ReactNode` | - | Additional sidebar content (secondary actions, etc.) |
-| `dynamicParams` | `Record<string, string>` | `{}` | Dynamic routing parameters for multi-tenant apps |
 
-#### Examples
+#### Usage
 
-**Workspace-based app:**
+The component automatically extracts parameters from the current route:
+
 ```tsx
-<LayoutSidebarContent dynamicParams={{ workspaceId: "workspace-123" }} />
-```
-
-**Tenant-based app:**
-```tsx
-<LayoutSidebarContent dynamicParams={{ tenantId: "tenant-456" }} />
-```
-
-**Simple app:**
-```tsx
+// No configuration needed - just use it
 <LayoutSidebarContent />
 ```
 
@@ -232,6 +200,6 @@ To use dynamic routing with the layout system, configure your routes with the ap
 
 The sidebar will automatically:
 - Generate navigation items from routes with `showInSidebar: true`
-- Handle dynamic parameter substitution in URLs
+- Extract and apply dynamic parameters from the current route
 - Maintain active state for current route
 - Support nested/collapsible navigation structure

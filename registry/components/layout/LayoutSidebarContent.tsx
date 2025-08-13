@@ -1,7 +1,10 @@
-import { Link, useMatches } from '@tanstack/react-router'
-import { ChevronRight } from 'lucide-react'
-
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import { Link, useLocation, useParams } from "@tanstack/react-router";
+import { ChevronRight } from "lucide-react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import {
   SidebarContent,
   SidebarGroup,
@@ -12,33 +15,14 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from '@/components/ui/sidebar'
-import { SidebarItem, useDynamicSidebar } from '@/hooks/useDynamicSidebar'
-import { PropsWithChildren, useMemo } from 'react'
-import { TooltipContent } from '@/components/ui/tooltip'
+} from "@/components/ui/sidebar";
+import { TooltipContent } from "@/components/ui/tooltip";
+import { SidebarItem, useDynamicSidebar } from "@/hooks/useDynamicSidebar";
+import { PropsWithChildren, useMemo } from "react";
 
-interface LayoutSidebarContentProps extends PropsWithChildren {
-  /** Dynamic parameters to pass to all sidebar links */
-  dynamicParams?: Record<string, string>
-}
-
-/**
- * Universal sidebar content component that works with any dynamic routing parameters.
- * 
- * @example
- * // For a workspace-based app:
- * <LayoutSidebarContent dynamicParams={{ workspaceId: "workspace-123" }} />
- * 
- * @example
- * // For a tenant-based app:
- * <LayoutSidebarContent dynamicParams={{ tenantId: "tenant-456" }} />
- * 
- * @example
- * // For a simple app without dynamic parameters:
- * <LayoutSidebarContent />
- */
-export const LayoutSidebarContent = ({ children, dynamicParams = {} }: LayoutSidebarContentProps) => {
-  const sidebarItems = useDynamicSidebar()
+/** Universal sidebar content component without params plumbing. */
+export const LayoutSidebarContent = ({ children }: PropsWithChildren) => {
+  const sidebarItems = useDynamicSidebar();
 
   return (
     <SidebarContent>
@@ -46,11 +30,12 @@ export const LayoutSidebarContent = ({ children, dynamicParams = {} }: LayoutSid
         <SidebarGroupContent>
           <SidebarMenu>
             {sidebarItems.map((item) => (
-              <SidebarItemComponent key={item.key} item={item} dynamicParams={dynamicParams} />
+              <SidebarItemComponent key={item.key} item={item} />
             ))}
           </SidebarMenu>
         </SidebarGroupContent>
       </SidebarGroup>
+
       {children && (
         <SidebarGroup className="mt-auto">
           <SidebarGroupContent>
@@ -59,54 +44,59 @@ export const LayoutSidebarContent = ({ children, dynamicParams = {} }: LayoutSid
         </SidebarGroup>
       )}
     </SidebarContent>
-  )
+  );
+};
+
+// --- utils ---
+function patternToRegex(pattern: string): RegExp {
+  const escaped = pattern.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+  const withParams = escaped.replace(
+    /\\\$[A-Za-z_][A-Za-z0-9_]*/g,
+    "[^/]+"
+  );
+  return new RegExp(`^${withParams}$`);
 }
 
-const CollapsibleSidebarItem = ({
-  item,
-  dynamicParams
-}: {
-  item: SidebarItem
-  dynamicParams: Record<string, string>
-}) => {
-  const matches = useMatches()
+function matchesPattern(pattern: string, pathname: string): boolean {
+  return patternToRegex(pattern).test(pathname);
+}
+
+// --- components ---
+const CollapsibleSidebarItem = ({ item }: { item: SidebarItem }) => {
+  const { pathname } = useLocation();
 
   const defaultOpen = useMemo(() => {
-    return matches.some((match) => {
-      // Check if the current pathname matches the item URL pattern
-      // For dynamic URLs, we need to handle the pattern matching
-      if (item.url.includes('/$')) {
-        // If the item URL contains dynamic parameters, check if current path matches the pattern
-        let urlPattern = item.url
-        // Replace all dynamic parameters with regex patterns
-        Object.keys(dynamicParams).forEach(param => {
-          urlPattern = urlPattern.replace(`/$${param}`, '/[^/]+')
-        })
-        const regex = new RegExp(`^${urlPattern}$`)
-        return regex.test(match.pathname)
-      }
-      return match.pathname === item.url
-    })
-  }, [matches, item.url, dynamicParams])
+    if (matchesPattern(item.url, pathname)) return true;
+    return item.children.some((c) => matchesPattern(c.url, pathname));
+  }, [item.url, item.children, pathname]);
 
   return (
-    <Collapsible asChild className="group/collapsible" defaultOpen={defaultOpen}>
+    <Collapsible
+      asChild
+      className="group/collapsible"
+      defaultOpen={defaultOpen}
+    >
       <SidebarMenuItem>
         <CollapsibleTrigger asChild>
           <SidebarMenuButton
-            tooltip={item.title ? <TooltipContent>{item.title}</TooltipContent> : undefined}
+            tooltip={
+              item.title ? (
+                <TooltipContent>{item.title}</TooltipContent>
+              ) : undefined
+            }
           >
             {item.icon}
             <span className="text-sm">{item.title}</span>
             <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
           </SidebarMenuButton>
         </CollapsibleTrigger>
+
         <CollapsibleContent>
           <SidebarMenuSub>
             {item.children.map((child) => (
-              <Link to={child.url} key={child.url} params={dynamicParams}>
-                {({ isActive }) => (
-                  <SidebarMenuSubItem>
+              <SidebarMenuSubItem key={child.url}>
+                <Link to={child.url}>
+                  {({ isActive }) => (
                     <SidebarMenuSubButton
                       asChild
                       isActive={isActive}
@@ -114,32 +104,27 @@ const CollapsibleSidebarItem = ({
                     >
                       <span className="font-inherit">{child.title}</span>
                     </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                )}
-              </Link>
+                  )}
+                </Link>
+              </SidebarMenuSubItem>
             ))}
           </SidebarMenuSub>
         </CollapsibleContent>
       </SidebarMenuItem>
     </Collapsible>
-  )
-}
+  );
+};
 
-const SidebarItemComponent = ({
-  item,
-  dynamicParams
-}: {
-  item: SidebarItem
-  dynamicParams: Record<string, string>
-}) => {
+const SidebarItemComponent = ({ item }: { item: SidebarItem }) => {
+  const params = useParams({ strict: false });
   if (item.children.length > 0) {
-    return <CollapsibleSidebarItem item={item} dynamicParams={dynamicParams} />
+    return <CollapsibleSidebarItem item={item} />;
   }
 
   return (
-    <Link to={item.url} key={item.url} params={dynamicParams}>
-      {({ isActive }) => (
-        <SidebarMenuItem key={item.key}>
+    <SidebarMenuItem key={item.key}>
+      <Link to={item.url} params={params}>
+        {({ isActive }) => (
           <SidebarMenuButton
             asChild
             isActive={isActive}
@@ -150,8 +135,8 @@ const SidebarItemComponent = ({
               <span>{item.title}</span>
             </span>
           </SidebarMenuButton>
-        </SidebarMenuItem>
-      )}
-    </Link>
-  )
-}
+        )}
+      </Link>
+    </SidebarMenuItem>
+  );
+};

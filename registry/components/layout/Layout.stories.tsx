@@ -96,16 +96,11 @@ const navigation = [
 \`\`\`
 
 ### 3. Dynamic Routing Support
-For multi-tenant or workspace-based applications:
+For multi-tenant or workspace-based applications, the layout automatically handles dynamic parameters through TanStack Router's \`useParams\` hook:
 
 \`\`\`tsx
-// Workspace-based app
-<LayoutSidebarContent dynamicParams={{ workspaceId: "workspace-123" }} />
-
-// Tenant-based app  
-<LayoutSidebarContent dynamicParams={{ tenantId: "tenant-456" }} />
-
-// Simple app without dynamic parameters
+// The sidebar automatically extracts params from the current route
+// No need to manually pass them
 <LayoutSidebarContent />
 \`\`\`
 
@@ -274,7 +269,7 @@ export const DynamicRoutingLayout: Story = {
     docs: {
       description: {
         story:
-          'Layout with dynamic routing support for multi-tenant or workspace-based applications. The sidebar automatically handles URL pattern matching for dynamic parameters.',
+          'Layout with automatic dynamic routing support for multi-tenant or workspace-based applications. The sidebar automatically extracts and uses URL parameters from TanStack Router.',
       },
     },
   },
@@ -295,16 +290,13 @@ export const DynamicRoutingLayout: Story = {
             subtitle: 'Workspace: Acme Corp',
             icon: <HouseIcon />,
           },
-          dynamicParams: {
-            workspaceId: 'workspace-123',
-            tenantId: 'tenant-456'
-          }
         }}
       >
         <div className="p-6">
           <h1 className="text-2xl font-semibold mb-4">Dynamic Routing Example</h1>
           <p className="text-muted-foreground mb-4">
-            This layout demonstrates support for dynamic routing parameters. The sidebar can handle URLs like:
+            This layout demonstrates automatic support for dynamic routing parameters. The sidebar
+            automatically extracts params from URLs like:
           </p>
           <div className="space-y-2 text-sm">
             <div className="p-3 bg-muted rounded-md">
@@ -318,7 +310,8 @@ export const DynamicRoutingLayout: Story = {
             </div>
           </div>
           <p className="text-muted-foreground mt-4">
-            Pass dynamic parameters through the sidebar configuration to enable this functionality.
+            No configuration needed - the sidebar automatically uses TanStack Router's useParams
+            hook to extract and apply dynamic parameters.
           </p>
         </div>
       </Layout>

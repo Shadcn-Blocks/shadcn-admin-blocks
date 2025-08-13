@@ -25,8 +25,6 @@ interface LayoutProps extends LayoutBaseProps {
   sidebar?: {
     footer?: LayoutSidebarFooterProps
     header?: LayoutSidebarHeaderProps
-    /** Dynamic parameters to pass to all sidebar links */
-    dynamicParams?: Record<string, string>
   }
 }
 
@@ -35,7 +33,7 @@ export function Layout({ sidebar, children }: PropsWithChildren<LayoutProps>) {
     <LayoutBase>
       <LayoutSidebar>
         <LayoutSidebarHeader {...sidebar?.header} />
-        <LayoutSidebarContent dynamicParams={sidebar?.dynamicParams} />
+        <LayoutSidebarContent />
         <LayoutSidebarFooter {...sidebar?.footer} />
       </LayoutSidebar>
       <SidebarInset>
