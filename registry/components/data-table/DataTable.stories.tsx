@@ -13,6 +13,7 @@ import { DataTableContent } from '@/components/data-table/DataTableContent'
 import { DataTablePagination } from '@/components/data-table/DataTablePagination'
 import { DataTableFooter } from '@/components/data-table/DataTableFooter'
 import { DataTablePageSwitcher } from '@/components/data-table/DataTablePageSwitcher'
+import { DataTableActiveFilters } from '@/components/data-table/DataTableActiveFilters'
 import dayjs from 'dayjs'
 
 const meta: Meta<typeof DataTable> = {
@@ -175,6 +176,27 @@ const data: Payment[] = Array.from({ length: 123 }, (_, i) => ({
   createdat: dayjs().add(-14, 'day').toISOString(),
 }))
 
+// Data with nullable date fields for testing
+const ordersData: Order[] = Array.from({ length: 150 }, (_, i) => ({
+  id: `ORD-${String(i + 1).padStart(5, '0')}`,
+  customer: emails[i % emails.length] ?? 'unknown@example.com',
+  amount: Math.floor(Math.random() * 5000) + 100,
+  status: statuses[i % statuses.length] ?? 'pending',
+  orderDate: dayjs().add(-30 + Math.floor(Math.random() * 30), 'day').toISOString(),
+  // 30% chance of NULL ship date (not shipped yet)
+  shipDate: Math.random() > 0.3 
+    ? dayjs().add(-20 + Math.floor(Math.random() * 20), 'day').toISOString()
+    : null,
+  // 20% chance of NULL delivery date (not delivered yet)  
+  deliveryDate: Math.random() > 0.2
+    ? dayjs().add(-10 + Math.floor(Math.random() * 10), 'day').toISOString()
+    : null,
+  // 50% chance of NULL cancel date (not cancelled)
+  cancelDate: Math.random() > 0.5
+    ? dayjs().add(-5 + Math.floor(Math.random() * 5), 'day').toISOString()
+    : null,
+}))
+
 type Payment = {
   id: string
   amount: number
@@ -183,43 +205,66 @@ type Payment = {
   createdat: string
 }
 
+type Order = {
+  id: string
+  customer: string
+  amount: number
+  status: 'pending' | 'processing' | 'success' | 'failed'
+  orderDate: string
+  shipDate: string | null
+  deliveryDate: string | null
+  cancelDate: string | null
+}
+
 const columns: DataTableColumn<Payment, any>[] = [
   {
     id: 'status',
     accessorKey: 'status',
     type: 'string',
+    filterable: true,
+    filterType: 'multi-select', // Enable multi-select for status
   },
   {
+    id: 'email',
     accessorKey: 'email',
+    type: 'string',
+    filterable: true,
   },
   {
+    id: 'amount',
     accessorKey: 'amount',
     type: 'number',
+    filterable: true,
   },
   {
+    id: 'createdat',
     accessorKey: 'createdat',
     type: 'date',
+    filterable: true,
   },
   {
     id: 'actions',
     type: 'actions',
-    enableHiding: false,
-    header: () => (
-      <div className="text-center">
-        <Button variant="ghost">Actions</Button>
-      </div>
-    ),
+    header: () => null, // No header text to keep column compact
     cell: () => {
       return (
-        <div className="text-center space-x-2">
-          <Button variant={'outline'} size={'icon'}>
-            <PencilIcon />
+        <div className="flex items-center justify-center gap-2">
+          <Button variant={'outline'} size={'icon'} className="h-7 w-7">
+            <PencilIcon className="h-3.5 w-3.5" />
           </Button>
-          <Button variant="destructive" className=" bg-red-500" size={'sm'}>
-            <Trash />
+          <Button variant="destructive" size={'icon'} className="h-7 w-7">
+            <Trash className="h-3.5 w-3.5" />
           </Button>
         </div>
       )
+      // For single button, the column will auto-size to be narrower:
+      // return (
+      //   <div className="flex items-center justify-center">
+      //     <Button variant={'outline'} size={'icon'} className="h-7 w-7">
+      //       <PencilIcon className="h-3.5 w-3.5" />
+      //     </Button>
+      //   </div>
+      // )
     },
   },
 ]
@@ -359,6 +404,178 @@ export const CustomLayout: Story = {
         Pagination:
         <DataTablePagination />
         <hr />
+      </>
+    ),
+  },
+}
+
+export const WithFilters: Story = {
+  name: '6. With Smart Filters',
+  parameters: {
+    docs: {
+      description: {
+        story: `
+Advanced filtering system with enhanced features:
+- **Single-input date range picker** with dual calendar view (desktop) and single month (mobile)
+- **Multi-select filters** for choosing multiple values at once
+- **Clear buttons** on all filter dropdowns for easy reset
+- **Range filters** for numbers (shows actual min/max from data)
+- **Smart text filters** that switch between select and search based on unique values
+- **Boolean toggles** for true/false columns
+- **Server-side filtering** via SQL queries for performance
+
+Try clicking the filter icons next to column headers!
+        `,
+      },
+    },
+  },
+  args: {
+    datasource,
+    query,
+    columns,
+    enableFilters: true,
+    children: (
+      <>
+        <div className="flex items-center justify-between py-4">
+          <div className="text-sm text-muted-foreground">
+            Click the filter icons next to column headers to see the improved filters with clear buttons
+          </div>
+          <DataTableToolbar />
+        </div>
+        <div className="rounded-md border">
+          <DataTableContent />
+        </div>
+        <DataTableFooter />
+      </>
+    ),
+  },
+}
+
+// Order columns with nullable date fields
+const orderColumns: DataTableColumn<Order, any>[] = [
+  {
+    id: 'id',
+    accessorKey: 'id',
+    type: 'string',
+  },
+  {
+    id: 'customer',
+    accessorKey: 'customer',
+    type: 'string',
+  },
+  {
+    id: 'amount',
+    accessorKey: 'amount',
+    type: 'number',
+    format: '0,0.00',
+  },
+  {
+    id: 'status',
+    accessorKey: 'status',
+    type: 'string',
+  },
+  {
+    id: 'orderDate',
+    accessorKey: 'orderDate',
+    type: 'date',
+  },
+  {
+    id: 'shipDate',
+    accessorKey: 'shipDate',
+    type: 'date',
+  },
+  {
+    id: 'deliveryDate',
+    accessorKey: 'deliveryDate',
+    type: 'date',
+  },
+  {
+    id: 'cancelDate',
+    accessorKey: 'cancelDate',
+    type: 'date',
+  },
+]
+
+const ordersDatasource = new StaticDataSource({ orders: ordersData })
+const ordersQuery = Q.select().from('orders')
+
+export const WithMultiSelectFilters: Story = {
+  name: '7. Multi-Select Filtering',
+  parameters: {
+    docs: {
+      description: {
+        story: `
+Demonstrates the enhanced filtering capabilities:
+- **Multi-select dropdown** for Status column - select multiple statuses at once
+- **Single-input date range picker** that shows both dates in one field
+- **Responsive calendar** - dual month view on desktop, single on mobile  
+- **Number range filters** with quick percentage presets
+- **Clear buttons** on all filters for easy reset
+- **Active filters bar** showing all applied filters
+
+Click the filter icons and try selecting multiple values!
+        `,
+      },
+    },
+  },
+  args: {
+    datasource,
+    query,
+    columns,
+    enableFilters: true,
+    children: (
+      <>
+        <DataTableActiveFilters columns={columns} />
+        <div className="flex items-center justify-between py-4">
+          <div className="text-sm text-muted-foreground">
+            Try the multi-select filter on Status column!
+          </div>
+          <DataTableToolbar />
+        </div>
+        <div className="rounded-md border">
+          <DataTableContent />
+        </div>
+        <DataTableFooter />
+      </>
+    ),
+  },
+}
+
+export const WithNullableDates: StoryObj<typeof DataTable<Order>> = {
+  name: '8. With Nullable Date Columns',
+  parameters: {
+    docs: {
+      description: {
+        story: `
+Table with nullable date columns showing proper handling of NULL values:
+- **Order Date** - Always has a value
+- **Ship Date** - NULL for unshipped orders (30% of records)
+- **Delivery Date** - NULL for undelivered orders (20% of records)
+- **Cancel Date** - NULL for non-cancelled orders (50% of records)
+
+NULL dates are displayed as "-" instead of "Invalid Date".
+Range filters properly handle NULL values in date columns.
+        `,
+      },
+    },
+  },
+  args: {
+    datasource: ordersDatasource,
+    query: ordersQuery,
+    columns: orderColumns,
+    enableFilters: true,
+    children: (
+      <>
+        <div className="flex items-center justify-between py-4">
+          <div className="text-sm text-muted-foreground">
+            Notice how NULL dates display as "-" instead of "Invalid Date"
+          </div>
+          <DataTableToolbar />
+        </div>
+        <div className="rounded-md border">
+          <DataTableContent />
+        </div>
+        <DataTableFooter />
       </>
     ),
   },
