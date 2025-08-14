@@ -3,10 +3,10 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
-import { SidebarInset, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
+import { SidebarInset } from '@/components/ui/sidebar'
 import type { Meta, StoryObj } from '@storybook/react'
 import { Link } from '@tanstack/react-router'
-import { BadgeCheck, Bell, CreditCard, HouseIcon, LifeBuoy, Send, Sparkles } from 'lucide-react'
+import { BadgeCheck, Bell, Building2, CreditCard, HouseIcon, Sparkles } from 'lucide-react'
 import { Fragment } from 'react/jsx-runtime'
 import { Layout, LayoutBase } from '@/components/layout/Layout'
 import { LayoutContent } from '@/components/layout/LayoutContent'
@@ -174,8 +174,8 @@ export const SimpleLayout: Story = {
 }
 
 const workspacesData: Workspace[] = [
-  { id: 'acme-inc', name: 'Acme Inc', logo: LifeBuoy, plan: 'Enterprise' },
-  { id: 'beta-co', name: 'Beta Co', logo: Send, plan: 'Pro' },
+  { id: 'acme-inc', name: 'Acme Inc', logo: Building2, plan: 'Enterprise' },
+  { id: 'beta-co', name: 'Beta Co', logo: Building2, plan: 'Pro' },
 ]
 
 const CustomLayoutStoryContent: FC = () => (
@@ -186,23 +186,7 @@ const CustomLayoutStoryContent: FC = () => (
           <WorkspaceSwitch />
         </LayoutSidebarHeader>
         <LayoutSidebarContent>
-          {/* Bottom Menu Items */}
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <Link to="/">
-                <LifeBuoy />
-                Support
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <Link to="/">
-                <Send />
-                Feedback
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
+          {/* Navigation items would go here */}
         </LayoutSidebarContent>
         <LayoutSidebarFooter
           user={{
