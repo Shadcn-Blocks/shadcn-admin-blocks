@@ -67,14 +67,14 @@ export const DataTableFilterDropdown: React.FC<DataTableFilterDropdownProps> = (
   }, [value, extractFilterValue])
   
   // Check if column is filterable
-  const isFilterable = column.filterable !== false && 
+  const isFilterable = ('filterable' in column ? column.filterable !== false : true) && 
     (!('type' in column) || column.type !== 'actions')
   
   if (!isFilterable) {
     return null
   }
 
-  const filterType = column.filterType || getDefaultFilterType(column)
+  const filterType = ('filterType' in column ? column.filterType : null) || getDefaultFilterType(column)
   
   // Don't show filter for 'none' type
   if (filterType === 'none') {
@@ -87,7 +87,7 @@ export const DataTableFilterDropdown: React.FC<DataTableFilterDropdownProps> = (
     (actualValue.value !== undefined) || 
     (actualValue.from !== undefined) || 
     (actualValue.to !== undefined) || 
-    (actualValue.values?.length > 0)
+    (actualValue.values && actualValue.values.length > 0)
   )
 
   const handleFilterChange = (newValue: FilterValue | null) => {
@@ -119,7 +119,7 @@ export const DataTableFilterDropdown: React.FC<DataTableFilterDropdownProps> = (
           column={column}
           datasource={datasource}
           query={query}
-          value={localValue}
+          value={localValue || undefined}
           onChange={handleFilterChange}
         />
       )
@@ -132,7 +132,7 @@ export const DataTableFilterDropdown: React.FC<DataTableFilterDropdownProps> = (
             column={column}
             datasource={datasource}
             query={query}
-            value={localValue}
+            value={localValue || undefined}
             onChange={handleFilterChange}
           />
         )
@@ -144,7 +144,7 @@ export const DataTableFilterDropdown: React.FC<DataTableFilterDropdownProps> = (
             column={column}
             datasource={datasource}
             query={query}
-            value={localValue}
+            value={localValue || undefined}
             onChange={handleFilterChange}
           />
         )
@@ -155,7 +155,7 @@ export const DataTableFilterDropdown: React.FC<DataTableFilterDropdownProps> = (
             column={column}
             datasource={datasource}
             query={query}
-            value={localValue}
+            value={localValue || undefined}
             onChange={handleFilterChange}
           />
         )
@@ -166,7 +166,7 @@ export const DataTableFilterDropdown: React.FC<DataTableFilterDropdownProps> = (
             column={column}
             datasource={datasource}
             query={query}
-            value={localValue}
+            value={localValue || undefined}
             onChange={handleFilterChange}
           />
         )
@@ -175,13 +175,13 @@ export const DataTableFilterDropdown: React.FC<DataTableFilterDropdownProps> = (
         return (
           <ToggleFilter
             column={column}
-            value={localValue}
+            value={localValue || undefined}
             onChange={handleFilterChange}
           />
         )
       
       case 'custom':
-        if (column.filterOptions?.renderFilter) {
+        if ('filterOptions' in column && column.filterOptions?.renderFilter) {
           return column.filterOptions.renderFilter({
             column,
             datasource,
@@ -214,7 +214,7 @@ export const DataTableFilterDropdown: React.FC<DataTableFilterDropdownProps> = (
     if (actualValue.value !== undefined) {
       return `Value: ${actualValue.value}`
     }
-    if (actualValue.values?.length > 0) {
+    if (actualValue.values && actualValue.values.length > 0) {
       return `${actualValue.values.length} values selected`
     }
     return 'Active'
@@ -227,9 +227,9 @@ export const DataTableFilterDropdown: React.FC<DataTableFilterDropdownProps> = (
           variant="ghost"
           size="sm"
           className={cn(
-            "h-9 w-9 p-0 relative group",
-            "md:h-9 md:w-9", // Desktop size
-            "touch:h-11 touch:w-11", // Mobile touch target (44px)
+            "h-8 w-8 p-0 relative group",
+            "md:h-8 md:w-8", // Desktop size
+            "touch:h-10 touch:w-10", // Mobile touch target
             hasFilter && "text-primary"
           )}
           aria-label={`Filter ${columnName}${hasFilter ? ` (${getFilterDescription()})` : ''}`}

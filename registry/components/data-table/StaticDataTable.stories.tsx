@@ -4,7 +4,7 @@ import { DataTableToolbar } from '@/components/data-table/DataTableToolbar'
 import { DataTableContent } from '@/components/data-table/DataTableContent'
 import { DataTableFooter } from '@/components/data-table/DataTableFooter'
 import { Button } from '@/components/ui/button'
-import { PencilIcon, TrashIcon } from 'lucide-react'
+import { PencilIcon, TrashIcon, Users, Building2, DollarSign, CheckCircle } from 'lucide-react'
 
 const meta: Meta<typeof StaticDataTable> = {
   component: StaticDataTable,
@@ -65,8 +65,8 @@ export const WithHeaders: Story = {
       { firstName: 'Charlie', userAge: 35 },
     ],
     columns: [
-      { accessorKey: 'firstName', header: 'Name' },
-      { accessorKey: 'userAge', header: 'Age' },
+      { accessorKey: 'firstName', title: 'Full Name' },
+      { accessorKey: 'userAge', title: 'Age (Years)' },
     ],
   },
 }
@@ -148,9 +148,9 @@ export const WithColors: Story = {
   },
 }
 
-// Story 6: With Search Bar
+// Story 6: With Tool Bar
 export const WithSearch: Story = {
-  name: '6. With Search Bar',
+  name: '6. With Tool Bar',
   args: {
     data: [
       { name: 'Alice Johnson', role: 'Developer' },
@@ -182,12 +182,33 @@ export const EmployeeList: Story = {
       { id: 5, name: 'Eve', department: 'HR', salary: 60000 },
     ],
     columns: [
-      { accessorKey: 'id', header: 'ID' },
-      { accessorKey: 'name', header: 'Name' },
-      { accessorKey: 'department', header: 'Department' },
+      { accessorKey: 'id', title: 'ID' },
+      {
+        accessorKey: 'name',
+        title: (
+          <>
+            <Users className="w-4 h-4 inline mr-1" />
+            Employee Name
+          </>
+        ),
+      },
+      {
+        accessorKey: 'department',
+        title: (
+          <>
+            <Building2 className="w-4 h-4 inline mr-1" />
+            Department
+          </>
+        ),
+      },
       {
         accessorKey: 'salary',
-        header: 'Salary',
+        title: (
+          <>
+            <DollarSign className="w-4 h-4 inline mr-1" />
+            Annual Salary
+          </>
+        ),
         cell: ({ row }) => {
           const salary = row.getValue('salary') as number
           return `$${salary?.toLocaleString() || 0}`
@@ -210,7 +231,7 @@ export const TodoList: Story = {
     columns: [
       {
         accessorKey: 'done',
-        header: '✓',
+        title: <CheckCircle className="w-4 h-4" />,
         cell: ({ row }) => (
           <input
             type="checkbox"
@@ -221,14 +242,14 @@ export const TodoList: Story = {
       },
       {
         accessorKey: 'task',
-        header: 'Task',
+        title: 'Task Description',
         cell: ({ row }) => (
           <span className={row.original['done'] ? 'line-through opacity-50' : ''}>
             {row.getValue('task')}
           </span>
         ),
       },
-      { accessorKey: 'due', header: 'Due' },
+      { accessorKey: 'due', title: 'Due Date' },
     ],
   },
 }

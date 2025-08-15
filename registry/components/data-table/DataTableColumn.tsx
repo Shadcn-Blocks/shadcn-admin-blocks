@@ -71,6 +71,8 @@ export interface FilterOptions {
 
 // Base column type with filter properties - using intersection type instead of extends
 type DataTableColumnBase<Data, Value = unknown> = ColumnDef<Data, Value> & {
+  id?: string
+  title?: React.ReactNode
   filterable?: boolean
   filterType?: FilterType
   filterOptions?: FilterOptions
@@ -78,24 +80,19 @@ type DataTableColumnBase<Data, Value = unknown> = ColumnDef<Data, Value> & {
 
 export type DataTableColumnString<Data, Value = unknown> = DataTableColumnBase<Data, Value> & {
   type: 'string'
-  id?: string
 }
 export type DataTableColumnNumber<Data, Value = unknown> = DataTableColumnBase<Data, Value> & {
   type: 'number'
   format?: string // e.g. '0,0.00' for 1,000.00
-  id?: string
 }
 export type DataTableColumnDate<Data, Value = unknown> = DataTableColumnBase<Data, Value> & {
   type: 'date'
-  id?: string
 }
 export type DataTableColumnBoolean<Data, Value = unknown> = DataTableColumnBase<Data, Value> & {
   type: 'boolean'
-  id?: string
 }
 export type DataTableColumnActions<Data, Value = unknown> = DataTableColumnBase<Data, Value> & {
   type: 'actions'
-  id?: string
 }
 
 export type DataTableColumn<Data, Value = unknown> =
@@ -143,7 +140,7 @@ export const mapColumn = <Data, Value>(
       const FilterDropdown = context?.FilterDropdown
 
       return (
-        <div className="flex items-center justify-center gap-1">
+        <div className="flex items-center justify-center gap-0.5">
           <Button
             variant="ghost"
             onClick={({ shiftKey }) => {
@@ -151,10 +148,11 @@ export const mapColumn = <Data, Value>(
                 ? tableColumn.clearSorting()
                 : tableColumn.toggleSorting(tableColumn.getIsSorted() === 'asc', shiftKey)
             }}
-            className="h-auto py-1"
+            className="h-auto py-1 pr-1"
           >
             <span className="flex items-center gap-1">
-              {('id' in column && column.id) ||
+              {('title' in column && column.title) ||
+                ('id' in column && column.id) ||
                 ('accessorKey' in column && String(column.accessorKey)) ||
                 'Column'}
               {!tableColumn.getIsSorted() && <ChevronsUpDownIcon className="h-4 w-4" />}

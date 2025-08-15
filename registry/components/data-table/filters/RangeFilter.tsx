@@ -137,7 +137,7 @@ export const RangeFilter: React.FC<RangeFilterProps> = ({
           })}
           min={metadata?.min as number}
           max={metadata?.max as number}
-          step={column.filterOptions?.step}
+          step={'filterOptions' in column && column.filterOptions ? column.filterOptions.step : undefined}
           className="flex-1"
         />
         <Input
@@ -150,7 +150,7 @@ export const RangeFilter: React.FC<RangeFilterProps> = ({
           })}
           min={localValue.from || (metadata?.min as number)}
           max={metadata?.max as number}
-          step={column.filterOptions?.step}
+          step={'filterOptions' in column && column.filterOptions ? column.filterOptions.step : undefined}
           className="flex-1"
         />
       </div>
@@ -203,9 +203,9 @@ export const RangeFilter: React.FC<RangeFilterProps> = ({
 
 
       {/* Custom presets from column options */}
-      {column.filterOptions?.presets && (
+      {'filterOptions' in column && column.filterOptions?.presets && (
         <div className="flex gap-1 flex-wrap">
-          {column.filterOptions.presets.map((preset, index) => (
+          {column.filterOptions.presets.map((preset: any, index: number) => (
             <Button
               key={index}
               size="sm"

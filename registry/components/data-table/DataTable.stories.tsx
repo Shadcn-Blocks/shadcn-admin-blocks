@@ -3,7 +3,7 @@
 import { StaticDataSource } from '@/lib/data-sources'
 import { Q } from '@jakub.knejzlik/ts-query'
 import type { Meta, StoryObj } from '@storybook/react'
-import { PencilIcon, Trash } from 'lucide-react'
+import { PencilIcon, Trash, DollarSign, Mail, Calendar, Hash } from 'lucide-react'
 import { DataTable } from '@/components/data-table/DataTable'
 import { StaticDataTable } from '@/components/data-table/StaticDataTable'
 import { Button } from '@/components/ui/button'
@@ -220,6 +220,7 @@ const columns: DataTableColumn<Payment, any>[] = [
   {
     id: 'status',
     accessorKey: 'status',
+    title: 'Payment Status',
     type: 'string',
     filterable: true,
     filterType: 'multi-select', // Enable multi-select for status
@@ -227,18 +228,21 @@ const columns: DataTableColumn<Payment, any>[] = [
   {
     id: 'email',
     accessorKey: 'email',
+    title: 'Customer Email',
     type: 'string',
     filterable: true,
   },
   {
     id: 'amount',
     accessorKey: 'amount',
+    title: 'Amount',
     type: 'number',
     filterable: true,
   },
   {
     id: 'createdat',
     accessorKey: 'createdat',
+    title: 'Created Date',
     type: 'date',
     filterable: true,
   },
@@ -290,9 +294,9 @@ export const SimplestTable: Story = {
         { name: 'Charlie', age: 35, role: 'Manager' },
       ]}
       columns={[
-        { accessorKey: 'name', header: 'Name' },
-        { accessorKey: 'age', header: 'Age' },
-        { accessorKey: 'role', header: 'Role' },
+        { accessorKey: 'name', title: 'Name' },
+        { accessorKey: 'age', title: 'Age' },
+        { accessorKey: 'role', title: 'Role' },
       ]}
     />
   ),
@@ -456,42 +460,50 @@ const orderColumns: DataTableColumn<Order, any>[] = [
   {
     id: 'id',
     accessorKey: 'id',
+    title: 'Order ID',
     type: 'string',
   },
   {
     id: 'customer',
     accessorKey: 'customer',
+    title: 'Customer Name',
     type: 'string',
   },
   {
     id: 'amount',
     accessorKey: 'amount',
+    title: 'Total Amount',
     type: 'number',
     format: '0,0.00',
   },
   {
     id: 'status',
     accessorKey: 'status',
+    title: 'Order Status',
     type: 'string',
   },
   {
     id: 'orderDate',
     accessorKey: 'orderDate',
+    title: 'Order Date',
     type: 'date',
   },
   {
     id: 'shipDate',
     accessorKey: 'shipDate',
+    title: 'Ship Date',
     type: 'date',
   },
   {
     id: 'deliveryDate',
     accessorKey: 'deliveryDate',
+    title: 'Delivery Date',
     type: 'date',
   },
   {
     id: 'cancelDate',
     accessorKey: 'cancelDate',
+    title: 'Cancel Date',
     type: 'date',
   },
 ]
@@ -571,6 +583,100 @@ Range filters properly handle NULL values in date columns.
             Notice how NULL dates display as "-" instead of "Invalid Date"
           </div>
           <DataTableToolbar />
+        </div>
+        <div className="rounded-md border">
+          <DataTableContent />
+        </div>
+        <DataTableFooter />
+      </>
+    ),
+  },
+}
+
+// Example columns with React element titles
+const columnsWithIcons: DataTableColumn<Payment, any>[] = [
+  {
+    id: 'id',
+    accessorKey: 'id',
+    title: <><Hash className="w-4 h-4 inline mr-1" />ID</>,
+    type: 'string',
+  },
+  {
+    id: 'status',
+    accessorKey: 'status',
+    title: 'Status',
+    type: 'string',
+    filterable: true,
+    filterType: 'multi-select',
+  },
+  {
+    id: 'email',
+    accessorKey: 'email',
+    title: <><Mail className="w-4 h-4 inline mr-1" />Email</>,
+    type: 'string',
+    filterable: true,
+  },
+  {
+    id: 'amount',
+    accessorKey: 'amount',
+    title: <><DollarSign className="w-4 h-4 inline mr-1" />Amount</>,
+    type: 'number',
+    filterable: true,
+  },
+  {
+    id: 'createdat',
+    accessorKey: 'createdat',
+    title: <><Calendar className="w-4 h-4 inline mr-1" />Date</>,
+    type: 'date',
+    filterable: true,
+  },
+  {
+    id: 'actions',
+    type: 'actions',
+    title: 'Actions',
+    header: () => null,
+    cell: () => {
+      return (
+        <div className="flex items-center justify-center gap-2">
+          <Button variant={'outline'} size={'icon'} className="h-7 w-7">
+            <PencilIcon className="h-3.5 w-3.5" />
+          </Button>
+          <Button variant="destructive" size={'icon'} className="h-7 w-7">
+            <Trash className="h-3.5 w-3.5" />
+          </Button>
+        </div>
+      )
+    },
+  },
+]
+
+export const WithCustomTitles: Story = {
+  name: '9. Custom Column Titles',
+  parameters: {
+    docs: {
+      description: {
+        story: `
+Demonstrates custom column titles with React elements:
+- **Simple text titles** - Override the default column ID display
+- **Icons in headers** - Add icons or other React elements to column headers
+- **Preserved functionality** - Sorting and filtering still work with custom titles
+
+The \`title\` property accepts any React node, allowing full customization of the column header text.
+        `,
+      },
+    },
+  },
+  args: {
+    datasource,
+    query,
+    columns: columnsWithIcons,
+    enableFilters: true,
+    children: (
+      <>
+        <div className="flex items-center justify-between py-4">
+          <div className="text-sm text-muted-foreground">
+            Column headers now display custom titles with icons instead of raw field names
+          </div>
         </div>
         <div className="rounded-md border">
           <DataTableContent />
