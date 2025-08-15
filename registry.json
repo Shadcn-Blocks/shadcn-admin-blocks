@@ -96,11 +96,16 @@
           "path": "registry/components/data-table/DataTableToolbar.tsx",
           "type": "registry:component"
         },
+        {
+          "path": "registry/components/data-table/StaticDataTable.tsx",
+          "type": "registry:component"
+        },
         { "path": "registry/lib/data-sources/database-metadata.ts", "type": "registry:lib" },
         { "path": "registry/lib/data-sources/DataSource.ts", "type": "registry:lib" },
         { "path": "registry/lib/data-sources/index.ts", "type": "registry:lib" },
         { "path": "registry/lib/data-sources/static-database.ts", "type": "registry:lib" },
-        { "path": "registry/lib/data-sources/StaticDataSource.ts", "type": "registry:lib" }
+        { "path": "registry/lib/data-sources/StaticDataSource.ts", "type": "registry:lib" },
+        { "path": "registry/components/feedback/Spin.tsx", "type": "registry:component" }
       ]
     },
     {
@@ -128,7 +133,10 @@
         { "path": "registry/components/form/FormFieldTextarea.tsx", "type": "registry:component" },
         { "path": "registry/components/form/FormFieldSelect.tsx", "type": "registry:component" },
         { "path": "registry/components/form/FormFieldCheckbox.tsx", "type": "registry:component" },
-        { "path": "registry/components/form/FormFieldDatePicker.tsx", "type": "registry:component" },
+        {
+          "path": "registry/components/form/FormFieldDatePicker.tsx",
+          "type": "registry:component"
+        },
         { "path": "registry/components/form/FormFieldNumber.tsx", "type": "registry:component" },
         { "path": "registry/components/form/FormDatePicker.tsx", "type": "registry:component" },
         { "path": "registry/components/form/index.ts", "type": "registry:component" },

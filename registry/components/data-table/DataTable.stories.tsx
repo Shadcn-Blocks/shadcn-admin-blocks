@@ -5,6 +5,7 @@ import { Q } from '@jakub.knejzlik/ts-query'
 import type { Meta, StoryObj } from '@storybook/react'
 import { PencilIcon, Trash } from 'lucide-react'
 import { DataTable } from '@/components/data-table/DataTable'
+import { StaticDataTable } from '@/components/data-table/StaticDataTable'
 import { Button } from '@/components/ui/button'
 import { DataTableColumn } from '@/components/data-table/DataTableColumn'
 import { DataTableToolbar } from '@/components/data-table/DataTableToolbar'
@@ -66,6 +67,27 @@ npx shadcn add https://raw.githubusercontent.com/Shadcn-Blocks/shadcn-admin-bloc
 
 ### 1. Simplest Possible Table
 Start with the most basic setup - perfect for prototyping:
+
+\`\`\`tsx
+// Using StaticDataTable - the easiest way!
+import { StaticDataTable } from '@/components/data-table/StaticDataTable'
+
+const data = [
+  { name: 'Alice', age: 30 },
+  { name: 'Bob', age: 25 },
+  { name: 'Charlie', age: 35 },
+]
+
+<StaticDataTable 
+  data={data}
+  columns={[
+    { accessorKey: 'name' },
+    { accessorKey: 'age' },
+  ]}
+/>
+\`\`\`
+
+Or using DataTable with StaticDataSource:
 
 \`\`\`tsx
 const users = [
@@ -204,6 +226,32 @@ const columns: DataTableColumn<Payment, any>[] = [
 
 const datasource = new StaticDataSource({ table: data })
 const query = Q.select().from('table')
+
+export const SimplestTable: Story = {
+  name: '0. Simplest Table (StaticDataTable)',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The absolute simplest way to create a table using StaticDataTable. Just pass data and columns - no datasource or query needed!',
+      },
+    },
+  },
+  render: () => (
+    <StaticDataTable
+      data={[
+        { name: 'Alice', age: 30, role: 'Developer' },
+        { name: 'Bob', age: 25, role: 'Designer' },
+        { name: 'Charlie', age: 35, role: 'Manager' },
+      ]}
+      columns={[
+        { accessorKey: 'name', header: 'Name' },
+        { accessorKey: 'age', header: 'Age' },
+        { accessorKey: 'role', header: 'Role' },
+      ]}
+    />
+  ),
+}
 
 export const BasicTable: Story = {
   name: '1. Basic Table',

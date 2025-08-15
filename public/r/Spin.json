@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "Spin",
+  "type": "registry:block",
+  "title": "Spin",
+  "description": "A feedback spinner component that displays a loading overlay with spinner over its child content.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/components/feedback/Spin.tsx",
+      "content": "import * as React from 'react'\nimport { cn } from '@/lib/utils'\nimport { LoadingSpinner } from '@/components/layout/LoadingSpinner'\n\nexport interface SpinProps {\n  children: React.ReactNode\n  spinning?: boolean\n  className?: string\n  overlayClassName?: string\n  spinnerClassName?: string\n  spinnerSize?: number\n  blur?: boolean\n}\n\nexport const Spin = React.forwardRef<HTMLDivElement, SpinProps>(\n  (\n    {\n      children,\n      spinning = false,\n      className,\n      overlayClassName,\n      spinnerClassName,\n      spinnerSize = 24,\n      blur = true,\n      ...props\n    },\n    ref\n  ) => {\n    return (\n      <div ref={ref} className={cn('relative', className)} {...props}>\n        {children}\n        {spinning && (\n          <div\n            className={cn(\n              'absolute inset-0 flex items-center justify-center bg-background/50',\n              blur && 'backdrop-blur-xs',\n              overlayClassName\n            )}\n          >\n            <LoadingSpinner size={spinnerSize} className={cn('text-primary', spinnerClassName)} />\n          </div>\n        )}\n      </div>\n    )\n  }\n)\n\nSpin.displayName = 'Spin'\n",
+      "type": "registry:component"
+    },
+    {
+      "path": "registry/components/layout/LoadingSpinner.tsx",
+      "content": "import { cn } from '@/lib/utils'\n\nexport interface ISVGProps extends React.SVGProps<SVGSVGElement> {\n  size?: number\n  className?: string\n}\n\nexport const LoadingSpinner = ({\n  size = 24,\n  className,\n  ...props\n}: ISVGProps) => {\n  return (\n    <svg\n      xmlns=\"http://www.w3.org/2000/svg\"\n      width={size}\n      height={size}\n      {...props}\n      viewBox=\"0 0 24 24\"\n      fill=\"none\"\n      stroke=\"currentColor\"\n      strokeWidth=\"2\"\n      strokeLinecap=\"round\"\n      strokeLinejoin=\"round\"\n      className={cn('animate-spin', className)}>\n      <path d=\"M21 12a9 9 0 1 1-6.219-8.56\" />\n    </svg>\n  )\n}\n",
+      "type": "registry:component"
+    }
+  ]
+}
