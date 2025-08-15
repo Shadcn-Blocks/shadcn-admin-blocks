@@ -54,7 +54,6 @@ export const createDatabaseMetadata = ({
                 col
                   .normalize('NFD')
                   .replace(/[\u0300-\u036f]/g, '')
-                  .toLowerCase()
                   .replace(/\s|[^\w]/g, '_') || `column_${i}`,
               label: col,
               type: overrideColumnMapping?.[type] || type,
