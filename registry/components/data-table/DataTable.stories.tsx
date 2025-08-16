@@ -173,7 +173,7 @@ const data: Payment[] = Array.from({ length: 123 }, (_, i) => ({
   amount: Math.floor(Math.random() * 1000) + 100,
   status: statuses[i % statuses.length] ?? 'pending',
   email: emails[i % emails.length] ?? 'unknown@example.com',
-  createdat: dayjs().add(-14, 'day').toISOString(),
+  createdat: dayjs().add(-Math.floor(Math.random() * 60), 'day').toISOString(), // Random date within last 60 days
 }))
 
 // Data with nullable date fields for testing

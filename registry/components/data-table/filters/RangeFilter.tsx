@@ -155,51 +155,6 @@ export const RangeFilter: React.FC<RangeFilterProps> = ({
         />
       </div>
 
-      {/* Quick presets for numbers */}
-      {isNumber && metadata?.min !== undefined && metadata?.max !== undefined && (
-        <div className="flex gap-1 flex-wrap">
-          <Button
-            size="sm"
-            variant="outline"
-            className="h-7 text-xs"
-            onClick={() => {
-              const min = metadata.min as number
-              const max = metadata.max as number
-              const quarter = min + (max - min) * 0.25
-              setLocalValue({ from: min, to: quarter })
-            }}
-          >
-            Bottom 25%
-          </Button>
-          <Button
-            size="sm"
-            variant="outline"
-            className="h-7 text-xs"
-            onClick={() => {
-              const min = metadata.min as number
-              const max = metadata.max as number
-              const q1 = min + (max - min) * 0.25
-              const q3 = min + (max - min) * 0.75
-              setLocalValue({ from: q1, to: q3 })
-            }}
-          >
-            Middle 50%
-          </Button>
-          <Button
-            size="sm"
-            variant="outline"
-            className="h-7 text-xs"
-            onClick={() => {
-              const min = metadata.min as number
-              const max = metadata.max as number
-              const q3 = min + (max - min) * 0.75
-              setLocalValue({ from: q3, to: max })
-            }}
-          >
-            Top 25%
-          </Button>
-        </div>
-      )}
 
 
       {/* Custom presets from column options */}
