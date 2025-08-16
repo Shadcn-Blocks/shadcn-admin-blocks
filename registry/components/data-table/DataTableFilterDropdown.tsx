@@ -121,6 +121,7 @@ export const DataTableFilterDropdown: React.FC<DataTableFilterDropdownProps> = (
           query={query}
           value={localValue || undefined}
           onChange={handleFilterChange}
+          isOpen={open}
         />
       )
     }
@@ -134,6 +135,7 @@ export const DataTableFilterDropdown: React.FC<DataTableFilterDropdownProps> = (
             query={query}
             value={localValue || undefined}
             onChange={handleFilterChange}
+            isOpen={open}
           />
         )
       
@@ -146,6 +148,7 @@ export const DataTableFilterDropdown: React.FC<DataTableFilterDropdownProps> = (
             query={query}
             value={localValue || undefined}
             onChange={handleFilterChange}
+            isOpen={open}
           />
         )
       
@@ -157,6 +160,7 @@ export const DataTableFilterDropdown: React.FC<DataTableFilterDropdownProps> = (
             query={query}
             value={localValue || undefined}
             onChange={handleFilterChange}
+            isOpen={open}
           />
         )
       
@@ -168,6 +172,7 @@ export const DataTableFilterDropdown: React.FC<DataTableFilterDropdownProps> = (
             query={query}
             value={localValue || undefined}
             onChange={handleFilterChange}
+            isOpen={open}
           />
         )
       

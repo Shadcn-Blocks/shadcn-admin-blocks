@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { X, Search } from 'lucide-react'
-import { DataTableColumn, FilterMetadata, FilterValue } from '@/components/data-table/DataTableColumn'
+import { DataTableColumn, FilterValue, FilterMetadata } from '@/components/data-table/DataTableColumn'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
@@ -10,6 +10,7 @@ import { StaticDataSource } from '@/lib/data-sources'
 import { SelectQuery } from '@jakub.knejzlik/ts-query'
 import { FilterMetadataService } from '@/components/data-table/services/FilterMetadataService'
 import { cn } from '@/lib/utils'
+import { useQuery } from '@tanstack/react-query'
 
 export interface MultiSelectFilterProps {
   column: DataTableColumn<any, any>
@@ -17,6 +18,7 @@ export interface MultiSelectFilterProps {
   query?: SelectQuery
   value?: FilterValue
   onChange: (value: FilterValue | null) => void
+  isOpen?: boolean
 }
 
 export const MultiSelectFilter: React.FC<MultiSelectFilterProps> = ({
@@ -24,30 +26,30 @@ export const MultiSelectFilter: React.FC<MultiSelectFilterProps> = ({
   datasource,
   query,
   value,
-  onChange
+  onChange,
+  isOpen = false
 }) => {
-  const [metadata, setMetadata] = React.useState<FilterMetadata>()
-  const [loading, setLoading] = React.useState(true)
   const [searchTerm, setSearchTerm] = React.useState('')
   const [selectedValues, setSelectedValues] = React.useState<Set<string>>(
     new Set(value?.values || [])
   )
 
-  // Fetch metadata
-  React.useEffect(() => {
-    if (!datasource || !query) {
-      setLoading(false)
-      return
-    }
+  // Get column id for query key
+  const columnId = ('id' in column && column.id) || 
+    ('accessorKey' in column && String(column.accessorKey)) || 'unknown'
 
-    FilterMetadataService.fetchMetadata(datasource, query, column)
-      .then(setMetadata)
-      .catch(error => {
-        console.warn('Failed to fetch filter metadata:', error)
-        setMetadata({})
-      })
-      .finally(() => setLoading(false))
-  }, [datasource, query, column])
+  // Use React Query for metadata fetching
+  const { data: metadata = {} as FilterMetadata, isLoading: loading } = useQuery<FilterMetadata>({
+    queryKey: ['filter-metadata', query?.toSQL(), columnId],
+    queryFn: async () => {
+      if (!datasource || !query) return {} as FilterMetadata
+      return FilterMetadataService.fetchMetadata(datasource, query, column)
+    },
+    // Enable query when dropdown is open or when we have existing values
+    enabled: !!datasource && !!query && (isOpen || (!!value?.values && value.values.length > 0)),
+    staleTime: 5 * 60 * 1000, // Consider data stale after 5 minutes
+    gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes (formerly cacheTime)
+  })
 
   // Update selected values when prop changes
   React.useEffect(() => {

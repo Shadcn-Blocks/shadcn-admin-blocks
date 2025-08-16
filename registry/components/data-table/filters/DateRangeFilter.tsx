@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { X } from 'lucide-react'
 import { DateRange } from 'react-day-picker'
-import { DataTableColumn, FilterMetadata, FilterValue } from '@/components/data-table/DataTableColumn'
+import { DataTableColumn, FilterValue, FilterMetadata } from '@/components/data-table/DataTableColumn'
 import { DateRangePicker } from '@/components/form/DateRangePicker'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -10,6 +10,7 @@ import { SelectQuery } from '@jakub.knejzlik/ts-query'
 import { FilterMetadataService } from '@/components/data-table/services/FilterMetadataService'
 import { parseFilterValue, toFilterValue, DATE_PRESETS } from '@/lib/date-range-utils'
 import dayjs from 'dayjs'
+import { useQuery } from '@tanstack/react-query'
 
 export interface DateRangeFilterProps {
   column: DataTableColumn<any, any>
@@ -17,6 +18,7 @@ export interface DateRangeFilterProps {
   query?: SelectQuery
   value?: FilterValue
   onChange: (value: FilterValue | null) => void
+  isOpen?: boolean
 }
 
 export const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
@@ -24,28 +26,29 @@ export const DateRangeFilter: React.FC<DateRangeFilterProps> = ({
   datasource,
   query,
   value,
-  onChange
+  onChange,
+  isOpen = false
 }) => {
-  const [metadata, setMetadata] = React.useState<FilterMetadata>()
-  const [loading, setLoading] = React.useState(true)
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>(
     parseFilterValue(value)
   )
 
-  React.useEffect(() => {
-    if (!datasource || !query) {
-      setLoading(false)
-      return
-    }
+  // Get column id for query key
+  const columnId = ('id' in column && column.id) || 
+    ('accessorKey' in column && String(column.accessorKey)) || 'unknown'
 
-    FilterMetadataService.fetchMetadata(datasource, query, column)
-      .then(setMetadata)
-      .catch(error => {
-        console.warn('Failed to fetch filter metadata:', error)
-        setMetadata({})
-      })
-      .finally(() => setLoading(false))
-  }, [datasource, query, column])
+  // Use React Query for metadata fetching
+  const { data: metadata = {} as FilterMetadata, isLoading: loading } = useQuery<FilterMetadata>({
+    queryKey: ['filter-metadata', query?.toSQL(), columnId],
+    queryFn: async () => {
+      if (!datasource || !query) return {} as FilterMetadata
+      return FilterMetadataService.fetchMetadata(datasource, query, column)
+    },
+    // Enable query when dropdown is open or when we have existing values
+    enabled: !!datasource && !!query && (isOpen || (!!value && (!!value.from || !!value.to))),
+    staleTime: 5 * 60 * 1000, // Consider data stale after 5 minutes
+    gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
+  })
 
   React.useEffect(() => {
     setDateRange(parseFilterValue(value))

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Search, X } from 'lucide-react'
-import { DataTableColumn, FilterMetadata, FilterValue } from '@/components/data-table/DataTableColumn'
+import { DataTableColumn, FilterValue, FilterMetadata } from '@/components/data-table/DataTableColumn'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { useQuery } from '@tanstack/react-query'
 
 export interface TextFilterProps {
   column: DataTableColumn<any, any>
@@ -21,6 +22,7 @@ export interface TextFilterProps {
   query?: SelectQuery
   value?: FilterValue
   onChange: (value: FilterValue | null) => void
+  isOpen?: boolean
 }
 
 export const TextFilter: React.FC<TextFilterProps> = ({
@@ -28,37 +30,36 @@ export const TextFilter: React.FC<TextFilterProps> = ({
   datasource,
   query,
   value,
-  onChange
+  onChange,
+  isOpen = false
 }) => {
-  const [metadata, setMetadata] = React.useState<FilterMetadata>()
-  const [loading, setLoading] = React.useState(true)
   const [mode, setMode] = React.useState<'select' | 'search'>('search')
   const [searchValue, setSearchValue] = React.useState(value?.value || '')
   const [filterType, setFilterType] = React.useState<'contains' | 'equals'>(
     value?.type === 'equals' ? 'equals' : 'contains'
   )
 
-  // Fetch metadata
-  React.useEffect(() => {
-    if (!datasource || !query) {
-      setLoading(false)
-      return
-    }
+  // Get column id for query key
+  const columnId = ('id' in column && column.id) || 
+    ('accessorKey' in column && String(column.accessorKey)) || 'unknown'
 
-    FilterMetadataService.fetchMetadata(datasource, query, column)
-      .then(data => {
-        setMetadata(data)
-        // Auto-switch to select mode if few distinct values
-        if ((data.totalDistinct || 0) <= 10 && data.distinctValues) {
-          setMode('select')
-        }
-      })
-      .catch(error => {
-        console.warn('Failed to fetch filter metadata:', error)
-        setMetadata({})
-      })
-      .finally(() => setLoading(false))
-  }, [datasource, query, column])
+  // Use React Query for metadata fetching
+  const { data: metadata = {} as FilterMetadata, isLoading: loading } = useQuery<FilterMetadata>({
+    queryKey: ['filter-metadata', query?.toSQL(), columnId],
+    queryFn: async () => {
+      if (!datasource || !query) return {} as FilterMetadata
+      const data = await FilterMetadataService.fetchMetadata(datasource, query, column)
+      // Auto-switch to select mode if few distinct values
+      if ((data.totalDistinct || 0) <= 10 && data.distinctValues) {
+        setMode('select')
+      }
+      return data
+    },
+    // Enable query when dropdown is open or when we have existing values
+    enabled: !!datasource && !!query && (isOpen || value?.value !== undefined),
+    staleTime: 5 * 60 * 1000, // Consider data stale after 5 minutes
+    gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
+  })
 
   // Update search value when prop changes
   React.useEffect(() => {
@@ -141,7 +142,7 @@ export const TextFilter: React.FC<TextFilterProps> = ({
             <SelectItem value="__all__">
               All ({metadata.totalCount} records)
             </SelectItem>
-            {metadata.distinctValues?.map((item) => (
+            {metadata.distinctValues?.map((item: any) => (
               <SelectItem 
                 key={item.value || '__empty__'} 
                 value={item.value || '__empty__'}
