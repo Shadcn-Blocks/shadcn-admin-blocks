@@ -10,7 +10,7 @@ import {
 import { useDataTable } from '@/components/data-table/DataTableProvider'
 
 export function DataTablePageSwitcher<TData>() {
-  const table = useDataTable<TData>()
+  const { table } = useDataTable<TData>()
 
   return (
     <Select

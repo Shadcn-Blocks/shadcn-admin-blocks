@@ -3,15 +3,20 @@ import * as React from 'react'
 
 interface DataTableContextValue<RecordType> {
   table: ReturnType<typeof useReactTable<RecordType>>
+  isLoading?: boolean
 }
 
 const DataTableContext = React.createContext<DataTableContextValue<any> | undefined>(undefined)
 
 export function DataTableProvider<RecordType>({
   table,
+  isLoading,
   children,
-}: React.PropsWithChildren<{ table: ReturnType<typeof useReactTable<RecordType>> }>) {
-  return <DataTableContext.Provider value={{ table }}>{children}</DataTableContext.Provider>
+}: React.PropsWithChildren<{ 
+  table: ReturnType<typeof useReactTable<RecordType>>
+  isLoading?: boolean 
+}>) {
+  return <DataTableContext.Provider value={{ table, isLoading }}>{children}</DataTableContext.Provider>
 }
 
 export function useDataTable<RecordType>() {
@@ -19,5 +24,5 @@ export function useDataTable<RecordType>() {
   if (!context) {
     throw new Error('useDataTable must be used within a DataTableProvider')
   }
-  return context.table as ReturnType<typeof useReactTable<RecordType>>
+  return context as DataTableContextValue<RecordType>
 }

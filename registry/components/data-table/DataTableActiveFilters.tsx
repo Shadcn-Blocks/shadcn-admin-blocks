@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -11,7 +10,7 @@ interface DataTableActiveFiltersProps<TData> {
 }
 
 export function DataTableActiveFilters<TData>({ columns }: DataTableActiveFiltersProps<TData>) {
-  const table = useDataTable()
+  const { table } = useDataTable()
   const columnFilters = table.getState().columnFilters
   
   if (columnFilters.length === 0) {

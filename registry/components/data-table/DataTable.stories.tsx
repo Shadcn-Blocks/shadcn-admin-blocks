@@ -1,6 +1,6 @@
 // registry/my-component/MyComponent.stories.ts
 
-import { StaticDataSource } from '@/lib/data-sources'
+import { StaticDataSource, MockDataSource } from '@/lib/data-sources'
 import { Q } from '@jakub.knejzlik/ts-query'
 import type { Meta, StoryObj } from '@storybook/react'
 import { PencilIcon, Trash, DollarSign, Mail, Calendar, Hash } from 'lucide-react'
@@ -677,6 +677,33 @@ The \`title\` property accepts any React node, allowing full customization of th
           <div className="text-sm text-muted-foreground">
             Column headers now display custom titles with icons instead of raw field names
           </div>
+        </div>
+        <div className="rounded-md border">
+          <DataTableContent />
+        </div>
+        <DataTableFooter />
+      </>
+    ),
+  },
+}
+
+// Loading states story with MockDataSource
+export const WithLoadingStates: Story = {
+  args: {
+    datasource: new MockDataSource({
+      tables: { table: data },
+      delay: 1000, // 1 second delay to simulate API loading
+    }),
+    query,
+    columns,
+    enableFilters: true,
+    children: (
+      <>
+        <div className="flex items-center justify-between py-4">
+          <div className="text-sm text-muted-foreground">
+            This table simulates API loading with a 1 second delay. Try sorting, filtering, and pagination to see loading states.
+          </div>
+          <DataTableToolbar />
         </div>
         <div className="rounded-md border">
           <DataTableContent />

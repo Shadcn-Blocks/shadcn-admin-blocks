@@ -12,7 +12,7 @@ import {
 import { useDataTable } from '@/components/data-table/DataTableProvider'
 
 export function DataTablePagination<TData>() {
-  const table = useDataTable<TData>()
+  const { table } = useDataTable<TData>()
   const currentPage = table.getState().pagination.pageIndex + 1
   const totalPages = table.getPageCount()
 

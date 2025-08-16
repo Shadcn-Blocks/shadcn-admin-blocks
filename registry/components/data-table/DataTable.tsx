@@ -25,7 +25,6 @@ import { DataTableFilterDropdown } from '@/components/data-table/DataTableFilter
 import { DataTableFooter } from '@/components/data-table/DataTableFooter'
 import { DataTableProvider } from '@/components/data-table/DataTableProvider'
 import { FilterMetadataService } from '@/components/data-table/services/FilterMetadataService'
-import { Spin } from '@/components/feedback/Spin'
 import { StaticDataSource } from '@/lib/data-sources'
 import { Cond, Condition, Fn, Q, SelectQuery } from '@jakub.knejzlik/ts-query'
 import { useQuery } from '@tanstack/react-query'
@@ -225,7 +224,7 @@ const DataTableInner = <RecordType,>({
   sourceQuery = sourceQuery.offset(pagination.pageIndex * pagination.pageSize)
   sourceQuery = sourceQuery.limit(pagination.pageSize)
 
-  const { data, isLoading } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: ['data-table', datasource.getContentHash(), sourceQuery.toSQL()],
     queryFn: async () => {
       // Debug: Log the SQL queries
@@ -236,6 +235,7 @@ const DataTableInner = <RecordType,>({
       const [rows, count] = await datasource.executeQueries([sourceQuery, countQuery])
       return [rows, { count: count[0].count }] as [RecordType[], { count: number }]
     },
+    placeholderData: (previousData) => previousData,
   })
 
   const [_data, count] = data ?? [null, null]
@@ -278,7 +278,7 @@ const DataTableInner = <RecordType,>({
   })
 
   return (
-    <DataTableProvider table={table}>
+    <DataTableProvider table={table} isLoading={isFetching}>
       <div className="w-full">
         {children ?? (
           <>
@@ -289,9 +289,7 @@ const DataTableInner = <RecordType,>({
               <DataTableActiveFilters columns={columns} />
             )}
             <div className="rounded-sm border">
-              <Spin spinning={isLoading}>
-                <DataTableContent />
-              </Spin>
+              <DataTableContent />
             </div>
             <div className="flex items-center justify-end space-x-2 py-4">
               <DataTableFooter />

@@ -10,7 +10,7 @@ import {
 import { useDataTable } from '@/components/data-table/DataTableProvider'
 
 export const DataTableToolbar = <RecordType,>() => {
-  const table = useDataTable<RecordType>()
+  const { table } = useDataTable<RecordType>()
   return (
     <div className="flex items-center py-4">
       <DropdownMenu>
