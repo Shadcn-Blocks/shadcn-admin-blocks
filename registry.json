@@ -57,13 +57,16 @@
       "type": "registry:block",
       "title": "DataTable",
       "description": "Data table based on TanStack Table.",
-      "registryDependencies": ["button", "dropdown-menu", "select", "pagination", "table"],
+      "registryDependencies": ["button", "dropdown-menu", "select", "pagination", "table", "badge", "checkbox", "input", "popover", "scroll-area", "skeleton", "calendar"],
       "dependencies": [
         "@tanstack/react-table",
         "@tanstack/react-query",
         "@jakub.knejzlik/ts-query",
         "numeral",
-        "sql.js"
+        "sql.js",
+        "date-fns",
+        "dayjs",
+        "react-day-picker"
       ],
       "devDependencies": ["@types/numeral", "@types/sql.js"],
       "files": [
@@ -97,6 +100,46 @@
           "type": "registry:component"
         },
         {
+          "path": "registry/components/data-table/DataTableActiveFilters.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/components/data-table/DataTableFilterContext.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/components/data-table/DataTableFilterDropdown.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/components/data-table/filters/DateRangeFilter.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/components/data-table/filters/MultiSelectFilter.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/components/data-table/filters/RangeFilter.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/components/data-table/filters/TextFilter.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/components/data-table/filters/ToggleFilter.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/components/data-table/services/FilterMetadataCache.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/components/data-table/services/FilterMetadataService.ts",
+          "type": "registry:component"
+        },
+        {
           "path": "registry/components/data-table/StaticDataTable.tsx",
           "type": "registry:component"
         },
@@ -105,7 +148,9 @@
         { "path": "registry/lib/data-sources/index.ts", "type": "registry:lib" },
         { "path": "registry/lib/data-sources/static-database.ts", "type": "registry:lib" },
         { "path": "registry/lib/data-sources/StaticDataSource.ts", "type": "registry:lib" },
-        { "path": "registry/components/feedback/Spin.tsx", "type": "registry:component" }
+        { "path": "registry/components/feedback/Spin.tsx", "type": "registry:component" },
+        { "path": "registry/components/form/DateRangePicker.tsx", "type": "registry:component" },
+        { "path": "registry/lib/date-range-utils.ts", "type": "registry:lib" }
       ]
     },
     {

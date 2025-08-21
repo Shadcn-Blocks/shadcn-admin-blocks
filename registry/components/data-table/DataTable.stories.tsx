@@ -1,6 +1,6 @@
 // registry/my-component/MyComponent.stories.ts
 
-import { StaticDataSource, MockDataSource } from '@/lib/data-sources'
+import { StaticDataSource } from '@/lib/data-sources'
 import { Q } from '@jakub.knejzlik/ts-query'
 import type { Meta, StoryObj } from '@storybook/react'
 import { PencilIcon, Trash, DollarSign, Mail, Calendar, Hash } from 'lucide-react'
@@ -15,6 +15,7 @@ import { DataTableFooter } from '@/components/data-table/DataTableFooter'
 import { DataTablePageSwitcher } from '@/components/data-table/DataTablePageSwitcher'
 import { DataTableActiveFilters } from '@/components/data-table/DataTableActiveFilters'
 import dayjs from 'dayjs'
+import { MockDataSource } from '@/lib/data-sources/MockDataSource'
 
 const meta: Meta<typeof DataTable> = {
   component: DataTable,
@@ -173,7 +174,9 @@ const data: Payment[] = Array.from({ length: 123 }, (_, i) => ({
   amount: Math.floor(Math.random() * 1000) + 100,
   status: statuses[i % statuses.length] ?? 'pending',
   email: emails[i % emails.length] ?? 'unknown@example.com',
-  createdat: dayjs().add(-Math.floor(Math.random() * 60), 'day').toISOString(), // Random date within last 60 days
+  createdat: dayjs()
+    .add(-Math.floor(Math.random() * 60), 'day')
+    .toISOString(), // Random date within last 60 days
 }))
 
 // Data with nullable date fields for testing
@@ -182,19 +185,30 @@ const ordersData: Order[] = Array.from({ length: 150 }, (_, i) => ({
   customer: emails[i % emails.length] ?? 'unknown@example.com',
   amount: Math.floor(Math.random() * 5000) + 100,
   status: statuses[i % statuses.length] ?? 'pending',
-  orderDate: dayjs().add(-30 + Math.floor(Math.random() * 30), 'day').toISOString(),
+  orderDate: dayjs()
+    .add(-30 + Math.floor(Math.random() * 30), 'day')
+    .toISOString(),
   // 30% chance of NULL ship date (not shipped yet)
-  shipDate: Math.random() > 0.3 
-    ? dayjs().add(-20 + Math.floor(Math.random() * 20), 'day').toISOString()
-    : null,
-  // 20% chance of NULL delivery date (not delivered yet)  
-  deliveryDate: Math.random() > 0.2
-    ? dayjs().add(-10 + Math.floor(Math.random() * 10), 'day').toISOString()
-    : null,
+  shipDate:
+    Math.random() > 0.3
+      ? dayjs()
+          .add(-20 + Math.floor(Math.random() * 20), 'day')
+          .toISOString()
+      : null,
+  // 20% chance of NULL delivery date (not delivered yet)
+  deliveryDate:
+    Math.random() > 0.2
+      ? dayjs()
+          .add(-10 + Math.floor(Math.random() * 10), 'day')
+          .toISOString()
+      : null,
   // 50% chance of NULL cancel date (not cancelled)
-  cancelDate: Math.random() > 0.5
-    ? dayjs().add(-5 + Math.floor(Math.random() * 5), 'day').toISOString()
-    : null,
+  cancelDate:
+    Math.random() > 0.5
+      ? dayjs()
+          .add(-5 + Math.floor(Math.random() * 5), 'day')
+          .toISOString()
+      : null,
 }))
 
 type Payment = {
@@ -442,7 +456,8 @@ Try clicking the filter icons next to column headers!
       <>
         <div className="flex items-center justify-between py-4">
           <div className="text-sm text-muted-foreground">
-            Click the filter icons next to column headers to see the improved filters with clear buttons
+            Click the filter icons next to column headers to see the improved filters with clear
+            buttons
           </div>
           <DataTableToolbar />
         </div>
@@ -598,7 +613,12 @@ const columnsWithIcons: DataTableColumn<Payment, any>[] = [
   {
     id: 'id',
     accessorKey: 'id',
-    title: <><Hash className="w-4 h-4 inline mr-1" />ID</>,
+    title: (
+      <>
+        <Hash className="w-4 h-4 inline mr-1" />
+        ID
+      </>
+    ),
     type: 'string',
   },
   {
@@ -612,21 +632,36 @@ const columnsWithIcons: DataTableColumn<Payment, any>[] = [
   {
     id: 'email',
     accessorKey: 'email',
-    title: <><Mail className="w-4 h-4 inline mr-1" />Email</>,
+    title: (
+      <>
+        <Mail className="w-4 h-4 inline mr-1" />
+        Email
+      </>
+    ),
     type: 'string',
     filterable: true,
   },
   {
     id: 'amount',
     accessorKey: 'amount',
-    title: <><DollarSign className="w-4 h-4 inline mr-1" />Amount</>,
+    title: (
+      <>
+        <DollarSign className="w-4 h-4 inline mr-1" />
+        Amount
+      </>
+    ),
     type: 'number',
     filterable: true,
   },
   {
     id: 'createdat',
     accessorKey: 'createdat',
-    title: <><Calendar className="w-4 h-4 inline mr-1" />Date</>,
+    title: (
+      <>
+        <Calendar className="w-4 h-4 inline mr-1" />
+        Date
+      </>
+    ),
     type: 'date',
     filterable: true,
   },
@@ -701,7 +736,8 @@ export const WithLoadingStates: Story = {
       <>
         <div className="flex items-center justify-between py-4">
           <div className="text-sm text-muted-foreground">
-            This table simulates API loading with a 1 second delay. Try sorting, filtering, and pagination to see loading states.
+            This table simulates API loading with a 1 second delay. Try sorting, filtering, and
+            pagination to see loading states.
           </div>
           <DataTableToolbar />
         </div>
