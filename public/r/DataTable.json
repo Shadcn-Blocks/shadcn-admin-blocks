@@ -140,7 +140,7 @@
     },
     {
       "path": "registry/lib/data-sources/index.ts",
-      "content": "export { StaticDataSource } from '@/lib/data-sources/StaticDataSource'\nexport { DataSource } from '@/lib/data-sources/DataSource'\n",
+      "content": "export { StaticDataSource } from '@/lib/data-sources/StaticDataSource'\nexport type { DataSource } from '@/lib/data-sources/DataSource'\n",
       "type": "registry:lib"
     },
     {
