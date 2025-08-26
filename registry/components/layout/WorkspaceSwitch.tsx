@@ -46,6 +46,7 @@ export const WorkspaceSwitch: React.FC<WorkspaceSwitchProps> = ({ onAddWorkspace
             <SidebarMenuButton
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              style={{ boxShadow: 'none' }}
             >
               <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                 <activeWorkspace.logo className="size-4" />
