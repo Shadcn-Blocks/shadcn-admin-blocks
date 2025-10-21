@@ -1,12 +1,32 @@
 import {
+  DropdownMenu,
+  DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { SidebarInset } from '@/components/ui/sidebar'
+import {
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from '@/components/ui/sidebar'
 import type { Meta, StoryObj } from '@storybook/react'
 import { Link } from '@tanstack/react-router'
-import { BadgeCheck, Bell, Building2, CreditCard, HouseIcon, Sparkles } from 'lucide-react'
+import {
+  BadgeCheck,
+  Bell,
+  BookOpen,
+  Building2,
+  ChevronsUpDown,
+  CreditCard,
+  HelpCircle,
+  HouseIcon,
+  LifeBuoy,
+  Sparkles,
+} from 'lucide-react'
 import { Fragment } from 'react/jsx-runtime'
 import { Layout, LayoutBase } from '@/components/layout/Layout'
 import { LayoutContent } from '@/components/layout/LayoutContent'
@@ -186,7 +206,32 @@ const CustomLayoutStoryContent: FC = () => (
           <WorkspaceSwitch />
         </LayoutSidebarHeader>
         <LayoutSidebarContent>
-          {/* Navigation items would go here */}
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <Link to="/">
+                  <LifeBuoy />
+                  Support
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <Link to="/">
+                  <HelpCircle />
+                  FAQ
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <Link to="/">
+                  <BookOpen />
+                  Documentation
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
         </LayoutSidebarContent>
         <LayoutSidebarFooter
           user={{
