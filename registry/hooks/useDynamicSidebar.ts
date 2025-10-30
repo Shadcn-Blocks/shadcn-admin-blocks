@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 
 declare module '@tanstack/react-router' {
   interface StaticDataRouteOption {
-    title?: string
+    title?: ReactNode
     icon?: ReactNode
     showInSidebar?: boolean
     sidebarOrder?: number
